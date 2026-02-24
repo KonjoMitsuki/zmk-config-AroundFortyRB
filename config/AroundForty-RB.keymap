@@ -171,10 +171,10 @@
         AML {
             display-name = "AML";
             bindings = <
-&trans  &trans  &trans  &trans  &trans          &trans  &trans    &trans    &trans    &trans
-&trans  &trans  &trans  &trans  &trans          &trans  &mkp MB1  &mkp MB3  &mkp MB2  &trans
-&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans    &trans    &trans    &trans
-&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans    &trans    &trans    &trans
+&trans  &trans  &trans  &trans  &trans          &trans  &trans    &msc SCRL_UP    &trans    &trans
+&trans  &trans  &trans  &trans  &trans          &trans  &mkp MB1  &msc SCRL_DOWN  &mkp MB2  &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans    &mkp MB3        &trans    &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans    &trans          &trans    &trans
             >;
         };
     };
