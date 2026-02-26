@@ -172,8 +172,8 @@
             display-name = "AML";
             bindings = <
 &trans  &trans  &trans  &trans  &trans          &trans  &trans    &msc SCRL_UP    &trans    &trans
-&trans  &trans  &trans  &trans  &trans          &trans  &mkp MB1  &msc SCRL_DOWN  &mkp MB2  &trans
-&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans    &mkp MB3        &trans    &trans
+&trans  &trans  &trans  &trans  &trans          &trans  &mkp MB1  &msc SCRL_DOWN  &mkp MB1  &mkp MB2
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans    &mkp MB3        &trans    &lt 7 LS(RS(RA(LA(LC(RC(B))))))
 &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans    &trans          &trans    &trans
             >;
         };
