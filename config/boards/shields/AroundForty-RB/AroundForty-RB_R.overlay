@@ -18,20 +18,16 @@
         ;
 };
 
-
 / {
-    /* スクロール方向をいつでも反転できるようにするための設定 */
-    /* 反転させたい場合は compatible を "zmk,input_processor_xy_to_scroll" に変え、*/
-    /* 下の scroll-layer のマッパー参照先を &zip_xy_to_scroll_mapper_tune に変更してください */
+    /* スクロール方向の反転設定 (scroll-y-invert / scroll-x-invert) */
     zip_xy_to_scroll_mapper_tune: zip_xy_to_scroll_mapper_tune {
         compatible = "zmk,input_processor_xy_to_scroll";
         #input-processor-cells = <0>;
-        /* 必要に応じてコメントを外して反転 */
         scroll-y-invert;
         // scroll-x-invert;
     };
 
-    /* AML専用 temp_layer: 割り当てキー(7=SCRL_UP, 16=MB1, 17=SCRL_DOWN, 18=MB2, 28=MB3)以外を押すとレイヤー解除 */
+    /* AML用 temp_layer: excluded-positions のキーのみレイヤー維持、それ以外で解除 */
     zip_temp_layer_aml: zip_temp_layer_aml {
         compatible = "zmk,input-processor-temp-layer";
         #input-processor-cells = <2>;
