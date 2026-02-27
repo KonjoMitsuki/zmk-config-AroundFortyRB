@@ -31,7 +31,7 @@
     zip_temp_layer_aml: zip_temp_layer_aml {
         compatible = "zmk,input-processor-temp-layer";
         #input-processor-cells = <2>;
-        excluded-positions = <7 16 17 18 28>;
+        excluded-positions = <7 16 17 18 19 28 30>;
     };
 
     trackball_listener: trackball_listener {
