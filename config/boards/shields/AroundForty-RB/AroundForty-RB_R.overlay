@@ -27,8 +27,15 @@
         compatible = "zmk,input_processor_xy_to_scroll";
         #input-processor-cells = <0>;
         /* 必要に応じてコメントを外して反転 */
-        // scroll-y-invert;
+        scroll-y-invert;
         // scroll-x-invert;
+    };
+
+    /* AML専用 temp_layer: 割り当てキー(7=SCRL_UP, 16=MB1, 17=SCRL_DOWN, 18=MB2, 28=MB3)以外を押すとレイヤー解除 */
+    zip_temp_layer_aml: zip_temp_layer_aml {
+        compatible = "zmk,input-processor-temp-layer";
+        #input-processor-cells = <2>;
+        excluded-positions = <7 16 17 18 28>;
     };
 
     trackball_listener: trackball_listener {
@@ -36,11 +43,11 @@
         device = <&trackball>;
         input-processors = <&zip_xy_transform (INPUT_TRANSFORM_X_INVERT)>,
                            <&zip_xy_scaler 1 1>,
-                           <&zip_temp_layer 9 300>;
+                           <&zip_temp_layer_aml 9 300>;
 
         scroll-layer {
             layers = <6 7>;
-            input-processors = <&zip_xy_to_scroll_mapper>, 
+            input-processors = <&zip_xy_to_scroll_mapper_tune>,
                                <&zip_scroll_scaler 1 45>;
         };
     };
