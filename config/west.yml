@@ -8,6 +8,9 @@ manifest:
     # RGB Widgetモジュール
     - name: caksoylar
       url-base: https://github.com/caksoylar
+    # ZMK Helpers
+    - name: urob
+      url-base: https://github.com/urob
   projects:
     - name: zmk
       remote: zmkfirmware
@@ -19,5 +22,8 @@ manifest:
     - name: zmk-rgbled-widget
       remote: caksoylar
       revision: v0.3-branch
+    - name: zmk-helpers
+      remote: urob
+      revision: main
   self:
     path: config
