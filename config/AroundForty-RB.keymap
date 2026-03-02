@@ -2,6 +2,7 @@
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/bt.h>
 #include <dt-bindings/zmk/keys.h>
+#include "keys_ja.h"
 #include <dt-bindings/zmk/pointing.h>
 
 &mt {
@@ -84,9 +85,9 @@
             display-name = "Win-Base";
             bindings = <
 &kp Q             &kp W     &kp E     &kp R                 &kp T                             &kp Y        &kp U             &kp I          &kp O    &kp P
-&kp A             &kp S     &kp D     &kp F                 &kp G                             &kp H        &kp J             &kp K          &kp L    &lt 7 MINUS
+&kp A             &kp S     &kp D     &kp F                 &kp G                             &kp H        &kp J             &kp K          &kp L    &lt 7 JP_MINUS
 &mt LEFT_SHIFT Z  &kp X     &kp C     &kp V                 &kp B        &mt ESC PRINTSCREEN  &kp N        &kp M             &kp COMMA      &kp DOT  &mt RIGHT_SHIFT SLASH
-&kp LCTRL         &kp LGUI  &kp LALT  &mt LSHFT LANGUAGE_1  &lt 2 SPACE  &lt 6 LANGUAGE_2     &lt 4 ENTER  &kp LEFT_BRACKET  &kp BACKSPACE  &mo 8    &kp DEL
+&kp LCTRL         &kp LGUI  &kp LALT  &mt LSHFT LANGUAGE_1  &lt 2 SPACE  &lt 6 LANGUAGE_2     &lt 4 ENTER  &kp JP_AT         &kp BACKSPACE  &mo 8    &kp DEL
             >;
         };
 
@@ -94,29 +95,29 @@
             display-name = "Mac-Base";
             bindings = <
 &kp Q             &kp W         &kp E         &kp R                 &kp T                          &kp Y        &kp U             &kp I          &kp O    &kp P
-&kp A             &kp S         &kp D         &kp F                 &kp G                          &kp H        &kp J             &kp K          &kp L    &lt 7 MINUS
+&kp A             &kp S         &kp D         &kp F                 &kp G                          &kp H        &kp J             &kp K          &kp L    &lt 7 JP_MINUS
 &mt LEFT_SHIFT Z  &kp X         &kp C         &kp V                 &kp B        &mac_ime          &kp N        &kp M             &kp COMMA      &kp DOT  &mt RIGHT_SHIFT SLASH
-&kp LCTRL         &kp LEFT_ALT  &kp LEFT_GUI  &mt LSHFT LANGUAGE_1  &lt 3 SPACE  &lt 6 LANGUAGE_2  &lt 5 ENTER  &kp LEFT_BRACKET  &kp BACKSPACE  &mo 8    &kp DEL
+&kp LCTRL         &kp LEFT_ALT  &kp LEFT_GUI  &mt LSHFT LANGUAGE_1  &lt 3 SPACE  &lt 6 LANGUAGE_2  &lt 5 ENTER  &kp JP_AT         &kp BACKSPACE  &mo 8    &kp DEL
             >;
         };
 
         Win-Fnc {
             display-name = "Win-Fnc";
             bindings = <
-&kp LC(A)       &kp LC(X)     &kp LC(C)    &kp LC(V)  &kp LC(F)          &kp LESS_THAN      &kp GREATER_THAN  &kp EQUAL         &kp PERCENT   &kp DOLLAR
-&kp TAB         &kp LEFT_ALT  &kp LS(TAB)  &mkp MB1   &mkp MB2           &kp LS(N8)         &kp LS(N9)        &kp LEFT_BRACKET  &kp LS(N6)    &kp LS(N2)
-&kp LEFT_SHIFT  &trans        &trans       &trans     &mkp MB3   &trans  &kp RIGHT_BRACKET  &kp BACKSLASH     &kp EXCLAMATION   &kp QUESTION  &kp LS(N7)
-&kp LCTRL       &trans        &trans       &trans     &trans     &trans  &trans             &trans            &kp BACKSPACE     &kp ENTER     &kp HASH
+&kp LC(A)       &kp LC(X)     &kp LC(C)    &kp LC(V)  &kp LC(F)          &kp JP_LT      &kp JP_GT         &kp JP_CARET      &kp JP_PERCENT  &kp JP_DOLLAR
+&kp TAB         &kp LEFT_ALT  &kp LS(TAB)  &mkp MB1   &mkp MB2           &kp JP_LPAR    &kp JP_RPAR       &kp JP_AT         &kp JP_AMPS     &kp JP_DQT
+&kp LEFT_SHIFT  &trans        &trans       &trans     &mkp MB3   &trans  &kp JP_LBKT    &kp JP_RBKT       &kp JP_EXCL       &kp JP_QMARK    &kp JP_SQT
+&kp LCTRL       &trans        &trans       &trans     &trans     &trans  &trans         &trans            &kp BACKSPACE     &kp ENTER       &kp JP_HASH
             >;
         };
 
         Mac-Fnc {
             display-name = "Mac-Fnc";
             bindings = <
-&kp LG(A)       &kp LG(X)     &kp LG(C)    &kp LG(V)  &kp LG(F)             &kp LESS_THAN      &kp GREATER_THAN  &kp EQUAL         &kp PERCENT   &kp DOLLAR
-&kp TAB         &kp LEFT_GUI  &kp LS(TAB)  &mkp MB1   &mkp MB2              &kp LS(N8)         &kp LS(N9)        &kp LEFT_BRACKET  &kp LS(N6)    &kp LS(N2)
-&kp LEFT_SHIFT  &trans        &trans       &trans     &mkp MB3   &kp LG(R)  &kp RIGHT_BRACKET  &kp BACKSLASH     &kp EXCLAMATION   &kp QUESTION  &kp LS(N7)
-&kp LCTRL       &trans        &trans       &trans     &trans     &trans     &trans             &trans            &kp BACKSPACE     &kp ENTER     &kp HASH
+&kp LG(A)       &kp LG(X)     &kp LG(C)    &kp LG(V)  &kp LG(F)             &kp JP_LT      &kp JP_GT         &kp JP_CARET      &kp JP_PERCENT  &kp JP_DOLLAR
+&kp TAB         &kp LEFT_GUI  &kp LS(TAB)  &mkp MB1   &mkp MB2              &kp JP_LPAR    &kp JP_RPAR       &kp JP_AT         &kp JP_AMPS     &kp JP_DQT
+&kp LEFT_SHIFT  &trans        &trans       &trans     &mkp MB3   &kp LG(R)  &kp JP_LBKT    &kp JP_RBKT       &kp JP_EXCL       &kp JP_QMARK    &kp JP_SQT
+&kp LCTRL       &trans        &trans       &trans     &trans     &trans     &trans         &trans            &kp BACKSPACE     &kp ENTER       &kp JP_HASH
             >;
         };
 
@@ -142,10 +143,10 @@
 
         Num_Scroll {
             bindings = <
-&kp F1   &kp F2   &kp F3  &kp F4  &kp F5           &kp LS(SEMICOLON)     &kp MINUS         &kp N7    &kp N8  &kp N9
-&kp F6   &kp F7   &kp F8  &kp F9  &kp F10          &kp LS(MINUS)         &kp SINGLE_QUOTE  &kp N4    &kp N5  &kp N6
-&kp F11  &kp F12  &trans  &trans  &trans   &trans  &kp LS(SINGLE_QUOTE)  &kp FSLH          &kp N1    &kp N2  &kp N3
-&trans   &trans   &trans  &trans  &trans   &trans  &kp ENTER             &kp LEFT_BRACKET  &kp BSPC  &trans  &kp N0
+&kp F1   &kp F2   &kp F3  &kp F4  &kp F5           &kp JP_PLUS    &kp JP_MINUS      &kp N7    &kp N8  &kp N9
+&kp F6   &kp F7   &kp F8  &kp F9  &kp F10          &kp JP_EQUAL   &kp JP_COLON      &kp N4    &kp N5  &kp N6
+&kp F11  &kp F12  &trans  &trans  &trans   &trans  &kp JP_ASTRK   &kp JP_SLASH      &kp N1    &kp N2  &kp N3
+&trans   &trans   &trans  &trans  &trans   &trans  &kp ENTER      &kp JP_LBKT       &kp BSPC  &trans  &kp N0
             >;
         };
 
