@@ -1,0 +1,9 @@
+file_format: "1"
+id: AroundForty-RB_L
+name: AroundForty-RB Left
+type: shield
+siblings:
+  - AroundForty-RB_R
+requires: [seeeduino_xiao_ble]
+features:
+  - keys

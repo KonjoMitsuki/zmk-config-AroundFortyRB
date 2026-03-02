@@ -1,8 +1,0 @@
-file_format: "1"
-id: AroundForty-RB
-name: AroundForty-RB
-type: shield
-url: https://github.com/razilyis/zmk-config-AroundForty-RB
-requires: [seeeduino_xiao_ble]
-features:
-  - keys
