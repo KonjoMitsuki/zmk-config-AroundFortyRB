@@ -20,14 +20,6 @@
 };
 
 / {
-    /* スクロール方向の反転設定 (scroll-y-invert / scroll-x-invert) */
-    zip_xy_to_scroll_mapper_tune: zip_xy_to_scroll_mapper_tune {
-        compatible = "zmk,input-processor-xy-to-scroll";
-        #input-processor-cells = <0>;
-        scroll-y-invert;
-        // scroll-x-invert;
-    };
-
     /* AML用 temp_layer: excluded-positions のキーのみレイヤー維持、それ以外で解除 */
     zip_temp_layer_aml: zip_temp_layer_aml {
         compatible = "zmk,input-processor-temp-layer";
@@ -44,7 +36,8 @@
 
         scroll-layer {
             layers = <6 7>;
-            input-processors = <&zip_xy_to_scroll_mapper_tune>,
+            input-processors = <&zip_xy_to_scroll_mapper>,
+                               <&zip_scroll_transform (INPUT_TRANSFORM_Y_INVERT)>,
                                <&zip_scroll_scaler 1 45>;
         };
     };
