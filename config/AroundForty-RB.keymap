@@ -2,8 +2,32 @@
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/bt.h>
 #include <dt-bindings/zmk/keys.h>
-#include <dt-bindings/zmk/keys_ja.h>
 #include <dt-bindings/zmk/pointing.h>
+
+// JIS (Japanese) Layout definitions
+#define JP_LT LS(COMMA)       // <
+#define JP_GT LS(DOT)         // >
+#define JP_CARET EQUAL        // ^
+#define JP_PERCENT LS(N5)     // %
+#define JP_DOLLAR LS(N4)      // $
+#define JP_LPAR LS(N8)        // (
+#define JP_RPAR LS(N9)        // )
+#define JP_AT LEFT_BRACKET    // @
+#define JP_AMPS LS(N6)        // &
+#define JP_DQT LS(N2)         // "
+#define JP_COLON SINGLE_QUOTE // :
+#define JP_LBKT RIGHT_BRACKET // [
+#define JP_RBKT NON_US_HASH   // ]
+#define JP_EXCL LS(N1)        // !
+#define JP_QMARK LS(SLASH)    // ?
+#define JP_SQT LS(N7)         // '
+#define JP_YEN INTERNATIONAL_3 // \ (Yen/backslash)
+#define JP_HASH LS(N3)        // #
+#define JP_PLUS LS(SEMICOLON) // +
+#define JP_MINUS MINUS        // -
+#define JP_EQUAL LS(MINUS)    // =
+#define JP_ASTRK LS(COLON)    // *
+#define JP_SLASH SLASH        // /
 
 &mt {
     flavor = "balanced";
