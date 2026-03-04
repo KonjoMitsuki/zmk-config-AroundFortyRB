@@ -21,7 +21,7 @@
 #define JP_EXCL LS(N1)            // !
 #define JP_QMARK LS(SLASH)        // ?
 #define JP_SQT LS(N7)             // '
-#define JP_YEN INT_3              // Yen
+#define JP_YEN INTERNATIONAL_3    // Yen (Backslash)
 #define JP_HASH LS(N3)            // #
 #define JP_MINUS MINUS            // -
 #define JP_PLUS LS(SEMICOLON)     // +
@@ -29,13 +29,13 @@
 #define JP_EQUAL LS(MINUS)        // =
 
 // --- 追加記号 ---
-#define JP_SEMI SEMICOLON         // ;
-#define JP_UNDER LS(INT_1)        // _
-#define JP_TILDE LS(EQUAL)        // ~
-#define JP_PIPE LS(INT_3)         // |
-#define JP_GRAVE LS(LEFT_BRACKET) // `
-#define JP_LBRC LS(RIGHT_BRACKET) // {
-#define JP_RBRC LS(NON_US_HASH)   // }
+#define JP_SEMI SEMICOLON            // ;
+#define JP_UNDER LS(INTERNATIONAL_1) // _
+#define JP_TILDE LS(EQUAL)           // ~
+#define JP_PIPE LS(INTERNATIONAL_3)  // |
+#define JP_GRAVE LS(LEFT_BRACKET)    // `
+#define JP_LBRC LS(RIGHT_BRACKET)    // {
+#define JP_RBRC LS(NON_US_HASH)      // }
 
 &mt {
     flavor = "balanced";
