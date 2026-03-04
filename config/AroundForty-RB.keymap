@@ -77,4 +77,132 @@
         mac_ime: mac_ime_toggle {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
-            bindings
+            bindings =
+                <&macro_press>,
+                <&kp LCTRL>,
+                <&macro_tap>,
+                <&kp SPACE>,
+                <&macro_release>,
+                <&kp LCTRL>;
+        };
+    };
+
+    behaviors {
+        lt_to_layer_0: lt_to_layer_0 {
+            compatible = "zmk,behavior-hold-tap";
+            label = "LAYER_TAP_TO_0";
+            bindings = <&mo>, <&to_layer_0>;
+            #binding-cells = <2>;
+            tapping-term-ms = <200>;
+        };
+
+        scroll_up_down: behavior_sensor_rotate_mouse_wheel_up_down {
+            compatible = "zmk,behavior-sensor-rotate";
+            #sensor-binding-cells = <0>;
+            bindings = <&msc SCRL_UP>, <&msc SCRL_DOWN>;
+            tap-ms = <20>;
+        };
+    };
+
+    keymap {
+        compatible = "zmk,keymap";
+
+        Win-Base {
+            display-name = "Win-Base";
+            bindings = <
+&kp Q             &kp W     &kp E     &kp R                 &kp T                             &kp Y        &kp U             &kp I          &kp O    &kp P
+&kp A             &kp S     &kp D     &kp F                 &kp G                             &kp H        &kp J             &kp K          &kp L    &lt 7 MINUS
+&mt LEFT_SHIFT Z  &kp X     &kp C     &kp V                 &kp B        &mt ESC PRINTSCREEN  &kp N        &kp M             &kp COMMA      &kp DOT  &mt RIGHT_SHIFT SLASH
+&kp LCTRL         &kp LGUI  &kp LALT  &mt LSHFT LANGUAGE_1  &lt 2 SPACE  &lt 6 LANGUAGE_2     &lt 4 ENTER  &kp LEFT_BRACKET  &kp BACKSPACE  &mo 8    &kp DEL
+            >;
+        };
+
+        Mac-Base {
+            display-name = "Mac-Base";
+            bindings = <
+&kp Q             &kp W         &kp E         &kp R                 &kp T                          &kp Y        &kp U             &kp I          &kp O    &kp P
+&kp A             &kp S         &kp D         &kp F                 &kp G                          &kp H        &kp J             &kp K          &kp L    &lt 7 MINUS
+&mt LEFT_SHIFT Z  &kp X         &kp C         &kp V                 &kp B        &mac_ime          &kp N        &kp M             &kp COMMA      &kp DOT  &mt RIGHT_SHIFT SLASH
+&kp LCTRL         &kp LEFT_ALT  &kp LEFT_GUI  &mt LSHFT LANGUAGE_1  &lt 3 SPACE  &lt 6 LANGUAGE_2  &lt 5 ENTER  &kp LEFT_BRACKET  &kp BACKSPACE  &mo 8    &kp DEL
+            >;
+        };
+
+        Win-Fnc {
+            display-name = "Win-Fnc";
+            bindings = <
+&kp LC(A)       &kp LC(X)     &kp LC(C)    &kp LC(V)  &kp LC(F)          &kp JP_LT     &kp JP_GT     &kp JP_CARET      &kp JP_PRCNT  &kp JP_DLLR
+&kp TAB         &kp LEFT_ALT  &kp LS(TAB)  &mkp MB1   &mkp MB2           &kp JP_LPAR   &kp JP_RPAR   &kp JP_AT         &kp JP_AMPS   &kp JP_DQT
+&kp LEFT_SHIFT  &trans        &trans       &trans     &mkp MB3   &trans  &kp JP_LBKT   &kp JP_RBKT   &kp JP_EXCL       &kp JP_QMARK  &kp JP_SQT
+&kp LCTRL       &trans        &trans       &trans     &trans     &trans  &trans        &trans        &kp BACKSPACE     &kp ENTER     &kp JP_HASH
+            >;
+        };
+
+        Mac-Fnc {
+            display-name = "Mac-Fnc";
+            bindings = <
+&kp LG(A)       &kp LG(X)     &kp LG(C)    &kp LG(V)  &kp LG(F)             &kp JP_LT     &kp JP_GT     &kp JP_CARET      &kp JP_PRCNT  &kp JP_DLLR
+&kp TAB         &kp LEFT_GUI  &kp LS(TAB)  &mkp MB1   &mkp MB2              &kp JP_LPAR   &kp JP_RPAR   &kp JP_AT         &kp JP_AMPS   &kp JP_DQT
+&kp LEFT_SHIFT  &trans        &trans       &trans     &mkp MB3   &kp LG(R)  &kp JP_LBKT   &kp JP_RBKT   &kp JP_EXCL       &kp JP_QMARK  &kp JP_SQT
+&kp LCTRL       &trans        &trans       &trans     &trans     &trans     &trans        &trans        &kp BACKSPACE     &kp ENTER     &kp JP_HASH
+            >;
+        };
+
+        Win-Common {
+            display-name = "Win-Common";
+            bindings = <
+&kp ESC    &trans        &trans       &kp LG(UP_ARROW)    &kp LA(UP_ARROW)                    &kp LC(W)          &kp LA(LEFT_ARROW)  &mkp MB3        &kp LA(RIGHT_ARROW)  &kp HOME
+&kp TAB    &kp LEFT_ALT  &kp LS(TAB)  &kp LG(LEFT_ARROW)  &kp LG(RIGHT_ARROW)                 &kp LC(PAGE_UP)    &mkp MB1            &kp UP_ARROW    &mkp MB2             &kp PAGE_UP
+&kp LSHFT  &trans        &trans       &kp LG(DOWN_ARROW)  &kp LA(DOWN_ARROW)   &kp LG(LS(S))  &kp LC(PAGE_DOWN)  &kp LEFT_ARROW      &kp DOWN_ARROW  &kp RIGHT_ARROW      &kp PAGE_DOWN
+&kp LCTRL  &trans        &trans       &trans              &trans               &trans         &trans             &kp LC(T)           &trans          &trans               &kp END
+            >;
+        };
+
+        Mac-Common {
+            display-name = "Mac-Common";
+            bindings = <
+&kp ESC    &trans        &trans       &kp LC(UP_ARROW)    &kp LG(UP_ARROW)                           &kp LG(W)        &kp LG(LEFT_ARROW)  &mkp MB3        &kp LG(RIGHT_ARROW)  &kp HOME
+&kp TAB    &kp LEFT_GUI  &kp LS(TAB)  &kp LC(LEFT_ARROW)  &kp LC(RIGHT_ARROW)                        &kp LC(TAB)      &mkp MB1            &kp UP_ARROW    &mkp MB2             &kp PAGE_UP
+&kp LSHFT  &trans        &trans       &kp LC(DOWN_ARROW)  &kp LG(DOWN_ARROW)   &kp LG(LS(N4))        &kp LS(LC(TAB))  &kp LEFT_ARROW      &kp DOWN_ARROW  &kp RIGHT_ARROW      &kp PAGE_DOWN
+&kp LCTRL  &trans        &trans       &trans              &trans               &trans                &trans           &kp LG(T)           &trans          &trans               &kp END
+            >;
+        };
+
+        Num_Scroll {
+            bindings = <
+&kp F1   &kp F2   &kp F3       &kp F4        &kp F5                  &kp JP_PLUS   &kp JP_MINUS  &kp N7    &kp N8  &kp N9
+&kp F6   &kp F7   &kp F8       &kp F9        &kp F10                 &kp JP_EQUAL  &kp JP_SEMI   &kp N4    &kp N5  &kp N6
+&kp F11  &kp F12  &kp JP_LBRC  &kp JP_RBRC   &kp JP_UNDER    &trans  &kp JP_AST    &kp FSLH      &kp N1    &kp N2  &kp N3
+&trans   &trans   &kp JP_GRAVE &kp JP_TILDE  &kp JP_PIPE     &trans  &kp ENTER     &kp JP_AMPS   &kp BSPC  &trans  &kp N0
+            >;
+        };
+
+        V_Scroll {
+            bindings = <
+&trans  &trans  &trans  &trans  &trans          &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans          &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+            >;
+        };
+
+        Settings {
+            display-name = "Settings";
+            bindings = <
+&trans  &trans  &trans  &trans  &trans         &bt BT_SEL 0  &bt BT_SEL 1    &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4
+&trans  &trans  &trans  &trans  &trans         &trans        &trans          &trans        &trans        &trans
+&trans  &trans  &trans  &trans  &trans  &to 0  &trans        &trans          &trans        &trans        &bt BT_CLR
+&trans  &trans  &trans  &trans  &trans  &to 1  &sys_reset    &studio_unlock  &bootloader   &trans        &bt BT_CLR_ALL
+            >;
+        };
+
+        AML {
+            display-name = "AML";
+            bindings = <
+&trans  &trans  &trans  &trans  &trans          &trans  &trans    &msc SCRL_UP  &trans    &trans
+&trans  &trans  &trans  &trans  &trans          &trans  &mkp MB1  &mkp MB1      &mkp MB2  &lt 7 RA(LA(A))
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans    &mkp MB3      &trans    &lt 7 LS(RS(RA(LA(LC(RCTRL(B))))))
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans    &trans        &trans    &trans
+            >;
+        };
+    };
+};
