@@ -167,12 +167,12 @@
             >;
         };
 
-        Num_Scroll {
+Num_Scroll {
             bindings = <
-&kp F1   &kp F2   &kp F3       &kp F4        &kp F5                  &kp JP_PLUS   &kp JP_MINUS  &kp N7    &kp N8  &kp N9
-&kp F6   &kp F7   &kp F8       &kp F9        &kp F10                 &kp JP_EQUAL  &kp JP_SEMI   &kp N4    &kp N5  &kp N6
-&kp F11  &kp F12  &kp JP_LBRC  &kp JP_RBRC   &kp JP_UNDER    &trans  &kp JP_AST    &kp FSLH      &kp N1    &kp N2  &kp N3
-&trans   &trans   &kp JP_GRAVE &kp JP_TILDE  &kp JP_PIPE     &trans  &kp ENTER     &kp JP_AMPS   &kp BSPC  &trans  &kp N0
+&kp F1   &kp F2   &kp F3       &kp F4        &kp F5                  &kp JP_PLUS  &kp N7  &kp N8    &kp N9       &kp JP_MINUS
+&kp F6   &kp F7   &kp F8       &kp F9        &kp F10                 &kp JP_EQUAL   &kp N4  &kp N5    &kp N6       &kp JP_SEMI
+&kp F11  &kp F12  &kp JP_LBRC  &kp JP_RBRC   &kp JP_COLON    &trans  &kp JP_AST      &kp N1  &kp N2    &kp N3       &kp FSLH
+&trans   &trans   &kp JP_GRAVE &kp JP_TILDE  &kp JP_PIPE     &trans  &kp ENTER  &kp N0  &kp BSPC  &kp JP_AMPS  &kp JP_UNDER
             >;
         };
 
