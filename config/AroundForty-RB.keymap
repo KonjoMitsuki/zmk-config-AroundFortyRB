@@ -5,28 +5,37 @@
 #include <dt-bindings/zmk/pointing.h>
 
 // JIS配列用の記号変換マクロ
-#define JP_LT LS(COMMA)       // <
-#define JP_GT LS(DOT)         // >
-#define JP_CARET EQUAL        // ^
-#define JP_PRCNT LS(N5)       // %
-#define JP_DLLR LS(N4)        // $
-#define JP_LPAR LS(N8)        // (
-#define JP_RPAR LS(N9)        // )
-#define JP_AT LEFT_BRACKET    // @
-#define JP_AMPS LS(N6)        // &
-#define JP_DQT LS(N2)         // "
-#define JP_COLON SINGLE_QUOTE // :
-#define JP_LBKT RIGHT_BRACKET // [
-#define JP_RBKT NON_US_HASH   // ]
-#define JP_EXCL LS(N1)        // !
-#define JP_QMARK LS(SLASH)    // ?
-#define JP_SQT LS(N7)         // '
-#define JP_YEN INTERNATIONAL_3 // Yen (Backslash)
-#define JP_HASH LS(N3)        // #
-#define JP_MINUS MINUS        // -
-#define JP_PLUS LS(SEMICOLON) // +
-#define JP_AST LS(SINGLE_QUOTE) // *
-#define JP_EQUAL LS(MINUS)    // =
+#define JP_LT LS(COMMA)           // <
+#define JP_GT LS(DOT)             // >
+#define JP_CARET EQUAL            // ^
+#define JP_PRCNT LS(N5)           // %
+#define JP_DLLR LS(N4)            // $
+#define JP_LPAR LS(N8)            // (
+#define JP_RPAR LS(N9)            // )
+#define JP_AT LEFT_BRACKET        // @
+#define JP_AMPS LS(N6)            // &
+#define JP_DQT LS(N2)             // "
+#define JP_COLON SINGLE_QUOTE     // :
+#define JP_LBKT RIGHT_BRACKET     // [
+#define JP_RBKT NON_US_HASH       // ]
+#define JP_EXCL LS(N1)            // !
+#define JP_QMARK LS(SLASH)        // ?
+#define JP_SQT LS(N7)             // '
+#define JP_YEN INTERNATIONAL_3    // Yen (Backslash)
+#define JP_HASH LS(N3)            // #
+#define JP_MINUS MINUS            // -
+#define JP_PLUS LS(SEMICOLON)     // +
+#define JP_AST LS(SINGLE_QUOTE)   // *
+#define JP_EQUAL LS(MINUS)        // =
+
+// --- 今回追加した不足記号 ---
+#define JP_SEMI SEMICOLON         // ;
+#define JP_UNDER LS(INTL_1)       // _
+#define JP_TILDE LS(EQUAL)        // ~
+#define JP_PIPE LS(INTL_3)        // |
+#define JP_GRAVE LS(LEFT_BRACKET) // `
+#define JP_LBRC LS(RIGHT_BRACKET) // {
+#define JP_RBRC LS(NON_US_HASH)   // }
 
 &mt {
     flavor = "balanced";
@@ -160,10 +169,10 @@
 
         Num_Scroll {
             bindings = <
-&kp F1   &kp F2   &kp F3  &kp F4  &kp F5           &kp JP_PLUS   &kp JP_MINUS  &kp N7    &kp N8  &kp N9
-&kp F6   &kp F7   &kp F8  &kp F9  &kp F10          &kp JP_EQUAL  &kp JP_COLON  &kp N4    &kp N5  &kp N6
-&kp F11  &kp F12  &trans  &trans  &trans   &trans  &kp JP_AST    &kp FSLH      &kp N1    &kp N2  &kp N3
-&trans   &trans   &trans  &trans  &trans   &trans  &kp ENTER     &kp JP_AMPS   &kp BSPC  &trans  &kp N0
+&kp F1   &kp F2   &kp F3       &kp F4        &kp F5                  &kp JP_PLUS   &kp JP_MINUS  &kp N7    &kp N8  &kp N9
+&kp F6   &kp F7   &kp F8       &kp F9        &kp F10                 &kp JP_EQUAL  &kp JP_SEMI   &kp N4    &kp N5  &kp N6
+&kp F11  &kp F12  &kp JP_LBRC  &kp JP_RBRC   &kp JP_UNDER    &trans  &kp JP_AST    &kp FSLH      &kp N1    &kp N2  &kp N3
+&trans   &trans   &kp JP_GRAVE &kp JP_TILDE  &kp JP_PIPE     &trans  &kp ENTER     &kp JP_AMPS   &kp BSPC  &trans  &kp N0
             >;
         };
 
