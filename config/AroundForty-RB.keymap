@@ -21,7 +21,7 @@
 #define JP_EXCL LS(N1)        // !
 #define JP_QMARK LS(SLASH)    // ?
 #define JP_SQT LS(N7)         // '
-#define JP_YEN INTERNATIONAL_3 // \
+#define JP_YEN INTERNATIONAL_3 // Yen (Backslash)
 #define JP_HASH LS(N3)        // #
 #define JP_MINUS MINUS        // -
 #define JP_PLUS LS(SEMICOLON) // +
