@@ -1,4 +1,4 @@
-#include <behaviors/rgbled_widget.dtsi>
+#include<behaviors/rgbled_widget.dtsi>
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/bt.h>
 #include <dt-bindings/zmk/keys.h>
@@ -123,7 +123,7 @@
     &kp Q             &kp W         &kp E         &kp R                 &kp T                          &kp Y        &kp U             &kp I          &kp O    &kp P
     &kp A             &kp S         &kp D         &kp F                 &kp G                          &kp H        &kp J             &kp K          &kp L    &lt 7 MINUS
     &mt LEFT_SHIFT Z  &kp X         &kp C         &kp V                 &kp B        &mac_ime          &kp N        &kp M             &kp COMMA      &kp DOT  &lt 9 SLASH
-    &kp LCTRL         &kp LEFT_ALT  &kp LEFT_GUI  &mt LSHFT LANGUAGE_1  &lt 3 SPACE  &mt RCTRL LANGUAGE_2  &lt 6 ENTER  &kp LEFT_BRACKET  &lt 5 BSPC     &mo 8    &kp DEL
+    &kp LCTRL         &kp LEFT_ALT  &kp LEFT_GUI  &mt LSHFT LANGUAGE_1  &lt 3 SPACE  &lt RCTRL LANGUAGE_2  &lt 6 ENTER  &kp LEFT_BRACKET  &kp BSPC     &mo 8    &kp DEL
                 >;
             };
             
