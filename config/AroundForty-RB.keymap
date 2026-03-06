@@ -102,6 +102,12 @@
             bindings = <&msc SCRL_UP>, <&msc SCRL_DOWN>;
             tap-ms = <20>;
         };
+
+        swapper: swapper {
+            compatible = "zmk,behavior-tri-state";
+            #binding-cells = <0>;
+            bindings = <&kt LALT>, <&kp TAB>, <&kt LALT>;
+        };
     };
 
     keymap {
@@ -132,7 +138,7 @@
                 bindings = <
     &kp LC(A)       &kp LC(X)     &kp LC(C)    &kp LC(V)  &kp LC(F)          &kp JP_LT     &kp JP_GT     &kp JP_CARET      &kp JP_PRCNT  &kp JP_YEN
     &kp TAB         &kp LEFT_ALT  &kp LS(TAB)  &mkp MB1   &mkp MB2           &kp JP_LPAR   &kp JP_RPAR   &kp JP_AT         &kp JP_AMPS   &kp JP_DQT
-    &kp LEFT_SHIFT  &trans        &trans       &trans     &mkp MB3   &trans  &kp JP_LBKT   &kp JP_RBKT   &kp JP_EXCL       &kp JP_QMARK  &kp JP_SQT
+    &kp LEFT_SHIFT  &trans        &trans       &swapper     &mkp MB3   &trans  &kp JP_LBKT   &kp JP_RBKT   &kp JP_EXCL       &kp JP_QMARK  &kp JP_SQT
     &kp LCTRL       &trans        &trans       &trans     &trans     &trans  &trans        &trans        &kp BACKSPACE     &kp JP_DLLR   &kp JP_HASH
                 >;
             };
@@ -142,7 +148,7 @@
                 bindings = <
     &kp LG(A)       &kp LG(X)     &kp LG(C)    &kp LG(V)  &kp LG(F)             &kp JP_LT     &kp JP_GT     &kp JP_CARET      &kp JP_PRCNT  &kp JP_YEN
     &kp TAB         &kp LEFT_GUI  &kp LS(TAB)  &mkp MB1   &mkp MB2              &kp JP_LPAR   &kp JP_RPAR   &kp JP_AT         &kp JP_AMPS   &kp JP_DQT
-    &kp LEFT_SHIFT  &trans        &trans       &trans     &mkp MB3   &kp LG(R)  &kp JP_LBKT   &kp JP_RBKT   &kp JP_EXCL       &kp JP_QMARK  &kp JP_SQT
+    &kp LEFT_SHIFT  &trans        &trans       &swapper     &mkp MB3   &kp LG(R)  &kp JP_LBKT   &kp JP_RBKT   &kp JP_EXCL       &kp JP_QMARK  &kp JP_SQT
     &kp LCTRL       &trans        &trans       &trans     &trans     &trans     &trans        &trans        &kp BACKSPACE     &kp JP_DLLR   &kp JP_HASH
                 >;
             };

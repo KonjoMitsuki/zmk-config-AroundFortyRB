@@ -8,6 +8,9 @@ manifest:
     # RGB Widgetモジュール
     - name: caksoylar
       url-base: https://github.com/caksoylar
+    # Tri-stateビヘイビア（Swapper）
+    - name: dhruvinsh
+      url-base: https://github.com/dhruvinsh
   projects:
     - name: zmk
       remote: zmkfirmware
@@ -19,5 +22,8 @@ manifest:
     - name: zmk-rgbled-widget
       remote: caksoylar
       revision: v0.3-branch
+    - name: zmk-tri-state
+      remote: dhruvinsh
+      revision: main
   self:
     path: config
