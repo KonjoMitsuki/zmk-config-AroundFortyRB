@@ -69,6 +69,12 @@
             bindings = <&msc SCRL_UP>, <&msc SCRL_DOWN>;
             tap-ms = <20>;
         };
+
+        swapper: swapper {
+            compatible = "zmk,behavior-tri-state";
+            #binding-cells = <0>;
+            bindings = <&kt LALT>, <&kp TAB>, <&kt LALT>;
+        };
     };
 
     keymap {
@@ -93,13 +99,13 @@
     &kp LCTRL         &kp LEFT_ALT  &kp LEFT_GUI  &mt LSHFT LANGUAGE_1  &lt 3 SPACE  &lt 4 LANGUAGE_2  &lt 6 ENTER  &kp LEFT_BRACKET  &kp BSPC       &mo 8    &kp DEL
             >;
         };
-        
+
         Win-Fnc {
             display-name = "Win-Fnc";
             bindings = <
     &kp LC(A)       &kp LC(X)     &kp LC(C)    &kp LC(V)  &kp LC(F)          &kp LT        &kp GT        &kp CARET         &kp PRCNT     &kp BSLH
     &kp TAB         &kp LEFT_ALT  &kp LS(TAB)  &mkp MB1   &mkp MB2           &kp LPAR      &kp RPAR      &kp AT            &kp AMPS      &kp DQT
-    &kp LEFT_SHIFT  &trans        &trans       &trans     &mkp MB3   &trans  &kp LBKT      &kp RBKT      &kp EXCL          &kp QMARK     &kp SQT
+    &kp LEFT_SHIFT  &trans        &trans       &swapper   &mkp MB3   &trans  &kp LBKT      &kp RBKT      &kp EXCL          &kp QMARK     &kp SQT
     &kp LCTRL       &trans        &trans       &trans     &trans     &trans  &trans        &trans        &kp BACKSPACE     &kp DLLR      &kp HASH
             >;
         };
@@ -109,7 +115,7 @@
             bindings = <
     &kp LG(A)       &kp LG(X)     &kp LG(C)    &kp LG(V)  &kp LG(F)             &kp LT        &kp GT        &kp CARET         &kp PRCNT     &kp BSLH
     &kp TAB         &kp LEFT_GUI  &kp LS(TAB)  &mkp MB1   &mkp MB2              &kp LPAR      &kp RPAR      &kp AT            &kp AMPS      &kp DQT
-    &kp LEFT_SHIFT  &trans        &trans       &trans     &mkp MB3   &kp LG(R)  &kp LBKT      &kp RBKT      &kp EXCL          &kp QMARK     &kp SQT
+    &kp LEFT_SHIFT  &trans        &trans       &swapper   &mkp MB3   &kp LG(R)  &kp LBKT      &kp RBKT      &kp EXCL          &kp QMARK     &kp SQT
     &kp LCTRL       &trans        &trans       &trans     &trans     &trans     &trans        &trans        &kp BACKSPACE     &kp DLLR      &kp HASH
             >;
         };
