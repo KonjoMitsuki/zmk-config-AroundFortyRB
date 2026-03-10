@@ -32,9 +32,21 @@
         device = <&trackball>;
         input-processors = <&zip_xy_transform INPUT_TRANSFORM_X_INVERT>,
                            <&zip_xy_scaler 1 1>;
-        scroll-layer {
-            layers = <6 7>;
+
+        // レイヤー6（通常の全方向スクロール）
+        scroll-layer-6 {
+            layers = <6>;
             input-processors = <&zip_xy_to_scroll_mapper>,
+                               <&zip_scroll_transform INPUT_TRANSFORM_Y_INVERT>,
+                               <&zip_scroll_scaler 1 45>;
+        };
+
+        // レイヤー7（垂直スクロール専用）
+        v-scroll-layer-7 {
+            layers = <7>;
+            // スクロール変換の前に「&zip_x_scaler 0 1」を挟んでX軸の入力を0にする
+            input-processors = <&zip_x_scaler 0 1>,
+                               <&zip_xy_to_scroll_mapper>,
                                <&zip_scroll_transform INPUT_TRANSFORM_Y_INVERT>,
                                <&zip_scroll_scaler 1 45>;
         };
