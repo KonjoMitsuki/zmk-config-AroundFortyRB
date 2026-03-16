@@ -101,8 +101,7 @@ lt_num: lt_num {
             label = "LT_NUM";
             bindings = <&mo>, <&kp>;
             #binding-cells = <2>;
-            tapping-term-ms = <200>;     // 100msだと短すぎて誤爆しやすいため、200ms程度を推奨
-            flavor = "tap-preferred";    // 記述をここに追加
+            tapping-term-ms = <150>;     
             quick-tap-ms = <150>;        // これを入れると Enter の連打が可能になります
         };
 
