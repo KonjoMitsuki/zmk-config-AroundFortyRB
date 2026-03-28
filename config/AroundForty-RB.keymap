@@ -140,27 +140,27 @@ lt_num: lt_num {
     keymap {
         compatible = "zmk,keymap";
 
-    Win-Base {
+    Win-Base { // layer 0
                 display-name = "Win-Base";
                 bindings = <
     &kp Q             &kp W     &kp E     &kp R                 &kp T                             &kp Y        &kp U             &kp I          &kp O    &kp P
-    &mt_a_ctrl LCTRL A  &kp S     &kp D     &kp F                 &kp G                             &kp H        &kp J             &kp K          &kp L    &lt 7 MINUS
-    &mt_z_shift LEFT_SHIFT Z  &kp X     &kp C     &kp V                 &kp B        &mt ESC PRINTSCREEN  &kp N        &kp M             &kp COMMA      &kp DOT  &lt 9 SLASH
-    &kp LCTRL         &kp LGUI  &kp LALT  &mt LSHFT LANGUAGE_1  &lt 2 SPACE  &lt 4 LANGUAGE_2 &lt_num 6 ENTER  &kp LEFT_BRACKET  &kp BSPC     &mo 8    &kp DEL
+    &mt_a_ctrl LCTRL A  &kp S     &kp D     &kp F                 &kp G                             &kp H        &kp J             &kp K          &kp L    &lt 8 MINUS
+    &mt_z_shift LEFT_SHIFT Z  &kp X     &kp C     &kp V                 &kp B        &mt ESC PRINTSCREEN  &kp N        &kp M             &kp COMMA      &kp DOT  &lt 10 SLASH
+    &kp LCTRL         &kp LGUI  &kp LALT  &mt LSHFT LANGUAGE_1  &lt 2 SPACE  &lt 4 LANGUAGE_2 &lt_num 6 ENTER  &kp LEFT_BRACKET  &kp BSPC     &mo 9    &kp DEL
                 >;
             };
 
-            Mac-Base {
+            Mac-Base { // layer 1
                 display-name = "Mac-Base";
                 bindings = <
     &kp Q             &kp W         &kp E         &kp R                 &kp T                          &kp Y        &kp U             &kp I          &kp O    &kp P
-    &mt_a_ctrl LCTRL A  &kp S         &kp D         &kp F                 &kp G                          &kp H        &kp J             &kp K          &kp L    &lt 7 MINUS
-    &mt_z_shift LEFT_SHIFT Z  &kp X         &kp C         &kp V                 &kp B        &mac_ime          &kp N        &kp M             &kp COMMA      &kp DOT  &lt 9 SLASH
-    &kp LCTRL         &kp LEFT_ALT  &kp LEFT_GUI  &mt LSHFT LANGUAGE_1  &lt 3 SPACE  &lt 4 LANGUAGE_2  &lt_num 10 ENTER &kp LEFT_BRACKET  &kp BSPC     &mo 8    &kp DEL
+    &mt_a_ctrl LCTRL A  &kp S         &kp D         &kp F                 &kp G                          &kp H        &kp J             &kp K          &kp L    &lt 8 MINUS
+    &mt_z_shift LEFT_SHIFT Z  &kp X         &kp C         &kp V                 &kp B        &mac_ime          &kp N        &kp M             &kp COMMA      &kp DOT  &lt 10 SLASH
+    &kp LCTRL         &kp LEFT_ALT  &kp LEFT_GUI  &mt LSHFT LANGUAGE_1  &lt 3 SPACE  &lt 4 LANGUAGE_2  &lt_num 10 ENTER &kp LEFT_BRACKET  &kp BSPC     &mo 9    &kp DEL
                 >;
             };
             
-    Win-Fnc {
+    Win-Fnc { // layer 2
                 display-name = "Win-Fnc";
                 bindings = <
     &kp LC(A)       &kp LC(X)     &kp LC(C)    &kp LC(V)  &kp LC(F)          &kp JP_LT     &kp JP_GT     &kp JP_CARET      &kp JP_PRCNT  &kp JP_YEN
@@ -170,7 +170,7 @@ lt_num: lt_num {
                 >;
             };
 
-            Mac-Fnc {
+            Mac-Fnc { // layer 3
                 display-name = "Mac-Fnc";
                 bindings = <
     &kp LG(A)       &kp LG(X)     &kp LG(C)    &kp LG(V)  &kp LG(F)             &kp LS(COMMA)  &kp LS(DOT)    &kp LS(N6)         &kp LS(N5)    &kp BACKSLASH
@@ -180,7 +180,7 @@ lt_num: lt_num {
                 >;
             };
 
-        Win-Common {
+        Win-Common { // layer 4
             display-name = "Win-Common";
             bindings = <
 &kp ESC    &trans        &trans       &kp LG(UP_ARROW)    &kp LA(UP_ARROW)                    &kp LC(W)          &kp LA(LEFT_ARROW)  &mkp MB3        &kp LA(RIGHT_ARROW)  &kp HOME
@@ -190,7 +190,7 @@ lt_num: lt_num {
             >;
         };
 
-        Mac-Common {
+        Mac-Common { // layer 5
             display-name = "Mac-Common";
             bindings = <
 &kp ESC    &trans        &trans       &kp LC(UP_ARROW)    &kp LG(UP_ARROW)                           &kp LG(W)        &kp LG(LEFT_ARROW)  &mkp MB3        &kp LG(RIGHT_ARROW)  &kp HOME
@@ -200,7 +200,7 @@ lt_num: lt_num {
             >;
         };
 
-Num_Scroll {
+Num_Scroll { // layer 6
             bindings = <
 &kp F1   &kp F2   &kp F3       &kp F4        &kp F5                  &kp JP_PLUS  &kp N7  &kp N8    &kp N9       &kp JP_MINUS
 &kp F6   &kp F7   &kp F8       &kp F9        &kp F10                 &kp JP_EQUAL   &kp N4  &kp N5    &kp N6       &kp JP_SEMI
@@ -209,7 +209,7 @@ Num_Scroll {
             >;
         };
 
-        Mac_Num_Scroll {
+        Mac_Num_Scroll { // layer 7
             display-name = "Mac-Num";
             bindings = <
 &kp F1   &kp F2   &kp F3           &kp F4             &kp F5              &kp LS(EQUAL)       &kp N7  &kp N8    &kp N9       &kp MINUS
@@ -219,7 +219,7 @@ Num_Scroll {
             >;
         };
 
-        V_Scroll {
+        V_Scroll { // layer 8
             bindings = <
 &trans  &trans  &trans  &trans  &trans          &trans  &trans  &trans  &trans  &trans
 &trans  &trans  &trans  &trans  &trans          &trans  &trans  &trans  &mo 6  &trans
@@ -228,7 +228,7 @@ Num_Scroll {
             >;
         };
 
-        Settings {
+        Settings { // layer 9
             display-name = "Settings";
             bindings = <
 &trans  &trans  &trans  &trans  &trans         &bt BT_SEL 0  &bt BT_SEL 1    &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4
@@ -238,11 +238,11 @@ Num_Scroll {
             >;
         };
 
-        AML {
+        AML { // layer 10
             display-name = "AML";
             bindings = <
 &trans  &trans  &trans  &trans  &trans          &trans  &trans    &trans        &msc SCRL_UP &trans
-&trans  &trans  &trans  &trans  &trans          &trans  &mkp MB1  &mkp MB1      &mkp MB2  &lt 7 RA(LA(A))
+&trans  &trans  &trans  &trans  &trans          &trans  &mkp MB1  &mkp MB1      &mkp MB2  &lt 8 RA(LA(A))
 &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans    &trans        &mkp MB3  &trans
 &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans    &trans        &trans    &trans
             >;
