@@ -27,8 +27,6 @@
 #define JP_PLUS LS(SEMICOLON)     // +
 #define JP_AST LS(SINGLE_QUOTE)   // *
 #define JP_EQUAL LS(MINUS)        // =
-
-// --- 追加記号 ---
 #define JP_SEMI SEMICOLON            // ;
 #define JP_UNDER LS(INTERNATIONAL_1) // _
 #define JP_TILDE LS(EQUAL)           // ~
@@ -148,7 +146,7 @@ lt_num: lt_num {
     &kp Q             &kp W         &kp E         &kp R                 &kp T                          &kp Y        &kp U             &kp I          &kp O    &kp P
     &kp A             &kp S         &kp D         &kp F                 &kp G                          &kp H        &kp J             &kp K          &kp L    &lt 7 MINUS
     &mt_z_shift LEFT_SHIFT Z  &kp X         &kp C         &kp V                 &kp B        &mac_ime          &kp N        &kp M             &kp COMMA      &kp DOT  &lt 9 SLASH
-    &kp LCTRL         &kp LEFT_ALT  &kp LEFT_GUI  &mt LSHFT LANGUAGE_1  &lt 3 SPACE  &lt 4 LANGUAGE_2  &lt_num 6 ENTER  &kp LEFT_BRACKET  &kp BSPC     &mo 8    &kp DEL
+    &kp LCTRL         &kp LEFT_ALT  &kp LEFT_GUI  &mt LSHFT LANGUAGE_1  &lt 3 SPACE  &lt 4 LANGUAGE_2  &lt_num 10 ENTER &kp LEFT_BRACKET  &kp BSPC     &mo 8    &kp DEL
                 >;
             };
             
@@ -165,10 +163,10 @@ lt_num: lt_num {
             Mac-Fnc {
                 display-name = "Mac-Fnc";
                 bindings = <
-    &kp LG(A)       &kp LG(X)     &kp LG(C)    &kp LG(V)  &kp LG(F)             &kp JP_LT     &kp JP_GT     &kp JP_CARET      &kp JP_PRCNT  &kp JP_YEN
-    &kp TAB         &kp LEFT_GUI  &kp LS(TAB)  &mkp MB1   &mkp MB2              &kp JP_LPAR   &kp JP_RPAR   &kp JP_AT         &kp JP_AMPS   &kp JP_DQT
-    &kp LEFT_SHIFT  &trans        &trans       &swapper     &mkp MB3   &kp LG(R)  &kp JP_LBKT   &kp JP_RBKT   &kp JP_EXCL       &kp JP_QMARK  &kp JP_SQT
-    &kp LCTRL       &trans        &trans       &trans     &trans     &trans     &trans        &trans        &kp BACKSPACE     &kp JP_DLLR   &kp JP_HASH
+    &kp LG(A)       &kp LG(X)     &kp LG(C)    &kp LG(V)  &kp LG(F)             &kp LS(COMMA)  &kp LS(DOT)    &kp LS(N6)         &kp LS(N5)    &kp BACKSLASH
+    &kp TAB         &kp LEFT_GUI  &kp LS(TAB)  &mkp MB1   &mkp MB2              &kp LS(N8)     &kp LS(N9)     &kp LS(N2)         &kp LS(N7)    &kp LS(SINGLE_QUOTE)
+    &kp LEFT_SHIFT  &trans        &trans       &swapper   &mkp MB3   &kp LG(R)  &kp LEFT_BRACKET &kp RIGHT_BRACKET &kp LS(N1)    &kp LS(SLASH) &kp SINGLE_QUOTE
+    &kp LCTRL       &trans        &trans       &trans     &trans     &trans     &trans        &trans          &kp BACKSPACE     &kp LS(N4)    &kp LS(N3)
                 >;
             };
 
@@ -198,6 +196,16 @@ Num_Scroll {
 &kp F6   &kp F7   &kp F8       &kp F9        &kp F10                 &kp JP_EQUAL   &kp N4  &kp N5    &kp N6       &kp JP_SEMI
 &kp F11  &kp F12  &kp JP_LBRC  &kp JP_RBRC   &kp JP_COLON    &trans  &kp JP_AST      &kp N1  &kp N2    &kp N3       &kp FSLH
 &kp LCTRL  &trans   &kp JP_GRAVE &kp JP_TILDE  &kp JP_PIPE     &trans  &kp ENTER  &kp JP_AMPS  &kp BSPC  &kp N0     &kp JP_UNDER
+            >;
+        };
+
+        Mac_Num_Scroll {
+            display-name = "Mac-Num";
+            bindings = <
+&kp F1   &kp F2   &kp F3           &kp F4             &kp F5              &kp LS(EQUAL)       &kp N7  &kp N8    &kp N9       &kp MINUS
+&kp F6   &kp F7   &kp F8           &kp F9             &kp F10             &kp EQUAL           &kp N4  &kp N5    &kp N6       &kp SEMICOLON
+&kp F11  &kp F12  &kp LS(LEFT_BRACKET) &kp LS(RIGHT_BRACKET) &kp SINGLE_QUOTE &trans       &kp LS(SINGLE_QUOTE) &kp N1  &kp N2    &kp N3       &kp FSLH
+&kp LCTRL  &trans &kp GRAVE        &kp LS(GRAVE)      &kp LS(BACKSLASH)   &trans        &kp ENTER  &kp LS(N7)  &kp BSPC  &kp N0     &kp LS(MINUS)
             >;
         };
 
