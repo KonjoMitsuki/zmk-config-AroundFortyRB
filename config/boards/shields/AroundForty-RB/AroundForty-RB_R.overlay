@@ -30,8 +30,7 @@
     trackball_listener: trackball_listener {
         compatible = "zmk,input-listener";
         device = <&trackball>;
-        input-processors = <&zip_xy_transform INPUT_TRANSFORM_X_INVERT>,
-                           <&zip_xy_scaler 1 1>;
+        input-processors = <&zip_xy_scaler 1 1>;
 
         // AML ON: 通常利用レイヤーのみ一時AMLレイヤー(10)を自動有効化
         aml-on-layers {
