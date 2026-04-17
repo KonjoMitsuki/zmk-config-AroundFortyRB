@@ -33,8 +33,9 @@
         input-processors = <&zip_xy_scaler 1 1>;
 
         // AML ON: 通常利用レイヤーのみ一時AMLレイヤー(10)を自動有効化
+        // ※ 8(縦スクロール専用)は除外して、-ホールド時のスクロールを優先
         aml-on-layers {
-            layers = <0 1 2 3 4 5 6 7 8 10>;
+            layers = <0 1 2 3 4 5 10>;
             input-processors = <&zip_temp_layer_aml 10 2000>;
         };
 
