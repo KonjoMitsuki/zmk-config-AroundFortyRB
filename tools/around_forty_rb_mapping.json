@@ -1,0 +1,99 @@
+{
+  "header": [
+    "小",
+    "薬",
+    "中",
+    "人",
+    "人",
+    "親",
+    "中心",
+    "親",
+    "人",
+    "人",
+    "中",
+    "薬",
+    "小"
+  ],
+  "center_label": "中心",
+  "rows": [
+    [
+      "P1C1",
+      "P1C2",
+      "P1C3",
+      "P1C4",
+      "P1C5",
+      "",
+      "CENTER",
+      "",
+      "P1C6",
+      "P1C7",
+      "P1C8",
+      "P1C9",
+      "P1C10"
+    ],
+    [
+      "P2C1",
+      "P2C2",
+      "P2C3",
+      "P2C4",
+      "P2C5",
+      "",
+      "CENTER",
+      "",
+      "P2C6",
+      "P2C7",
+      "P2C8",
+      "P2C9",
+      "P2C10"
+    ],
+    [
+      "P3C1",
+      "P3C2",
+      "P3C3",
+      "P3C4",
+      "P3C5",
+      "P3C6",
+      "CENTER",
+      "P4C8",
+      "P3C7",
+      "P3C8",
+      "P3C9",
+      "P3C10",
+      "P3C11"
+    ],
+    [
+      "P4C1",
+      "P4C2",
+      "P4C3",
+      "P4C4",
+      "P4C5",
+      "P4C6",
+      "CENTER",
+      "P4C9",
+      "P4C7",
+      "",
+      "",
+      "P4C10",
+      "P4C11"
+    ]
+  ],
+  "custom_behaviors": {
+    "mt_a_ctrl": "mt",
+    "mt_z_shift": "mt",
+    "lt_num": "lt"
+  },
+  "hold_only_behaviors": ["mo"],
+  "macro_overrides": {
+    "JP_YEN": "¥"
+  },
+  "symbol_map": {
+    "BACKSPACE": "BSPC",
+    "SPACE": "SPACE"
+  },
+  "shift_map": {
+    "LS(LEFT_BRACKET)": "{",
+    "LS(RIGHT_BRACKET)": "}",
+    "LS(SINGLE_QUOTE)": "*",
+    "LS(BACKSLASH)": "|"
+  }
+}
