@@ -20,13 +20,13 @@ description: >
 
 ## 対象ファイル構成
 
-| ファイル | 役割 |
-|---|---|
-| `config/AroundForty-RB.keymap` | 全レイヤーのキーマップ |
-| `config/boards/shields/AroundForty-RB/AroundForty-RB_R.conf` | 右手側（Central）設定 |
-| `config/boards/shields/AroundForty-RB/AroundForty-RB_L.conf` | 左手側（Peripheral）設定 |
+| ファイル                                                        | 役割                                        |
+| --------------------------------------------------------------- | ------------------------------------------- |
+| `config/AroundForty-RB.keymap`                                  | 全レイヤーのキーマップ                      |
+| `config/boards/shields/AroundForty-RB/AroundForty-RB_R.conf`    | 右手側（Central）設定                       |
+| `config/boards/shields/AroundForty-RB/AroundForty-RB_L.conf`    | 左手側（Peripheral）設定                    |
 | `config/boards/shields/AroundForty-RB/AroundForty-RB_R.overlay` | 右手 DTS オーバーレイ（トラックボール設定） |
-| `config/west.yml` | 依存モジュール管理 |
+| `config/west.yml`                                               | 依存モジュール管理                          |
 
 ---
 
@@ -60,19 +60,19 @@ description: >
 
 現在のレイヤー構成（詳細は `references/layout.md`）:
 
-| レイヤー | 名前 | 説明 |
-|---|---|---|
-| 0 | Win-Base | Windows JIS 基本レイヤー |
-| 1 | Mac-Base | macOS US 基本レイヤー |
-| 2 | Win-Fnc | Windows 記号・マウス・修飾 |
-| 3 | Mac-Fnc | Mac 記号・マウス・修飾 |
-| 4 | Win-Common | Windows ナビゲーション |
-| 5 | Mac-Common | Mac ナビゲーション |
-| 6 | Num_Scroll | 数字・ファンクション（Win JIS） |
-| 7 | Mac_Num_Scroll | 数字・ファンクション（Mac US） |
-| 8 | V_Scroll | 縦スクロール専用 |
-| 9 | Settings | BT 選択・リセット・ブートローダー |
-| 10 | AML | トラックボール操作レイヤー |
+| レイヤー | 名前           | 説明                              |
+| -------- | -------------- | --------------------------------- |
+| 0        | Win-Base       | Windows JIS 基本レイヤー          |
+| 1        | Mac-Base       | macOS US 基本レイヤー             |
+| 2        | Win-Fnc        | Windows 記号・マウス・修飾        |
+| 3        | Mac-Fnc        | Mac 記号・マウス・修飾            |
+| 4        | Win-Common     | Windows ナビゲーション            |
+| 5        | Mac-Common     | Mac ナビゲーション                |
+| 6        | Num_Scroll     | 数字・ファンクション（Win JIS）   |
+| 7        | Mac_Num_Scroll | 数字・ファンクション（Mac US）    |
+| 8        | V_Scroll       | 縦スクロール専用                  |
+| 9        | Settings       | BT 選択・リセット・ブートローダー |
+| 10       | AML            | トラックボール操作レイヤー        |
 
 ### 3. keymap ファイルのバインディング構造を理解する
 
@@ -104,6 +104,16 @@ description: >
 &kp LS(TAB)          // Shift+Tab
 ```
 
+### 5. 変更後に `keymap.md` を更新する
+
+`config/AroundForty-RB.keymap` を変更したら、必ず生成スクリプトを実行して `keymap.md` のテーブルも更新する。
+
+```bash
+python3 scripts/generate_keymap_table.py --source config/AroundForty-RB.keymap --out keymap.md --apply
+```
+
+更新後は `git diff` で `keymap.md` の差分を確認し、キーマップ変更とテーブル内容が一致していることを確認する。
+
 #### カスタムビヘイビア（このキーボード固有）
 
 ```c
@@ -131,7 +141,8 @@ JP_PIPE JP_GRAVE JP_LBRC JP_RBRC
 ## .conf 変更の手順
 
 **どちらの .conf を変えるか**を先に確認する：
-- トラックボール・Studio・ZMK Studio → **_R.conf（右/Central）**
+
+- トラックボール・Studio・ZMK Studio → **\_R.conf（右/Central）**
 - BLE 安定性・バッテリー → **両方**に同じ設定
 
 詳細なオプション一覧は **`references/conf_options.md`** を参照。
@@ -165,6 +176,7 @@ trackball: trackball@0 {
 ```
 
 スクロール感度（`zip_scroll_scaler`）:
+
 ```dts
 <&zip_scroll_scaler 1 45>   // 分子 分母 → 小さいほど速い（45→30で速くなる）
 ```
