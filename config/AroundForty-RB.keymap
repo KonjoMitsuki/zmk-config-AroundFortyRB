@@ -144,7 +144,7 @@
             display-name = "Win-Base";
             bindings = <
                 &kp Q                    &kp W          &kp E          &kp R                  &kp T                  &kp Y                   &kp U            &kp I             &kp O             &kp P
-                &mt_a_ctrl LCTRL A       &kp S          &lt 6 D        &kp F                  &kp G                  &kp H                   &kp J            &kp K             &lt 8 L           &lt 8 MINUS
+                &mt_a_ctrl LCTRL A       &kp S          &lt 6 D        &kp F                  &kp G                  &kp H                   &kp J            &kp K             &kp L             &lt 8 MINUS
                 &mt_z_shift LEFT_SHIFT Z &kp X          &kp C          &kp V                  &kp B                  &lt 6 PRINTSCREEN       &kp N            &kp M             &kp COMMA         &kp DOT   &lt 10 SLASH
                 &kp LCTRL                &kp LGUI       &kp LALT       &mt LSHFT LANGUAGE_1   &lt 2 SPACE            &lt 4 LANGUAGE_2        &lt_num 6 ENTER  &kp LEFT_BRACKET  &kp BSPC          &mo 9     &kp DEL
             >;
@@ -154,7 +154,7 @@
             display-name = "Mac-Base";
             bindings = <
                 &kp Q                    &kp W          &kp E          &kp R                  &kp T                  &kp Y                   &kp U            &kp I             &kp O             &kp P
-                &mt_a_ctrl LCTRL A       &kp S          &lt 7 D        &kp F                  &kp G                  &kp H                   &kp J            &kp K             &lt 8 L           &lt 8 MINUS
+                &mt_a_ctrl LCTRL A       &kp S          &lt 7 D        &kp F                  &kp G                  &kp H                   &kp J            &kp K             &kp L             &lt 8 MINUS
                 &mt_z_shift LEFT_SHIFT Z &kp X          &kp C          &kp V                  &kp B                  &mac_ime                &kp N            &kp M             &kp COMMA         &kp DOT   &lt 10 SLASH
                 &kp LCTRL                &kp LEFT_ALT   &kp LEFT_GUI   &mt LSHFT LANGUAGE_1   &lt 3 SPACE            &lt 5 LANGUAGE_2        &lt_num 10 ENTER &kp LEFT_BRACKET  &kp BSPC          &mo 9     &kp DEL
             >;
