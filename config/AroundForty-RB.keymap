@@ -202,10 +202,10 @@
 
         Num_Scroll { // layer 6
             bindings = <
-                    &trans                   &trans         &trans         &trans                 &trans                 &kp LS(EQUAL)           &kp N7            &kp N8            &kp N9            &kp MINUS
-                    &kp F13                  &kp LS(N3)     &kp LEFT_BRACKET &kp RIGHT_BRACKET   &kp LS(SEMICOLON)     &kp EQUAL               &kp N4            &kp N5            &kp N6            &kp SEMICOLON
-                    &trans                   &kp LS(MINUS)  &kp GRAVE      &kp LS(GRAVE)          &kp LS(BACKSLASH)      &trans                  &kp LS(N8)        &kp N1            &kp N2            &kp N3          &kp N0
-                    &kp LCTRL                &trans         &trans         &trans                 &trans                 &trans                  &kp ENTER         &kp LS(N7)        &kp BSPC          &kp FSLH        &kp LS(MINUS)
+                    &trans                   &trans         &trans         &trans                 &trans                 &kp JP_PLUS             &kp N7            &kp N8            &kp N9            &kp JP_MINUS
+                    &kp F13                  &kp JP_HASH         &kp JP_LBRC    &kp JP_RBRC            &kp JP_COLON           &kp JP_EQUAL            &kp N4            &kp N5            &kp N6            &kp JP_SEMI
+                    &trans                   &kp JP_UNDER         &kp JP_GRAVE   &kp JP_TILDE           &kp JP_PIPE            &trans                  &kp JP_AST        &kp N1            &kp N2            &kp N3          &kp N0
+                    &kp LCTRL                &trans         &trans         &trans                 &trans                 &trans                  &kp ENTER         &kp JP_AMPS       &kp BSPC          &kp FSLH        &kp JP_UNDER
             >;
         };
 
@@ -213,8 +213,8 @@
             display-name = "Mac-Num";
             bindings = <
                     &trans                   &trans         &trans         &trans                 &trans                 &kp LS(EQUAL)           &kp N7            &kp N8            &kp N9            &kp MINUS
-                    &kp F13                  &kp LS(N3)      &kp LEFT_BRACKET &kp RIGHT_BRACKET   &kp LS(SEMICOLON)     &kp EQUAL               &kp N4            &kp N5            &kp N6            &kp SEMICOLON
-                    &trans                   &kp LS(MINUS)   &kp GRAVE      &kp LS(GRAVE)          &kp LS(BACKSLASH)      &trans                  &kp LS(N8)          &kp N1         &kp N2            &kp N3          &kp N0
+                    &kp F13                  &kp LS(N3)     &kp LS(LEFT_BRACKET) &kp LS(RIGHT_BRACKET) &kp LS(SEMICOLON)  &kp EQUAL               &kp N4            &kp N5            &kp N6            &kp SEMICOLON
+                    &trans                   &kp LS(MINUS)  &kp GRAVE      &kp LS(GRAVE)          &kp LS(BACKSLASH)      &trans                  &kp LS(N8)            &kp N1         &kp N2            &kp N3          &kp N0
                     &kp LCTRL                &trans         &trans         &trans                 &trans                 &trans              &kp ENTER         &kp LS(N7)        &kp BSPC          &kp FSLH          &kp LS(MINUS)
             >;
         };
