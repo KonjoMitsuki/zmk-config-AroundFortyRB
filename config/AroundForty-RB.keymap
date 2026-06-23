@@ -123,6 +123,14 @@
             tapping-term-ms = <250>;
         };
 
+        lt_d: lt_d {
+            compatible = "zmk,behavior-hold-tap";
+            label = "LT_D";
+            bindings = <&mo>, <&kp>;
+            #binding-cells = <2>;
+            tapping-term-ms = <350>;
+        };
+
         scroll_up_down: behavior_sensor_rotate_mouse_wheel_up_down {
             compatible = "zmk,behavior-sensor-rotate";
             #sensor-binding-cells = <0>;
@@ -144,7 +152,7 @@
             display-name = "Win-Base";
             bindings = <
                 &kp Q                    &kp W          &kp E          &kp R                  &kp T                  &kp Y                   &kp U            &kp I             &kp O             &kp P
-                &mt_a_ctrl LCTRL A       &kp S          &lt 6 D        &kp F                  &kp G                  &kp H                   &kp J            &kp K             &lt 8 L           &lt 8 MINUS
+                &mt_a_ctrl LCTRL A       &kp S          &lt_d 6 D      &kp F                  &kp G                  &kp H                   &kp J            &kp K             &kp L             &lt 8 MINUS
                 &mt_z_shift LEFT_SHIFT Z &kp X          &kp C          &kp V                  &kp B                  &lt 6 PRINTSCREEN       &kp N            &kp M             &kp COMMA         &kp DOT   &lt 10 SLASH
                 &kp LCTRL                &kp LGUI       &kp LALT       &mt LSHFT LANGUAGE_1   &lt 2 SPACE            &lt 4 LANGUAGE_2        &lt_num 6 ENTER  &kp LEFT_BRACKET  &kp BSPC          &mo 9     &kp DEL
             >;
@@ -154,7 +162,7 @@
             display-name = "Mac-Base";
             bindings = <
                 &kp Q                    &kp W          &kp E          &kp R                  &kp T                  &kp Y                   &kp U            &kp I             &kp O             &kp P
-                &mt_a_ctrl LCTRL A       &kp S          &lt 7 D        &kp F                  &kp G                  &kp H                   &kp J            &kp K             &lt 8 L           &lt 8 MINUS
+                &mt_a_ctrl LCTRL A       &kp S          &lt_d 7 D      &kp F                  &kp G                  &kp H                   &kp J            &kp K             &kp L             &lt 8 MINUS
                 &mt_z_shift LEFT_SHIFT Z &kp X          &kp C          &kp V                  &kp B                  &mac_ime                &kp N            &kp M             &kp COMMA         &kp DOT   &lt 10 SLASH
                 &kp LCTRL                &kp LEFT_ALT   &kp LEFT_GUI   &mt LSHFT LANGUAGE_1   &lt 3 SPACE            &lt 5 LANGUAGE_2        &lt_num 10 ENTER &kp LEFT_BRACKET  &kp BSPC          &mo 9     &kp DEL
             >;
@@ -204,8 +212,8 @@
             bindings = <
                     &trans                   &trans         &trans         &trans                 &trans                 &kp JP_PLUS             &kp N7            &kp N8            &kp N9            &kp JP_MINUS
                     &kp F13                  &kp JP_HASH         &kp JP_LBRC    &kp JP_RBRC            &kp JP_COLON           &kp JP_EQUAL            &kp N4            &kp N5            &kp N6            &kp JP_SEMI
-                    &trans                   &kp JP_UNDER         &kp JP_GRAVE   &kp JP_TILDE           &kp JP_PIPE            &trans                  &kp JP_AST        &kp N1            &kp N2            &kp N3          &kp N0
-                    &kp LCTRL                &trans         &trans         &trans                 &trans                 &trans                  &kp ENTER         &kp JP_AMPS       &kp BSPC          &kp FSLH        &kp JP_UNDER
+                    &trans                   &kp JP_UNDER         &kp JP_GRAVE   &kp JP_TILDE           &kp JP_PIPE            &trans                  &kp JP_AST        &kp N1            &kp N2            &kp N3          &kp COMMA
+                    &kp LCTRL                &trans         &trans         &trans                 &trans                 &trans                  &kp ENTER         &kp JP_AMPS       &kp BSPC          &kp N0        &kp JP_UNDER
             >;
         };
 
@@ -214,8 +222,8 @@
             bindings = <
                     &trans                   &trans         &trans         &trans                 &trans                 &kp LS(EQUAL)           &kp N7            &kp N8            &kp N9            &kp MINUS
                     &kp F13                  &kp LS(N3)     &kp LS(LEFT_BRACKET) &kp LS(RIGHT_BRACKET) &kp LS(SEMICOLON)  &kp EQUAL               &kp N4            &kp N5            &kp N6            &kp SEMICOLON
-                    &trans                   &kp LS(MINUS)  &kp GRAVE      &kp LS(GRAVE)          &kp LS(BACKSLASH)      &trans                  &kp LS(N8)            &kp N1         &kp N2            &kp N3          &kp N0
-                    &kp LCTRL                &trans         &trans         &trans                 &trans                 &trans              &kp ENTER         &kp LS(N7)        &kp BSPC          &kp FSLH          &kp LS(MINUS)
+                    &trans                   &kp LS(MINUS)  &kp GRAVE      &kp LS(GRAVE)          &kp LS(BACKSLASH)      &trans                  &kp LS(N8)            &kp N1         &kp N2            &kp N3          &kp COMMA
+                    &kp LCTRL                &trans         &trans         &trans                 &trans                 &trans              &kp ENTER         &kp LS(N7)        &kp BSPC          &kp N0          &kp LS(MINUS)
             >;
         };
 
