@@ -77,21 +77,21 @@
 
 ### Num_Scroll 実配列（物理配置）
 
-| 小    | 薬       | 中       | 人       | 人       | 親    | 中心 | 親    | 人       | 人  | 中  | 薬       | 小       |
-| ----- | -------- | -------- | -------- | -------- | ----- | :--: | ----- | -------- | --- | --- | -------- | -------- |
-| trans | trans    | trans    | trans    | trans    |       | 中心 |       | JP_PLUS  | N7  | N8  | N9       | JP_MINUS |
-| F13   | JP_HASH  | JP_LBRC  | JP_RBRC  | JP_COLON |       | 中心 |       | JP_EQUAL | N4  | N5  | N6       | JP_SEMI  |
-| trans | JP_UNDER | JP_GRAVE | JP_TILDE | JP_PIPE  | trans | 中心 |       | JP_AST   | N1  | N2  | N3       | COMMA    |
-| LCTRL | trans    | trans    | trans    | trans    | trans | 中心 | JP_AMPS | ENTER 🔵 | BSPC |    | N0       | JP_UNDER |
+| 小    | 薬       | 中       | 人       | 人       | 親    | 中心 | 親       | 人       | 人  | 中  | 薬       | 小       |
+| ----- | -------- | -------- | -------- | -------- | ----- | :--: | -------- | -------- | --- | --- | -------- | -------- |
+| trans | trans    | trans    | trans    | trans    |       | 中心 |          | JP_PLUS  | N7  | N8  | N9       | JP_MINUS |
+| F13   | JP_HASH  | JP_LBRC  | JP_RBRC  | JP_COLON |       | 中心 |          | JP_EQUAL | N4  | N5  | N6       | JP_SEMI  |
+| trans | JP_UNDER | JP_GRAVE | JP_TILDE | JP_PIPE  | trans | 中心 | JP_AMPS  | JP_AST   | N1  | N2  | N3       | COMMA    |
+| LCTRL | trans    | trans    | trans    | trans    | trans | 中心 | BSPC     | ENTER 🔵 |     |     | N0       | JP_UNDER |
 
 ### Mac_Num_Scroll 実配列（物理配置）
 
-| 小    | 薬        | 中               | 人                | 人            | 親    | 中心 | 親     | 人               | 人  | 中  | 薬       | 小        |
-| ----- | --------- | ---------------- | ----------------- | ------------- | ----- | :--: | ------ | ---------------- | --- | --- | -------- | --------- |
-| trans | trans     | trans            | trans             | trans         |       | 中心 |        | LS(EQUAL)        | N7  | N8  | N9       | MINUS     |
-| F13   | LS(N3)    | LS(LEFT_BRACKET) | LS(RIGHT_BRACKET) | LS(SEMICOLON) |       | 中心 |        | EQUAL            | N4  | N5  | N6       | SEMICOLON |
-| trans | LS(MINUS) | GRAVE            | LS(GRAVE)         | LS(BACKSLASH) | trans | 中心 |        | LS(N8)           | N1  | N2  | N3       | COMMA     |
-| LCTRL | trans     | trans            | trans             | trans         | trans | 中心 | LS(N7) | ENTER 🔵         | BSPC |   | N0       | LS(MINUS) |
+| 小    | 薬        | 中               | 人                | 人            | 親    | 中心 | 親       | 人               | 人  | 中  | 薬       | 小        |
+| ----- | --------- | ---------------- | ----------------- | ------------- | ----- | :--: | -------- | ---------------- | --- | --- | -------- | --------- |
+| trans | trans     | trans            | trans             | trans         |       | 中心 |          | LS(EQUAL)        | N7  | N8  | N9       | MINUS     |
+| F13   | LS(N3)    | LS(LEFT_BRACKET) | LS(RIGHT_BRACKET) | LS(SEMICOLON) |       | 中心 |          | EQUAL            | N4  | N5  | N6       | SEMICOLON |
+| trans | LS(MINUS) | GRAVE            | LS(GRAVE)         | LS(BACKSLASH) | trans | 中心 | LS(N7)   | LS(N8)           | N1  | N2  | N3       | COMMA     |
+| LCTRL | trans     | trans            | trans             | trans         | trans | 中心 | BSPC     | ENTER 🔵         |     |     | N0       | LS(MINUS) |
 
 ### V_Scroll 実配列（物理配置）
 
