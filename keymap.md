@@ -24,7 +24,7 @@
 | 小               | 薬   | 中        | 人                   | 人            | 親                  | 中心 | 親   | 人            | 人  | 中  | 薬        | 小            |
 | ---------------- | ---- | --------- | -------------------- | ------------- | ------------------- | :--: | ---- | ------------- | --- | --- | --------- | ------------- |
 | Q                | W    | E         | R                    | T             |                     | 中心 |      | Y             | U   | I   | O         | P             |
-| **LCTRL**,A      | S    | **`6`**,D | F                    | G             |                     | 中心 |      | H             | J   | K   | **`8`**,L | **`8`**,MINUS |
+| **LCTRL**,A      | S    | **`6`**,D | F                    | G             |                     | 中心 |      | H             | J   | K   | L         | **`8`**,MINUS |
 | **LEFT_SHIFT**,Z | X    | C         | V                    | B             | **`6`**,PRINTSCREEN | 中心 | [    | N             | M   | ,   | .         | **`10`**,/    |
 | LCTRL            | LGUI | LALT      | **LSHFT**,LANGUAGE_1 | **`2`**,SPACE | **`4`**,LANGUAGE_2  | 中心 | BSPC | **`6`**,ENTER |     |     | **`9`**   | DEL           |
 
@@ -35,7 +35,7 @@
 | 小               | 薬       | 中        | 人                   | 人            | 親                 | 中心 | 親   | 人             | 人  | 中  | 薬        | 小            |
 | ---------------- | -------- | --------- | -------------------- | ------------- | ------------------ | :--: | ---- | -------------- | --- | --- | --------- | ------------- |
 | Q                | W        | E         | R                    | T             |                    | 中心 |      | Y              | U   | I   | O         | P             |
-| **LCTRL**,A      | S        | **`7`**,D | F                    | G             |                    | 中心 |      | H              | J   | K   | **`8`**,L | **`8`**,MINUS |
+| **LCTRL**,A      | S        | **`7`**,D | F                    | G             |                    | 中心 |      | H              | J   | K   | L         | **`8`**,MINUS |
 | **LEFT_SHIFT**,Z | X        | C         | V                    | B             | mac_ime            | 中心 | [    | N              | M   | ,   | .         | **`10`**,/    |
 | LCTRL            | LEFT_ALT | LEFT_GUI  | **LSHFT**,LANGUAGE_1 | **`3`**,SPACE | **`5`**,LANGUAGE_2 | 中心 | BSPC | **`10`**,ENTER |     |     | **`9`**   | DEL           |
 
@@ -61,7 +61,7 @@
 
 | 小    | 薬       | 中      | 人             | 人              | 親        | 中心 | 親    | 人            | 人             | 中         | 薬              | 小        |
 | ----- | -------- | ------- | -------------- | --------------- | --------- | :--: | ----- | ------------- | -------------- | ---------- | --------------- | --------- |
-| ESC   | trans    | trans   | LG(UP_ARROW)   | LA(UP_ARROW)    |           | 中心 |       | LC(W)         | LA(LEFT_ARROW) | mkp(MB3)   | LA(RIGHT_ARROW) | HOME      |
+| ESC   | trans    | trans   | LG(UP_ARROW)   | LA(UP_ARROW)    | LC(W)     | 中心 |       | LC(W)         | LA(LEFT_ARROW) | mkp(MB3)   | LA(RIGHT_ARROW) | HOME      |
 | TAB   | LEFT_ALT | LS(TAB) | LG(LEFT_ARROW) | LG(RIGHT_ARROW) |           | 中心 |       | LC(PAGE_UP)   | mkp(MB1)       | UP_ARROW   | mkp(MB2)        | PAGE_UP   |
 | LSHFT | trans    | trans   | LG(DOWN_ARROW) | LA(DOWN_ARROW)  | LG(LS(S)) | 中心 | LC(T) | LC(PAGE_DOWN) | LEFT_ARROW     | DOWN_ARROW | RIGHT_ARROW     | PAGE_DOWN |
 | LCTRL | trans    | trans   | trans          | trans           | trans 🔵  | 中心 | trans | trans         |                |            | trans           | END       |
@@ -77,21 +77,21 @@
 
 ### Num_Scroll 実配列（物理配置）
 
-| 小    | 薬    | 中       | 人       | 人       | 親    | 中心 | 親      | 人       | 人  | 中  | 薬   | 小       |
-| ----- | ----- | -------- | -------- | -------- | ----- | :--: | ------- | -------- | --- | --- | ---- | -------- |
-| trans | trans | trans    | trans    | trans    |       | 中心 |         | LS(EQUAL) | N7  | N8  | N9   | MINUS    |
-| F13   | LS(N3) | LEFT_BRACKET | RIGHT_BRACKET | LS(SEMICOLON) |       | 中心 |         | EQUAL    | N4  | N5  | N6   | SEMICOLON |
-| trans | LS(MINUS) | GRAVE | LS(GRAVE) | LS(BACKSLASH) | trans | 中心 |         | LS(N8)   | N1  | N2  | N3   | N0       |
-| LCTRL | trans | trans    | trans    | trans    | trans | 中心 | BSPC    | ENTER 🔵 |     |     | FSLH | LS(MINUS) |
+| 小    | 薬       | 中       | 人       | 人       | 親    | 中心 | 親    | 人       | 人  | 中  | 薬       | 小       |
+| ----- | -------- | -------- | -------- | -------- | ----- | :--: | ----- | -------- | --- | --- | -------- | -------- |
+| trans | trans    | trans    | trans    | trans    |       | 中心 |       | JP_PLUS  | N7  | N8  | N9       | JP_MINUS |
+| F13   | JP_HASH  | JP_LBRC  | JP_RBRC  | JP_COLON |       | 中心 |       | JP_EQUAL | N4  | N5  | N6       | JP_SEMI  |
+| trans | JP_UNDER | JP_GRAVE | JP_TILDE | JP_PIPE  | trans | 中心 |       | JP_AST   | N1  | N2  | N3       | COMMA    |
+| LCTRL | trans    | trans    | trans    | trans    | trans | 中心 | JP_AMPS | ENTER 🔵 | BSPC |    | N0       | JP_UNDER |
 
 ### Mac_Num_Scroll 実配列（物理配置）
 
-| 小    | 薬    | 中               | 人                | 人            | 親    | 中心 | 親     | 人               | 人  | 中  | 薬   | 小        |
-| ----- | ----- | ---------------- | ----------------- | ------------- | ----- | :--: | ------ | ---------------- | --- | --- | ---- | --------- |
-| trans | trans | trans            | trans             | trans         |       | 中心 |        | LS(EQUAL)        | N7  | N8  | N9   | MINUS     |
-| F13   | LS(N3) | LEFT_BRACKET     | RIGHT_BRACKET     | LS(SEMICOLON) |       | 中心 |        | EQUAL            | N4  | N5  | N6   | SEMICOLON |
-| trans | LS(MINUS) | GRAVE        | LS(GRAVE)         | LS(BACKSLASH) | trans | 中心 |      | LS(SINGLE_QUOTE) | N1  | N2  | N3   | N0        |
-| LCTRL | trans | trans            | trans             | trans         | trans | 中心 | BSPC   | ENTER 🔵         |     |     | FSLH | LS(MINUS) |
+| 小    | 薬        | 中               | 人                | 人            | 親    | 中心 | 親     | 人               | 人  | 中  | 薬       | 小        |
+| ----- | --------- | ---------------- | ----------------- | ------------- | ----- | :--: | ------ | ---------------- | --- | --- | -------- | --------- |
+| trans | trans     | trans            | trans             | trans         |       | 中心 |        | LS(EQUAL)        | N7  | N8  | N9       | MINUS     |
+| F13   | LS(N3)    | LS(LEFT_BRACKET) | LS(RIGHT_BRACKET) | LS(SEMICOLON) |       | 中心 |        | EQUAL            | N4  | N5  | N6       | SEMICOLON |
+| trans | LS(MINUS) | GRAVE            | LS(GRAVE)         | LS(BACKSLASH) | trans | 中心 |        | LS(N8)           | N1  | N2  | N3       | COMMA     |
+| LCTRL | trans     | trans            | trans             | trans         | trans | 中心 | LS(N7) | ENTER 🔵         | BSPC |   | N0       | LS(MINUS) |
 
 ### V_Scroll 実配列（物理配置）
 
@@ -104,14 +104,23 @@
 
 ### Settings 実配列（物理配置）
 
-| 小    | 薬    | 中    | 人    | 人    | 親      | 中心 | 親            | 人        | 人       | 中       | 薬       | 小         |
-| ----- | ----- | ----- | ----- | ----- | ------- | :--: | ------------- | --------- | -------- | -------- | -------- | ---------- |
-| trans | trans | trans | trans | trans |         | 中心 |               | BT_SEL 0  | BT_SEL 1 | BT_SEL 2 | BT_SEL 3 | BT_SEL 4   |
-| trans | trans | trans | trans | trans | trans   | 中心 | trans         | trans     | trans    | trans    | trans    | trans      |
-| trans | trans | trans | trans | trans | to(`0`) | 中心 | studio_unlock | trans     | trans    | trans    | trans    | BT_CLR     |
-| trans | trans | trans | trans | trans | to(`1`) | 中心 | bootloader    | sys_reset |          |          | trans 🔵 | BT_CLR_ALL |
+AML自動レイヤー（Auto Mouse Layer）のON/OFFを操作できます。
 
-### AML 実配列（物理配置）
+| 小           | 薬        | 中    | 人    | 人    | 親      | 中心 | 親            | 人        | 人       | 中       | 薬       | 小         |
+| ------------ | --------- | ----- | ----- | ----- | ------- | :--: | ------------- | --------- | -------- | -------- | -------- | ---------- |
+| AML ON       | AML OFF   | trans | trans | trans |         | 中心 |               | BT_SEL 0  | BT_SEL 1 | BT_SEL 2 | BT_SEL 3 | BT_SEL 4   |
+| trans        | trans     | trans | trans | trans | trans   | 中心 | trans         | trans     | trans    | trans    | trans    | trans      |
+| trans        | trans     | trans | trans | trans | to(`0`) | 中心 | studio_unlock | trans     | trans    | trans    | trans    | BT_CLR     |
+| trans        | trans     | trans | trans | trans | to(`1`) | 中心 | bootloader    | sys_reset |          |          | trans 🔵 | BT_CLR_ALL |
+
+**AML ON/OFF について:**
+- **AML ON**（Q位置）: トラックボールを動かすと自動的にAMLレイヤー（`10`）へ一時切替 (Win-Baseにリセット)
+- **AML OFF**（W位置）: 自動切替を無効化。`&lt 10 /` 等による手動アクセスは引き続き可能 (Win-Baseにリセット)
+- ※ どちらのボタンも Win-Base にリセットされます。Mac-Baseをご利用の場合は押後に `to(1)` を押してください。
+
+### AML 実配列（物理配置）　layer 10
+
+AML（Auto Mouse Layer）はトラックボール操作時に自動で有効になるレイヤーです。
 
 | 小    | 薬    | 中    | 人    | 人    | 親    | 中心 | 親    | 人    | 人       | 中       | 薬       | 小                   |
 | ----- | ----- | ----- | ----- | ----- | ----- | :--: | ----- | ----- | -------- | -------- | -------- | -------------------- |
@@ -119,3 +128,15 @@
 | trans | trans | trans | trans | trans |       | 中心 |       | trans | mkp(MB1) | mkp(MB1) | mkp(MB2) | **`8`**,RA(LA(A)) 🔵 |
 | trans | trans | trans | trans | trans | trans | 中心 | trans | trans | trans    | trans    | mkp(MB3) | trans                |
 | trans | trans | trans | trans | trans | trans | 中心 | trans | trans |          |          | trans    | trans                |
+
+### AML-Off 実配列（物理配置）　layer 11
+
+AML自動発動を無効化するフラグレイヤー。すべてのキーが `trans`（透過）で、このレイヤー自体はキー入力を変更しません。
+`input-listener` の優先度制御のみに使用します。
+
+| 小    | 薬    | 中    | 人    | 人    | 親    | 中心 | 親    | 人    | 人    | 中    | 薬    | 小    |
+| ----- | ----- | ----- | ----- | ----- | ----- | :--: | ----- | ----- | ----- | ----- | ----- | ----- |
+| trans | trans | trans | trans | trans | trans | 中心 | trans | trans | trans | trans | trans | trans |
+| trans | trans | trans | trans | trans | trans | 中心 | trans | trans | trans | trans | trans | trans |
+| trans | trans | trans | trans | trans | trans | 中心 | trans | trans | trans | trans | trans | trans |
+| trans | trans | trans | trans | trans | trans | 中心 | trans | trans | trans | trans | trans | trans |
