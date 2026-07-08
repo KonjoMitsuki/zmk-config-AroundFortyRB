@@ -30,8 +30,17 @@
     trackball_listener: trackball_listener {
         compatible = "zmk,input-listener";
         device = <&trackball>;
+        // base: X反転 → スケール → AML自動発動（レイヤー10へ一時切替、2000ms）
         input-processors = <&zip_xy_transform INPUT_TRANSFORM_X_INVERT>,
-                           <&zip_xy_scaler 1 1>;
+                           <&zip_xy_scaler 1 1>,
+                           <&zip_temp_layer_aml 10 2000>;
+
+        // レイヤー11（AML-Off フラグ）がONのとき: AML自動発動をスキップして通常カーソル
+        aml-off-layer-11 {
+            layers = <11>;
+            input-processors = <&zip_xy_transform INPUT_TRANSFORM_X_INVERT>,
+                               <&zip_xy_scaler 1 1>;
+        };
 
         // レイヤー6/7（通常の全方向スクロール）
         scroll-layer-6 {
