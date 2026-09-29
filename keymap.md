@@ -114,6 +114,7 @@ AML自動レイヤー（Auto Mouse Layer）のON/OFFを操作できます。
 | trans        | trans     | trans | trans | trans | to(`1`) | 中心 | bootloader    | sys_reset |          |          | trans 🔵 | BT_CLR_ALL |
 
 **AML ON/OFF について:**
+- Settings へ入るキーは、長押しで Settings レイヤー、1回タップで AML OFF、2回タップで AML ON に切り替わります。
 - **AML ON**（Q位置）: トラックボールを動かすと自動的にAMLレイヤー（`10`）へ一時切替 (Win-Baseにリセット)
 - **AML OFF**（W位置）: 自動切替を無効化。`&lt 10 /` 等による手動アクセスは引き続き可能 (Win-Baseにリセット)
 - ※ どちらのボタンも Win-Base にリセットされます。Mac-Baseをご利用の場合は押後に `to(1)` を押してください。

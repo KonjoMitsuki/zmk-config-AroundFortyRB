@@ -95,6 +95,14 @@
                 = <&macro_tap>, <&to 0>
                 , <&macro_tap>, <&tog 11>;
         };
+
+        aml_toggle_td: aml_toggle_td {
+            compatible = "zmk,behavior-tap-dance";
+            #binding-cells = <0>;
+            label = "AML_TOGGLE_TD";
+            tapping-term-ms = <200>;
+            bindings = <&aml_off>, <&to 0>;
+        };
     };
 
     behaviors {
@@ -145,6 +153,16 @@
             bindings = <&mo>, <&kp>;
         };
 
+        settings_hold_tap: settings_hold_tap {
+            compatible = "zmk,behavior-hold-tap";
+            label = "SETTINGS_HOLD_TAP";
+            #binding-cells = <0>;
+            tapping-term-ms = <200>;
+            flavor = "balanced";
+            quick-tap-ms = <0>;
+            bindings = <&mo 9>, <&aml_toggle_td>;
+        };
+
         scroll_up_down: behavior_sensor_rotate_mouse_wheel_up_down {
             compatible = "zmk,behavior-sensor-rotate";
             #sensor-binding-cells = <0>;
@@ -168,7 +186,7 @@
                 &kp Q                    &kp W          &kp E          &kp R                  &kp T                  &kp Y                   &kp U            &kp I             &kp O             &kp P
                 &mt_a_ctrl LCTRL A       &kp S          &lt_typ 6 D      &kp F                  &kp G                  &kp H                   &kp J            &kp K             &kp L             &lt 8 MINUS
                 &mt_z_shift LEFT_SHIFT Z &kp X          &kp C          &kp V                  &kp B                  &lt 6 PRINTSCREEN       &kp N            &kp M             &kp COMMA         &kp DOT   &lt 10 SLASH
-                &kp LCTRL                &kp LGUI       &kp LALT       &mt LSHFT LANGUAGE_1   &lt 2 SPACE            &lt 4 LANGUAGE_2        &lt_num 6 ENTER  &kp LEFT_BRACKET  &kp BSPC          &mo 9     &kp DEL
+                &kp LCTRL                &kp LGUI       &kp LALT       &mt LSHFT LANGUAGE_1   &lt 2 SPACE            &lt 4 LANGUAGE_2        &lt_num 6 ENTER  &kp LEFT_BRACKET  &kp BSPC          &settings_hold_tap     &kp DEL
             >;
         };
 
@@ -178,7 +196,7 @@
                 &kp Q                    &kp W          &kp E          &kp R                  &kp T                  &kp Y                   &kp U            &kp I             &kp O             &kp P
                 &mt_a_ctrl LCTRL A       &kp S          &lt_typ 7 D      &kp F                  &kp G                  &kp H                   &kp J            &kp K             &kp L             &lt 8 MINUS
                 &mt_z_shift LEFT_SHIFT Z &kp X          &kp C          &kp V                  &kp B                  &mac_ime                &kp N            &kp M             &kp COMMA         &kp DOT   &lt 10 SLASH
-                &kp LCTRL                &kp LEFT_ALT   &kp LEFT_GUI   &mt LSHFT LANGUAGE_1   &lt 3 SPACE            &lt 5 LANGUAGE_2        &lt_num 10 ENTER &kp LEFT_BRACKET  &kp BSPC          &mo 9     &kp DEL
+                &kp LCTRL                &kp LEFT_ALT   &kp LEFT_GUI   &mt LSHFT LANGUAGE_1   &lt 3 SPACE            &lt 5 LANGUAGE_2        &lt_num 10 ENTER &kp LEFT_BRACKET  &kp BSPC          &settings_hold_tap     &kp DEL
             >;
         };
 
