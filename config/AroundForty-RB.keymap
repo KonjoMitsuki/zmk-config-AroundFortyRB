@@ -100,7 +100,7 @@
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
             label = "AML_TOGGLE_TD";
-            tapping-term-ms = <200>;
+            tapping-term-ms = <300>;
             bindings = <&aml_off>, <&to 0>;
         };
     };
