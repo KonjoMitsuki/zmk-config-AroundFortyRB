@@ -160,7 +160,7 @@
             tapping-term-ms = <200>;
             flavor = "balanced";
             quick-tap-ms = <0>;
-            bindings = <&mo 9>, <&aml_toggle_td>;
+            bindings = <&mo 9 &aml_toggle_td>;
         };
 
         scroll_up_down: behavior_sensor_rotate_mouse_wheel_up_down {
