@@ -1,0 +1,4 @@
+interface:
+  display_name: "AroundFortyRB キーマップ相談"
+  short_description: "運指・IME・Neovim・トラックボールの競合を踏まえて配置を相談"
+  default_prompt: "Use $aroundforty-keymap-design to improve my keymap for Neovim and Japanese input."

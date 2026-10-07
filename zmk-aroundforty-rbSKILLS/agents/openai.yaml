@@ -1,0 +1,13 @@
+interface:
+  display_name: AroundFortyRB 開発
+  short_description: AroundFortyRBの実設定と物理座標を確認して安全に編集する
+  default_prompt: Use $zmk-aroundforty-rb to inspect and update my AroundFortyRB configuration.
+  icon_small: assets/icon.svg
+  icon_large: assets/icon.svg
+policy:
+  products:
+  - chatgpt
+  - codex
+  - api
+  - atlas
+  allow_implicit_invocation: true
