@@ -19,6 +19,8 @@ DEFAULT_SYMBOL_MAP = {
     "SEMICOLON": ";",
     "BACKSLASH": "\\",
     "GRAVE": "`",
+    "SINGLE_QUOTE": "'",
+    **{f"N{i}": str(i) for i in range(10)},
 }
 
 DEFAULT_SHIFT_MAP = {
@@ -42,6 +44,7 @@ DEFAULT_SHIFT_MAP = {
     "LS(EQUAL)": "+",
     "LS(SEMICOLON)": "+",
     "LS(SINGLE_QUOTE)": "*",
+    "LS(GRAVE)": "~",
 }
 
 ARG_COUNTS = {
@@ -59,6 +62,8 @@ ARG_COUNTS = {
     "sys_reset": 0,
     "studio_unlock": 0,
     "bootloader": 0,
+    "settings_hold_tap": 2,
+    "mac_settings_hold_tap": 2,
 }
 
 
@@ -127,6 +132,7 @@ def tokenize_line(line: str) -> List[str]:
 
 def parse_bindings(bind_body: str) -> List[List[Tuple[str, List[str]]]]:
     rows: List[List[Tuple[str, List[str]]]] = []
+    bind_body = re.sub(r"/\*[\s\S]*?\*/", "", bind_body)
     for line in bind_body.splitlines():
         tokens = tokenize_line(line)
         if not tokens:
@@ -216,6 +222,8 @@ def format_binding(
         layer = f"`{args[0]}`"
         tap = render_key(args[1], macro_comments, macro_overrides, symbol_map, shift_map)
         return f"**{layer}**,{tap}"
+    if beh_type == "settings":
+        return f"**`{args[0]}`**,AML切替"
 
     if beh == "mt":
         hold = render_key(args[0], macro_comments, macro_overrides, symbol_map, shift_map)
@@ -338,16 +346,33 @@ def main() -> int:
         allowed = {x.strip() for x in args.layers.split(",")}
         layers = [layer for layer in layers if layer[0] in allowed]
 
-    output_lines: List[str] = []
+    output_lines: List[str] = [
+        "# AroundFortyRB キーマップ\n",
+        "`config/AroundForty-RB.keymap` から生成した物理配置表です。WinはJIS、MacはUS配列を前提とします。\n",
+        "太字は長押し、カンマの後はタップの動作です。数字はレイヤー番号、`trans` は下位レイヤーの動作を使います。",
+        "Settingsキーは1回タップでAML自動OFF、2回タップで自動ON、長押しでSettingsです。\n",
+        "### 物理座標\n",
+        render_table(header, [[center_label if c == "CENTER" else c for c in row] for row in layout_rows]),
+        "",
+    ]
     for name, body in layers:
         rows = parse_bindings(body)
+        if [len(row) for row in rows] != [10, 10, 11, 11]:
+            raise SystemExit(f"{name}: expected 10/10/11/11 bindings, got {[len(row) for row in rows]}")
+        layer_symbol_map = {**symbol_map, **mapping.get("layer_symbol_maps", {}).get(name, {})}
+        os_name = "Mac" if name.startswith("Mac") else "Win"
+        layer_shift_map = {
+            **shift_map,
+            **mapping.get("os_shift_maps", {}).get(os_name, {}),
+            **mapping.get("layer_shift_maps", {}).get(name, {}),
+        }
         formatter = lambda b, a: format_binding(
             b,
             a,
             macro_comments,
             macro_overrides,
-            symbol_map,
-            shift_map,
+            layer_symbol_map,
+            layer_shift_map,
             custom_behaviors,
             hold_only,
         )
@@ -367,7 +392,8 @@ def main() -> int:
         return 0
 
     mode = "a" if args.append else "w"
-    Path(args.out).write_text(output, encoding="utf-8")
+    with Path(args.out).open(mode, encoding="utf-8", newline="\n") as out_file:
+        out_file.write(output)
     return 0
 
 

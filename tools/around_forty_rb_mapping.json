@@ -80,7 +80,10 @@
   "custom_behaviors": {
     "mt_a_ctrl": "mt",
     "mt_z_shift": "mt",
-    "lt_num": "lt"
+    "lt_num": "lt",
+    "lt_typ": "lt",
+    "settings_hold_tap": "settings",
+    "mac_settings_hold_tap": "settings"
   },
   "hold_only_behaviors": ["mo"],
   "macro_overrides": {
@@ -89,6 +92,18 @@
   "symbol_map": {
     "BACKSPACE": "BSPC",
     "SPACE": "SPACE"
+  },
+  "os_shift_maps": {
+    "Mac": {
+      "LS(N2)": "@",
+      "LS(N6)": "^",
+      "LS(N7)": "&",
+      "LS(N8)": "*",
+      "LS(N9)": "(",
+      "LS(N0)": ")",
+      "LS(SEMICOLON)": ":",
+      "LS(SINGLE_QUOTE)": "\""
+    }
   },
   "shift_map": {
     "LS(LEFT_BRACKET)": "{",

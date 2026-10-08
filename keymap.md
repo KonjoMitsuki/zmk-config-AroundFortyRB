@@ -1,230 +1,134 @@
-# Coordinate table: 物理座標マッピング
+# AroundFortyRB キーマップ
 
-以下のテーブルは `keymap.md` 内の物理配列テーブルに対応する座標を示します。
-各セルは `(row, col)` の形式で、行は上から `1`〜`4`、列は左から `1`〜`13` を割り当てています。
+`config/AroundForty-RB.keymap` から生成した物理配置表です。WinはJIS、MacはUS配列を前提とします。
 
-🔵 は、そのレイヤーに入るためのキーです。
+太字は長押し、カンマの後はタップの動作です。数字はレイヤー番号、`trans` は下位レイヤーの動作を使います。
+Settingsキーは1回タップでAML自動OFF、2回タップで自動ON、長押しでSettingsです。
 
-| 行 / 指 |    小 |    薬 |    中 |    人 |    人 |    親 | 中心 |    親 |    人 |     人 |     中 |     薬 |     小 |
-| ------- | ----: | ----: | ----: | ----: | ----: | ----: | :--: | ----: | ----: | -----: | -----: | -----: | -----: |
-| 1       | (1,1) | (1,2) | (1,3) | (1,4) | (1,5) | (1,6) | 中心 | (1,8) | (1,9) | (1,10) | (1,11) | (1,12) | (1,13) |
-| 2       | (2,1) | (2,2) | (2,3) | (2,4) | (2,5) | (2,6) | 中心 | (2,8) | (2,9) | (2,10) | (2,11) | (2,12) | (2,13) |
-| 3       | (3,1) | (3,2) | (3,3) | (3,4) | (3,5) | (3,6) | 中心 | (3,8) | (3,9) | (3,10) | (3,11) | (3,12) | (3,13) |
-| 4       | (4,1) | (4,2) | (4,3) | (4,4) | (4,5) | (4,6) | 中心 | (4,8) | (4,9) | (4,10) | (4,11) | (4,12) | (4,13) |
+### 物理座標
 
-# Win-Base 実配列（物理配置）
+| 小 | 薬 | 中 | 人 | 人 | 親 | 中心 | 親 | 人 | 人 | 中 | 薬 | 小 |
+| --- | --- | --- | --- | --- | --- | :--: | --- | --- | --- | --- | --- | --- |
+| P1C1 | P1C2 | P1C3 | P1C4 | P1C5 |  | 中心 |  | P1C6 | P1C7 | P1C8 | P1C9 | P1C10 |
+| P2C1 | P2C2 | P2C3 | P2C4 | P2C5 |  | 中心 |  | P2C6 | P2C7 | P2C8 | P2C9 | P2C10 |
+| P3C1 | P3C2 | P3C3 | P3C4 | P3C5 | P3C6 | 中心 | P4C8 | P3C7 | P3C8 | P3C9 | P3C10 | P3C11 |
+| P4C1 | P4C2 | P4C3 | P4C4 | P4C5 | P4C6 | 中心 | P4C9 | P4C7 |  |  | P4C10 | P4C11 |
 
-以下は `Win-Base` レイヤーの、プログラム上の位置を現実のキーボード配列に並べ替えた表です。
+### Win-Base Physical Layout
 
-- 表記ルール:
-  - 長押しと単押しで挙動が変わるキーは「長押し,単押し」の順で記載します。長押しで入力されるものは太字にします。
-  - レイヤー番号は`で囲みます（例: `8``）。
-  - 左右分割キーボードのため中央を示す列を追加しています。
+| 小 | 薬 | 中 | 人 | 人 | 親 | 中心 | 親 | 人 | 人 | 中 | 薬 | 小 |
+| --- | --- | --- | --- | --- | --- | :--: | --- | --- | --- | --- | --- | --- |
+| Q | W | E | R | T |  | 中心 |  | Y | U | I | O | P |
+| **LCTRL**,A | S | **`6`**,D | F | G |  | 中心 |  | H | J | K | L | **`8`**,- |
+| **LEFT_SHIFT**,Z | X | C | V | B | **`6`**,PRINTSCREEN | 中心 | @ | N | M | , | . | **`10`**,/ |
+| LCTRL | LGUI | LALT | **LSHFT**,LANGUAGE_1 | **`2`**,SPACE | **`4`**,LANGUAGE_2 | 中心 | BSPC | **`6`**,ENTER |  |  | **`9`**,AML切替 | DEL |
 
-| 小               | 薬   | 中        | 人                   | 人            | 親                  | 中心 | 親   | 人            | 人  | 中  | 薬        | 小            |
-| ---------------- | ---- | --------- | -------------------- | ------------- | ------------------- | :--: | ---- | ------------- | --- | --- | --------- | ------------- |
-| Q                | W    | E         | R                    | T             |                     | 中心 |      | Y             | U   | I   | O         | P             |
-| **LCTRL**,A      | S    | **`6`**,D | F                    | G             |                     | 中心 |      | H             | J   | K   | L         | **`8`**,MINUS |
-| **LEFT_SHIFT**,Z | X    | C         | V                    | B             | **`6`**,PRINTSCREEN | 中心 | [    | N             | M   | ,   | .         | **`10`**,/    |
-| LCTRL            | LGUI | LALT      | **LSHFT**,LANGUAGE_1 | **`2`**,SPACE | **`4`**,LANGUAGE_2  | 中心 | BSPC | **`6`**,ENTER |     |     | **`9`**   | DEL           |
+### Mac-Base Physical Layout
 
-（注）左側が小指列、右側が小指列になるよう物理配列に配置しています。中心列は視認用です。
+| 小 | 薬 | 中 | 人 | 人 | 親 | 中心 | 親 | 人 | 人 | 中 | 薬 | 小 |
+| --- | --- | --- | --- | --- | --- | :--: | --- | --- | --- | --- | --- | --- |
+| Q | W | E | R | T |  | 中心 |  | Y | U | I | O | P |
+| **LCTRL**,A | S | **`7`**,D | F | G |  | 中心 |  | H | J | K | L | **`8`**,- |
+| **LEFT_SHIFT**,Z | X | C | V | B | mac_ime | 中心 | [ | N | M | , | . | **`10`**,/ |
+| LCTRL | LEFT_ALT | LEFT_GUI | **LSHFT**,LANGUAGE_1 | **`3`**,SPACE | **`5`**,LANGUAGE_2 | 中心 | BSPC | **`7`**,ENTER |  |  | **`12`**,AML切替 | DEL |
 
-### Mac-Base 実配列（物理配置）
+### Win-Fnc Physical Layout
 
-| 小               | 薬       | 中        | 人                   | 人            | 親                 | 中心 | 親   | 人             | 人  | 中  | 薬        | 小            |
-| ---------------- | -------- | --------- | -------------------- | ------------- | ------------------ | :--: | ---- | -------------- | --- | --- | --------- | ------------- |
-| Q                | W        | E         | R                    | T             |                    | 中心 |      | Y              | U   | I   | O         | P             |
-| **LCTRL**,A      | S        | **`7`**,D | F                    | G             |                    | 中心 |      | H              | J   | K   | L         | **`8`**,MINUS |
-| **LEFT_SHIFT**,Z | X        | C         | V                    | B             | mac_ime            | 中心 | [    | N              | M   | ,   | .         | **`10`**,/    |
-| LCTRL            | LEFT_ALT | LEFT_GUI  | **LSHFT**,LANGUAGE_1 | **`3`**,SPACE | **`5`**,LANGUAGE_2 | 中心 | BSPC | **`10`**,ENTER |     |     | **`9`**   | DEL           |
+| 小 | 薬 | 中 | 人 | 人 | 親 | 中心 | 親 | 人 | 人 | 中 | 薬 | 小 |
+| --- | --- | --- | --- | --- | --- | :--: | --- | --- | --- | --- | --- | --- |
+| LC(A) | LC(X) | LC(C) | LC(V) | LC(F) |  | 中心 |  | < | > | ^ | % | ¥ |
+| TAB | LEFT_ALT | LS(TAB) | mkp(MB1) | mkp(MB2) |  | 中心 |  | ( | ) | @ | & | " |
+| LEFT_SHIFT | trans | trans | swapper | mkp(MB3) | trans | 中心 | trans | [ | ] | ! | ? | ' |
+| LCTRL | trans | trans | trans | trans | trans | 中心 | BSPC | trans |  |  | $ | # |
 
-### Win-Fnc 実配列（物理配置）
+### Mac-Fnc Physical Layout
 
-| 小             | 薬       | 中      | 人       | 人       | 親    | 中心 | 親        | 人      | 人      | 中       | 薬       | 小      |
-| -------------- | -------- | ------- | -------- | -------- | ----- | :--: | --------- | ------- | ------- | -------- | -------- | ------- |
-| LC(A)          | LC(X)    | LC(C)   | LC(V)    | LC(F)    |       | 中心 |           | JP_LT   | JP_GT   | JP_CARET | JP_PRCNT | JP_YEN  |
-| TAB            | LEFT_ALT | LS(TAB) | mkp(MB1) | mkp(MB2) |       | 中心 |           | JP_LPAR | JP_RPAR | JP_AT    | JP_AMPS  | JP_DQT  |
-| **LEFT_SHIFT** | trans    | trans   | swapper  | mkp(MB3) | trans | 中心 | trans     | JP_LBKT | JP_RBKT | JP_EXCL  | JP_QMARK | JP_SQT  |
-| LCTRL          | trans    | trans   | trans    | trans 🔵 | trans | 中心 | BACKSPACE | trans   |         |          | JP_DLLR  | JP_HASH |
+| 小 | 薬 | 中 | 人 | 人 | 親 | 中心 | 親 | 人 | 人 | 中 | 薬 | 小 |
+| --- | --- | --- | --- | --- | --- | :--: | --- | --- | --- | --- | --- | --- |
+| LG(A) | LG(X) | LG(C) | LG(V) | LG(F) |  | 中心 |  | < | > | ^ | % | \ |
+| TAB | LEFT_GUI | LS(TAB) | mkp(MB1) | mkp(MB2) |  | 中心 |  | * | ( | @ | & | " |
+| LEFT_SHIFT | trans | trans | swapper | mkp(MB3) | LG(R) | 中心 | trans | [ | ] | ! | ? | ' |
+| LCTRL | trans | trans | trans | trans | trans | 中心 | BSPC | trans |  |  | $ | # |
 
-### Mac-Fnc 実配列（物理配置）
+### Win-Common Physical Layout
 
-| 小             | 薬       | 中      | 人       | 人       | 親    | 中心 | 親        | 人           | 人            | 中     | 薬        | 小               |
-| -------------- | -------- | ------- | -------- | -------- | ----- | :--: | --------- | ------------ | ------------- | ------ | --------- | ---------------- |
-| LG(A)          | LG(X)    | LG(C)   | LG(V)    | LG(F)    |       | 中心 |           | LS(COMMA)    | LS(DOT)       | LS(N6) | LS(N5)    | BACKSLASH        |
-| TAB            | LEFT_GUI | LS(TAB) | mkp(MB1) | mkp(MB2) |       | 中心 |           | LS(N8)       | LS(N9)        | LS(N2) | LS(N7)    | LS(SINGLE_QUOTE) |
-| **LEFT_SHIFT** | trans    | trans   | swapper  | mkp(MB3) | LG(R) | 中心 | trans     | LEFT_BRACKET | RIGHT_BRACKET | LS(N1) | LS(SLASH) | SINGLE_QUOTE     |
-| LCTRL          | trans    | trans   | trans    | trans 🔵 | trans | 中心 | BACKSPACE | trans        |               |        | LS(N4)    | LS(N3)           |
+| 小 | 薬 | 中 | 人 | 人 | 親 | 中心 | 親 | 人 | 人 | 中 | 薬 | 小 |
+| --- | --- | --- | --- | --- | --- | :--: | --- | --- | --- | --- | --- | --- |
+| ESC | trans | trans | LG(UP_ARROW) | LA(UP_ARROW) |  | 中心 |  | LC(W) | LA(LEFT_ARROW) | mkp(MB3) | LA(RIGHT_ARROW) | HOME |
+| TAB | LEFT_ALT | LS(TAB) | LG(LEFT_ARROW) | LG(RIGHT_ARROW) |  | 中心 |  | LC(PAGE_UP) | mkp(MB1) | UP_ARROW | mkp(MB2) | PAGE_UP |
+| LSHFT | trans | trans | LG(DOWN_ARROW) | LA(DOWN_ARROW) | LG(LS(S)) | 中心 | LC(T) | LC(PAGE_DOWN) | LEFT_ARROW | DOWN_ARROW | RIGHT_ARROW | PAGE_DOWN |
+| LCTRL | trans | trans | trans | trans | trans | 中心 | trans | trans |  |  | trans | END |
 
-### Win-Common 実配列（物理配置）
+### Mac-Common Physical Layout
 
-| 小    | 薬       | 中      | 人             | 人              | 親        | 中心 | 親    | 人            | 人             | 中         | 薬              | 小        |
-| ----- | -------- | ------- | -------------- | --------------- | --------- | :--: | ----- | ------------- | -------------- | ---------- | --------------- | --------- |
-| ESC   | trans    | trans   | LG(UP_ARROW)   | LA(UP_ARROW)    | LC(W)     | 中心 |       | LC(W)         | LA(LEFT_ARROW) | mkp(MB3)   | LA(RIGHT_ARROW) | HOME      |
-| TAB   | LEFT_ALT | LS(TAB) | LG(LEFT_ARROW) | LG(RIGHT_ARROW) |           | 中心 |       | LC(PAGE_UP)   | mkp(MB1)       | UP_ARROW   | mkp(MB2)        | PAGE_UP   |
-| LSHFT | trans    | trans   | LG(DOWN_ARROW) | LA(DOWN_ARROW)  | LG(LS(S)) | 中心 | LC(T) | LC(PAGE_DOWN) | LEFT_ARROW     | DOWN_ARROW | RIGHT_ARROW     | PAGE_DOWN |
-| LCTRL | trans    | trans   | trans          | trans           | trans 🔵  | 中心 | trans | trans         |                |            | trans           | END       |
+| 小 | 薬 | 中 | 人 | 人 | 親 | 中心 | 親 | 人 | 人 | 中 | 薬 | 小 |
+| --- | --- | --- | --- | --- | --- | :--: | --- | --- | --- | --- | --- | --- |
+| ESC | trans | trans | LC(UP_ARROW) | LG(UP_ARROW) |  | 中心 |  | LG(W) | LG(LEFT_ARROW) | mkp(MB3) | LG(RIGHT_ARROW) | HOME |
+| TAB | LEFT_GUI | LS(TAB) | LC(LEFT_ARROW) | LC(RIGHT_ARROW) |  | 中心 |  | LC(TAB) | mkp(MB1) | UP_ARROW | mkp(MB2) | PAGE_UP |
+| LSHFT | trans | trans | LC(DOWN_ARROW) | LG(DOWN_ARROW) | LG(LS(N4)) | 中心 | LG(T) | LS(LC(TAB)) | LEFT_ARROW | DOWN_ARROW | RIGHT_ARROW | PAGE_DOWN |
+| LCTRL | trans | trans | trans | trans | trans | 中心 | trans | trans |  |  | trans | END |
 
-### Mac-Common 実配列（物理配置）
+### Num_Scroll Physical Layout
 
-| 小    | 薬       | 中      | 人             | 人              | 親         | 中心 | 親    | 人          | 人             | 中         | 薬              | 小        |
-| ----- | -------- | ------- | -------------- | --------------- | ---------- | :--: | ----- | ----------- | -------------- | ---------- | --------------- | --------- |
-| ESC   | trans    | trans   | LC(UP_ARROW)   | LG(UP_ARROW)    |            | 中心 |       | LG(W)       | LG(LEFT_ARROW) | mkp(MB3)   | LG(RIGHT_ARROW) | HOME      |
-| TAB   | LEFT_GUI | LS(TAB) | LC(LEFT_ARROW) | LC(RIGHT_ARROW) |            | 中心 |       | LC(TAB)     | mkp(MB1)       | UP_ARROW   | mkp(MB2)        | PAGE_UP   |
-| LSHFT | trans    | trans   | LC(DOWN_ARROW) | LG(DOWN_ARROW)  | LG(LS(N4)) | 中心 | LG(T) | LS(LC(TAB)) | LEFT_ARROW     | DOWN_ARROW | RIGHT_ARROW     | PAGE_DOWN |
-| LCTRL | trans    | trans   | trans          | trans           | trans 🔵   | 中心 | trans | trans       |                |            | trans           | END       |
+| 小 | 薬 | 中 | 人 | 人 | 親 | 中心 | 親 | 人 | 人 | 中 | 薬 | 小 |
+| --- | --- | --- | --- | --- | --- | :--: | --- | --- | --- | --- | --- | --- |
+| trans | trans | trans | trans | trans |  | 中心 |  | + | 7 | 8 | 9 | - |
+| F13 | # | { | } | : |  | 中心 |  | = | 4 | 5 | 6 | ; |
+| trans | _ | &#96; | ~ | &#124; | trans | 中心 | & | * | 1 | 2 | 3 | , |
+| LCTRL | trans | trans | trans | trans | trans | 中心 | BSPC | ENTER |  |  | 0 | _ |
 
-### Num_Scroll 実配列（物理配置）
+### Mac_Num_Scroll Physical Layout
 
-| 小    | 薬       | 中       | 人       | 人       | 親    | 中心 | 親       | 人       | 人  | 中  | 薬       | 小       |
-| ----- | -------- | -------- | -------- | -------- | ----- | :--: | -------- | -------- | --- | --- | -------- | -------- |
-| trans | trans    | trans    | trans    | trans    |       | 中心 |          | JP_PLUS  | N7  | N8  | N9       | JP_MINUS |
-| F13   | JP_HASH  | JP_LBRC  | JP_RBRC  | JP_COLON |       | 中心 |          | JP_EQUAL | N4  | N5  | N6       | JP_SEMI  |
-| trans | JP_UNDER | JP_GRAVE | JP_TILDE | JP_PIPE  | trans | 中心 | JP_AMPS  | JP_AST   | N1  | N2  | N3       | COMMA    |
-| LCTRL | trans    | trans    | trans    | trans    | trans | 中心 | BSPC     | ENTER 🔵 |     |     | N0       | JP_UNDER |
+| 小 | 薬 | 中 | 人 | 人 | 親 | 中心 | 親 | 人 | 人 | 中 | 薬 | 小 |
+| --- | --- | --- | --- | --- | --- | :--: | --- | --- | --- | --- | --- | --- |
+| trans | trans | trans | trans | trans |  | 中心 |  | + | 7 | 8 | 9 | - |
+| F13 | # | { | } | : |  | 中心 |  | = | 4 | 5 | 6 | ; |
+| trans | _ | &#96; | ~ | &#124; | trans | 中心 | & | * | 1 | 2 | 3 | , |
+| LCTRL | trans | trans | trans | trans | trans | 中心 | BSPC | ENTER |  |  | 0 | _ |
 
-### Mac_Num_Scroll 実配列（物理配置）
+### V_Scroll Physical Layout
 
-| 小    | 薬        | 中               | 人                | 人            | 親    | 中心 | 親       | 人               | 人  | 中  | 薬       | 小        |
-| ----- | --------- | ---------------- | ----------------- | ------------- | ----- | :--: | -------- | ---------------- | --- | --- | -------- | --------- |
-| trans | trans     | trans            | trans             | trans         |       | 中心 |          | LS(EQUAL)        | N7  | N8  | N9       | MINUS     |
-| F13   | LS(N3)    | LS(LEFT_BRACKET) | LS(RIGHT_BRACKET) | LS(SEMICOLON) |       | 中心 |          | EQUAL            | N4  | N5  | N6       | SEMICOLON |
-| trans | LS(MINUS) | GRAVE            | LS(GRAVE)         | LS(BACKSLASH) | trans | 中心 | LS(N7)   | LS(N8)           | N1  | N2  | N3       | COMMA     |
-| LCTRL | trans     | trans            | trans             | trans         | trans | 中心 | BSPC     | ENTER 🔵         |     |     | N0       | LS(MINUS) |
-
-### V_Scroll 実配列（物理配置）
-
-| 小    | 薬    | 中    | 人    | 人    | 親    | 中心 | 親    | 人    | 人    | 中    | 薬         | 小       |
-| ----- | ----- | ----- | ----- | ----- | ----- | :--: | ----- | ----- | ----- | ----- | ---------- | -------- |
-| trans | trans | trans | trans | trans |       | 中心 |       | trans | trans | trans | trans      | trans    |
-| trans | trans | trans | trans | trans |       | 中心 |       | trans | trans | trans | mo(`6`) 🔵 | trans 🔵 |
-| trans | trans | trans | trans | trans | trans | 中心 | trans | trans | trans | trans | trans      | trans    |
-| trans | trans | trans | trans | trans | trans | 中心 | trans | trans |       |       | trans      | trans    |
-
-### Settings 実配列（物理配置）
-
-AML自動レイヤー（Auto Mouse Layer）のON/OFFを操作できます。
-
-| 小           | 薬        | 中    | 人    | 人    | 親      | 中心 | 親            | 人        | 人       | 中       | 薬       | 小         |
-| ------------ | --------- | ----- | ----- | ----- | ------- | :--: | ------------- | --------- | -------- | -------- | -------- | ---------- |
-| AML ON       | AML OFF   | trans | trans | trans |         | 中心 |               | BT_SEL 0  | BT_SEL 1 | BT_SEL 2 | BT_SEL 3 | BT_SEL 4   |
-| trans        | trans     | trans | trans | trans | trans   | 中心 | trans         | trans     | trans    | trans    | trans    | trans      |
-| trans        | trans     | trans | trans | trans | to(`0`) | 中心 | studio_unlock | trans     | trans    | trans    | trans    | BT_CLR     |
-| trans        | trans     | trans | trans | trans | to(`1`) | 中心 | bootloader    | sys_reset |          |          | trans 🔵 | BT_CLR_ALL |
-
-**AML ON/OFF について:**
-- Settings へ入るキーは、長押しで Settings レイヤー、1回タップで AML OFF、2回タップで AML ON に切り替わります。
-- **AML ON**（Q位置）: トラックボールを動かすと自動的にAMLレイヤー（`10`）へ一時切替 (Win-Baseにリセット)
-- **AML OFF**（W位置）: 自動切替を無効化。`&lt 10 /` 等による手動アクセスは引き続き可能 (Win-Baseにリセット)
-- ※ どちらのボタンも Win-Base にリセットされます。Mac-Baseをご利用の場合は押後に `to(1)` を押してください。
-
-### AML 実配列（物理配置）　layer 10
-
-AML（Auto Mouse Layer）はトラックボール操作時に自動で有効になるレイヤーです。
-
-| 小    | 薬    | 中    | 人    | 人    | 親    | 中心 | 親    | 人    | 人       | 中       | 薬       | 小                   |
-| ----- | ----- | ----- | ----- | ----- | ----- | :--: | ----- | ----- | -------- | -------- | -------- | -------------------- |
-| trans | trans | trans | trans | trans |       | 中心 |       | trans | trans    | trans    | SCRL_UP  | trans                |
-| trans | trans | trans | trans | trans |       | 中心 |       | trans | mkp(MB1) | mkp(MB1) | mkp(MB2) | **`8`**,RA(LA(A)) 🔵 |
-| trans | trans | trans | trans | trans | trans | 中心 | trans | trans | trans    | trans    | mkp(MB3) | trans                |
-| trans | trans | trans | trans | trans | trans | 中心 | trans | trans |          |          | trans    | trans                |
-
-### AML-Off 実配列（物理配置）　layer 11
-
-AML自動発動を無効化するフラグレイヤー。すべてのキーが `trans`（透過）で、このレイヤー自体はキー入力を変更しません。
-`input-listener` の優先度制御のみに使用します。
-
-| 小    | 薬    | 中    | 人    | 人    | 親    | 中心 | 親    | 人    | 人    | 中    | 薬    | 小    |
-| ----- | ----- | ----- | ----- | ----- | ----- | :--: | ----- | ----- | ----- | ----- | ----- | ----- |
+| 小 | 薬 | 中 | 人 | 人 | 親 | 中心 | 親 | 人 | 人 | 中 | 薬 | 小 |
+| --- | --- | --- | --- | --- | --- | :--: | --- | --- | --- | --- | --- | --- |
+| trans | trans | trans | trans | trans |  | 中心 |  | trans | trans | trans | trans | trans |
+| trans | trans | trans | trans | trans |  | 中心 |  | trans | trans | trans | **`6`** | trans |
 | trans | trans | trans | trans | trans | trans | 中心 | trans | trans | trans | trans | trans | trans |
+| trans | trans | trans | trans | trans | trans | 中心 | trans | trans |  |  | trans | trans |
+
+### Settings Physical Layout
+
+| 小 | 薬 | 中 | 人 | 人 | 親 | 中心 | 親 | 人 | 人 | 中 | 薬 | 小 |
+| --- | --- | --- | --- | --- | --- | :--: | --- | --- | --- | --- | --- | --- |
+| to(`0`) | aml_toggle_td | trans | trans | trans |  | 中心 |  | bt(BT_SEL 0) | bt(BT_SEL 1) | bt(BT_SEL 2) | bt(BT_SEL 3) | bt(BT_SEL 4) |
+| trans | trans | trans | trans | trans |  | 中心 |  | trans | trans | trans | trans | trans |
+| trans | trans | trans | trans | trans | to(`0`) | 中心 | studio_unlock | trans | trans | trans | trans | bt(BT_CLR) |
+| trans | trans | trans | trans | trans | to(`1`) | 中心 | bootloader | sys_reset |  |  | trans | bt(BT_CLR_ALL) |
+
+### AML Physical Layout
+
+| 小 | 薬 | 中 | 人 | 人 | 親 | 中心 | 親 | 人 | 人 | 中 | 薬 | 小 |
+| --- | --- | --- | --- | --- | --- | :--: | --- | --- | --- | --- | --- | --- |
+| trans | trans | trans | trans | trans |  | 中心 |  | trans | trans | trans | msc(SCRL_UP) | trans |
+| trans | trans | trans | trans | trans |  | 中心 |  | trans | mkp(MB1) | mkp(MB1) | mkp(MB2) | **`8`**,RA(LA(A)) |
+| trans | trans | trans | trans | trans | trans | 中心 | trans | trans | trans | trans | mkp(MB3) | trans |
+| trans | trans | trans | trans | trans | trans | 中心 | trans | trans |  |  | trans | trans |
+
+### AML-Off Physical Layout
+
+| 小 | 薬 | 中 | 人 | 人 | 親 | 中心 | 親 | 人 | 人 | 中 | 薬 | 小 |
+| --- | --- | --- | --- | --- | --- | :--: | --- | --- | --- | --- | --- | --- |
+| trans | trans | trans | trans | trans |  | 中心 |  | trans | trans | trans | trans | trans |
+| trans | trans | trans | trans | trans |  | 中心 |  | trans | trans | trans | trans | trans |
 | trans | trans | trans | trans | trans | trans | 中心 | trans | trans | trans | trans | trans | trans |
-| trans | trans | trans | trans | trans | trans | 中心 | trans | trans | trans | trans | trans | trans |
-| trans | trans | trans | trans | trans | trans | 中心 | trans | trans | trans | trans | trans | trans |
+| trans | trans | trans | trans | trans | trans | 中心 | trans | trans |  |  | trans | trans |
 
-# 実際の入力記号による物理配置レイヤー（ビジュアル表示用）
+### Mac-Settings Physical Layout
 
-プログラム上のキーコード（`JP_PLUS` など）の代わりに、実際にキーボードから入力される記号文字（`+` など）で表記し、各種ショートカットキーを分かりやすい日本語に翻訳したレイヤーマップです。
+| 小 | 薬 | 中 | 人 | 人 | 親 | 中心 | 親 | 人 | 人 | 中 | 薬 | 小 |
+| --- | --- | --- | --- | --- | --- | :--: | --- | --- | --- | --- | --- | --- |
+| to(`1`) | mac_aml_toggle_td | trans | trans | trans |  | 中心 |  | bt(BT_SEL 0) | bt(BT_SEL 1) | bt(BT_SEL 2) | bt(BT_SEL 3) | bt(BT_SEL 4) |
+| trans | trans | trans | trans | trans |  | 中心 |  | trans | trans | trans | trans | trans |
+| trans | trans | trans | trans | trans | to(`0`) | 中心 | studio_unlock | trans | trans | trans | trans | bt(BT_CLR) |
+| trans | trans | trans | trans | trans | to(`1`) | 中心 | bootloader | sys_reset |  |  | trans | bt(BT_CLR_ALL) |
 
-### Win-Base (入力記号表示)
-
-| 小               | 薬   | 中        | 人                   | 人            | 親                  | 中心 | 親   | 人            | 人  | 中  | 薬        | 小          |
-| ---------------- | ---- | --------- | -------------------- | ------------- | ------------------- | :--: | ---- | ------------- | --- | --- | --------- | ----------- |
-| Q                | W    | E         | R                    | T             |                     | 中心 |      | Y             | U   | I   | O         | P           |
-| **Ctrl**,A       | S    | **`6`**,D | F                    | G             |                     | 中心 |      | H             | J   | K   | L         | **`8`**,-   |
-| **Shift**,Z      | X    | C         | V                    | B             | **`6`**,PrintScreen | 中心 | [    | N             | M   | ,   | .         | **`10`**,/  |
-| Ctrl             | Win  | Alt       | **Shift**,無変換     | **`2`**,SPACE | **`4`**,変換        | 中心 | BSPC | **`6`**,ENTER |     |     | **`9`**   | DEL         |
-
-### Mac-Base (入力記号表示)
-
-| 小               | 薬       | 中        | 人                   | 人            | 親                 | 中心 | 親   | 人             | 人  | 中  | 薬        | 小          |
-| ---------------- | -------- | --------- | -------------------- | ------------- | ------------------ | :--: | ---- | -------------- | --- | --- | --------- | ----------- |
-| Q                | W        | E         | R                    | T             |                    | 中心 |      | Y              | U   | I   | O         | P           |
-| **Ctrl**,A       | S        | **`7`**,D | F                    | G             |                    | 中心 |      | H              | J   | K   | L         | **`8`**,-   |
-| **Shift**,Z      | X        | C         | V                    | B             | 英数/かな切替       | 中心 | [    | N              | M   | ,   | .         | **`10`**,/  |
-| Ctrl             | Alt      | Cmd       | **Shift**,英数       | **`3`**,SPACE | **`5`**,かな       | 中心 | BSPC | **`10`**,ENTER |     |     | **`9`**   | DEL         |
-
-### Win-Fnc (入力記号表示)
-
-| 小             | 薬   | 中      | 人       | 人       | 親    | 中心 | 親        | 人    | 人    | 中    | 薬    | 小    |
-| -------------- | ---- | ------- | -------- | -------- | ----- | :--: | --------- | ----- | ----- | ----- | ----- | ----- |
-| 全選択         | カット | コピー  | 貼り付け | 検索     |       | 中心 |           | <     | >     | ^     | %     | ¥     |
-| TAB            | Alt  | Shift+TAB| 左クリック| 右クリック|       | 中心 |           | (     | )     | @     | &     | "     |
-| **Shift**      | trans| trans   | タスク切替| 中クリック| trans | 中心 | trans     | [     | ]     | !     | ?     | '     |
-| Ctrl           | trans| trans   | trans    | trans 🔵 | trans | 中心 | BACKSPACE | trans |       |       | $     | #     |
-
-### Mac-Fnc (入力記号表示)
-
-| 小             | 薬   | 中      | 人       | 人       | 親    | 中心 | 親        | 人    | 人    | 中    | 薬    | 小    |
-| -------------- | ---- | ------- | -------- | -------- | ----- | :--: | --------- | ----- | ----- | ----- | ----- | ----- |
-| 全選択         | カット | コピー  | 貼り付け | 検索     |       | 中心 |           | <     | >     | ^     | %     | \     |
-| TAB            | Cmd  | Shift+TAB| 左クリック| 右クリック|       | 中心 |           | *     | (     | @     | &     | "     |
-| **Shift**      | trans| trans   | タスク切替| 中クリック| 更新  | trans | trans     | [     | ]     | !     | ?     | '     |
-| Ctrl           | trans| trans   | trans    | trans 🔵 | trans | 中心 | BACKSPACE | trans |       |       | $     | #     |
-
-### Win-Common (入力記号表示)
-
-| 小    | 薬    | 中       | 人             | 人             | 親            | 中心 | 親      | 人           | 人         | 中         | 薬         | 小        |
-| ----- | ----- | -------- | -------------- | -------------- | ------------- | :--: | ------- | ------------ | ---------- | ---------- | ---------- | --------- |
-| ESC   | trans | trans    | ウィンドウ最大 | Alt+↑          | タブを閉じる  | 中心 |         | タブを閉じる | 戻る(Alt+←) | 中クリック | 進む(Alt+→) | HOME      |
-| TAB   | Alt   | Shift+TAB| 左半分寄せ     | 右半分寄せ     |               | 中心 |         | 左タブ移動   | 左クリック | ↑          | 右クリック | PAGE_UP   |
-| Shift | trans | trans    | ウィンドウ最小 | Alt+↓          | 範囲SS(Win+S) | 中心 | 新規タブ| 右タブ移動   | ←          | ↓          | →          | PAGE_DOWN |
-| Ctrl  | trans | trans    | trans          | trans          | trans 🔵      | 中心 | trans   | trans        |            |            | trans      | END       |
-
-### Mac-Common (入力記号表示)
-
-| 小    | 薬    | 中       | 人             | 人             | 親            | 中心 | 親      | 人           | 人         | 中         | 薬         | 小        |
-| ----- | ----- | -------- | -------------- | -------------- | ------------- | :--: | ------- | ------------ | ---------- | ---------- | ---------- | --------- |
-| ESC   | trans | trans    | Mssn Ctrl(↑)   | Cmd+↑          |               | 中心 |         | タブを閉じる | 行頭へ移動 | 中クリック | 行末へ移動 | HOME      |
-| TAB   | Cmd   | Shift+TAB| 左スペース移動 | 右スペース移動 |               | 中心 |         | 右タブ移動   | 左クリック | ↑          | 右クリック | PAGE_UP   |
-| Shift | trans | trans    | App Expose(↓)  | Cmd+↓          | 範囲SS(Cmd+4) | 中心 | 新規タブ| 左タブ移動   | ←          | ↓          | →          | PAGE_DOWN |
-| Ctrl  | trans | trans    | trans          | trans          | trans 🔵      | 中心 | trans   | trans        |            |            | trans      | END       |
-
-### Num_Scroll (入力記号表示)
-
-| 小    | 薬   | 中   | 人   | 人   | 親    | 中心 | 親   | 人   | 人  | 中  | 薬  | 小   |
-| ----- | ---- | ---- | ---- | ---- | ----- | :--: | ---- | ---- | --- | --- | --- | ---- |
-| trans | trans| trans| trans| trans|       | 中心 |      | +    | 7   | 8   | 9   | -    |
-| F13   | #    | [    | ]    | :    |       | 中心 |      | =    | 4   | 5   | 6   | ;    |
-| trans | _    | \`   | ~    | \|   | trans | 中心 |&    | *    | 1   | 2   | 3   | ,    |
-| LCTRL | trans| trans| trans| trans| trans | 中心 | BSPC | ENTER 🔵 | |  | 0   | _    |
-
-### Mac_Num_Scroll (入力記号表示)
-
-| 小    | 薬   | 中    | 人   | 人   | 親    | 中心 | 親   | 人        | 人  | 中  | 薬  | 小   |
-| ----- | ---- | ----- | ---- | ---- | ----- | :--: | ---- | --------- | --- | --- | --- | ---- |
-| trans | trans| trans | trans| trans|       | 中心 |      | +         | 7   | 8   | 9   | -    |
-| F13   | #    | {     | }    | :    |       | 中心 |      | =         | 4   | 5   | 6   | ;    |
-| trans | _    | \`    | ~    | \|   | trans | 中心 | &    | *         | 1   | 2   | 3   | ,    |
-| LCTRL | trans| trans | trans| trans| trans | 中心 | BSPC | ENTER 🔵  |     |     | 0   | _    |
-
-### Settings (設定機能表示)
-
-| 小             | 薬              | 中    | 人    | 人    | 親        | 中心 | 親                | 人             | 人             | 中             | 薬             | 小                   |
-| -------------- | --------------- | ----- | ----- | ----- | --------- | :--: | ----------------- | -------------- | -------------- | -------------- | -------------- | -------------------- |
-| AML自動ON(Win) | AML自動OFF      | trans | trans | trans |           | 中心 |                   | デバイス1接続  | デバイス2接続  | デバイス3接続  | デバイス4接続  | デバイス5接続        |
-| trans          | trans           | trans | trans | trans | trans     | 中心 | trans             | trans          | trans          | trans          | trans          | trans                |
-| trans          | trans           | trans | trans | trans | Winモード | 中心 | Studioロック解除  | trans          | trans          | trans          | trans          | ペアリング解除(1台)  |
-| trans          | trans           | trans | trans | trans | Macモード | 中心 | ブートローダー起動| キーボード再起動|                |                | trans 🔵       | ペアリング解除(全台) |
-
-
+generated

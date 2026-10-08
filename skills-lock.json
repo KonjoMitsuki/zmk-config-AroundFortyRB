@@ -1,0 +1,62 @@
+{
+  "version": 1,
+  "skills": {
+    "aroundforty-keymap-design": {
+      "source": "./.agents/skills/aroundforty-keymap-design",
+      "sourceType": "local",
+      "computedHash": "efa1b3748c1625f8c3a852e6a9075666934fe40b8409857b2971e326f0f92772"
+    },
+    "build-system": {
+      "source": "beriberikix/zephyr-agent-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/beriberikix/zephyr-agent-skills.git",
+      "ref": "main",
+      "skillPath": "skills/build-system/SKILL.md",
+      "computedHash": "f6e829922405e840054402873bbea211dba66bbe8733e14c07f0902d16fe32ef"
+    },
+    "connectivity-ble": {
+      "source": "beriberikix/zephyr-agent-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/beriberikix/zephyr-agent-skills.git",
+      "ref": "main",
+      "skillPath": "skills/connectivity-ble/SKILL.md",
+      "computedHash": "6670a7ffd641da3b13cff720ec6de6278aff64ff9eb17faf10bbe6660ae85ef4"
+    },
+    "devicetree": {
+      "source": "beriberikix/zephyr-agent-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/beriberikix/zephyr-agent-skills.git",
+      "ref": "main",
+      "skillPath": "skills/devicetree/SKILL.md",
+      "computedHash": "9770acf4107bebb60d1d6ec284e9082d33250832b4b721ed7a575158dbbb90f9"
+    },
+    "find-skills": {
+      "source": "vercel-labs/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/vercel-labs/skills.git",
+      "skillPath": "skills/find-skills/SKILL.md",
+      "computedHash": "913b9d37d0d54047dd65222bb8c67b2bf04e3cb87dcad1729068d7a8b2c8c396"
+    },
+    "testing-debugging": {
+      "source": "beriberikix/zephyr-agent-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/beriberikix/zephyr-agent-skills.git",
+      "ref": "main",
+      "skillPath": "skills/testing-debugging/SKILL.md",
+      "computedHash": "df47d51f0a6f9a088a490fe61de4fc0f0725d17ffae0286d814002c2f90f4b27"
+    },
+    "zmk": {
+      "source": "Fandhe-AI/agent-reference-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/Fandhe-AI/agent-reference-skills.git",
+      "ref": "main",
+      "skillPath": "skills/zmk/SKILL.md",
+      "computedHash": "11f47affec2b5c22745e1cff24dab5d1ef4e9615de398922e648adfbb4462cd0"
+    },
+    "zmk-aroundforty-rb": {
+      "source": "./.agents/skills/zmk-aroundforty-rb",
+      "sourceType": "local",
+      "computedHash": "2d1ea46c5ba6dc4d14179e4624d60f3ab91935536e0a9acc5e8d8ad700ae87ce"
+    }
+  }
+}
