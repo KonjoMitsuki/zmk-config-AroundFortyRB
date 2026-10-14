@@ -58,17 +58,17 @@
             label = "TO_LAYER_0";
         };
 
-        // Windows用入力切り替え：Alt + Grave (~)
+        // Windows用入力切り替え：Win + Space
         ime_tog: ime_toggle {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             bindings =
                 <&macro_press>,
-                <&kp LALT>,
+                <&kp LGUI>,
                 <&macro_tap>,
-                <&kp GRAVE>,
+                <&kp SPACE>,
                 <&macro_release>,
-                <&kp LALT>;
+                <&kp LGUI>;
         };
 
         // macOS用入力切り替え：Ctrl + Space
