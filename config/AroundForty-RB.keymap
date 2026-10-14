@@ -251,7 +251,7 @@
         Win-Common { // layer 4
             display-name = "Win-Common";
             bindings = <
-                &kp ESC                  &trans         &trans         &kp LG(UP_ARROW)       &kp LA(UP_ARROW)       &kp LC(W)               &kp LA(LEFT_ARROW) &mkp MB3         &kp LA(RIGHT_ARROW) &kp HOME
+                &kp ESC                  &ime_tog       &trans         &kp LG(UP_ARROW)       &kp LA(UP_ARROW)       &kp LC(W)               &kp LA(LEFT_ARROW) &mkp MB3         &kp LA(RIGHT_ARROW) &kp HOME
                 &kp TAB                  &kp LEFT_ALT   &kp LS(TAB)    &kp LG(LEFT_ARROW)     &kp LG(RIGHT_ARROW)    &kp LC(PAGE_UP)         &mkp MB1           &kp UP_ARROW     &mkp MB2            &kp PAGE_UP
                 &kp LSHFT                &trans         &trans         &kp LG(DOWN_ARROW)     &kp LA(DOWN_ARROW)     &kp LG(LS(S))           &kp LC(PAGE_DOWN)  &kp LEFT_ARROW   &kp DOWN_ARROW      &kp RIGHT_ARROW &kp PAGE_DOWN
                 &kp LCTRL                &trans         &trans         &trans                 &trans                 &trans                  &trans             &kp LC(T)        &trans              &trans        &kp END
@@ -261,7 +261,7 @@
         Mac-Common { // layer 5
             display-name = "Mac-Common";
             bindings = <
-                &kp ESC                  &trans         &trans         &kp LC(UP_ARROW)       &kp LG(UP_ARROW)       &kp LG(W)               &kp LG(LEFT_ARROW) &mkp MB3         &kp LG(RIGHT_ARROW) &kp HOME
+                &kp ESC                  &mac_ime       &trans         &kp LC(UP_ARROW)       &kp LG(UP_ARROW)       &kp LG(W)               &kp LG(LEFT_ARROW) &mkp MB3         &kp LG(RIGHT_ARROW) &kp HOME
                 &kp TAB                  &kp LEFT_GUI   &kp LS(TAB)    &kp LC(LEFT_ARROW)     &kp LC(RIGHT_ARROW)    &kp LC(TAB)             &mkp MB1           &kp UP_ARROW     &mkp MB2            &kp PAGE_UP
                 &kp LSHFT                &trans         &trans         &kp LC(DOWN_ARROW)     &kp LG(DOWN_ARROW)     &kp LG(LS(N4))          &kp LS(LC(TAB))    &kp LEFT_ARROW   &kp DOWN_ARROW      &kp RIGHT_ARROW &kp PAGE_DOWN
                 &kp LCTRL                &trans         &trans         &trans                 &trans                 &trans                  &trans             &kp LG(T)        &trans              &trans        &kp END
@@ -270,20 +270,20 @@
 
         Num_Scroll { // layer 6
             bindings = <
-                    &trans                   &trans         &trans         &trans                 &trans                 &kp JP_PLUS             &kp N7            &kp N8            &kp N9            &kp JP_MINUS
-                    &kp F13                  &kp JP_HASH         &kp JP_LBRC    &kp JP_RBRC            &kp JP_COLON           &kp JP_EQUAL            &kp N4            &kp N5            &kp N6            &kp JP_SEMI
-                    &trans                   &kp JP_UNDER         &kp JP_GRAVE   &kp JP_TILDE           &kp JP_PIPE            &trans                  &kp JP_AST        &kp N1            &kp N2            &kp N3          &kp COMMA
-                    &kp LCTRL                &trans         &trans         &trans                 &trans                 &trans                  &kp ENTER         &kp JP_AMPS       &kp BSPC          &kp N0        &kp JP_UNDER
+                    &kp F1                   &kp F2         &kp F3         &kp F4                 &kp F5                 &kp JP_PLUS             &kp N7            &kp N8            &kp N9            &kp JP_MINUS
+                    &kp F6                   &kp JP_HASH         &kp JP_LBRC    &kp JP_RBRC            &kp JP_COLON           &kp JP_EQUAL            &kp N4            &kp N5            &kp N6            &kp JP_SEMI
+                    &kp F7                   &kp JP_UNDER         &kp JP_GRAVE   &kp JP_TILDE           &kp JP_PIPE            &trans                  &kp JP_AST        &kp N1            &kp N2            &kp N3          &kp COMMA
+                    &kp LCTRL                &kp F8         &kp F9         &kp F10                &kp F11                &kp F12                 &kp ENTER         &kp JP_AMPS       &kp BSPC          &kp N0        &kp JP_UNDER
             >;
         };
 
         Mac_Num_Scroll { // layer 7
             display-name = "Mac-Num";
             bindings = <
-                    &trans                   &trans         &trans         &trans                 &trans                 &kp LS(EQUAL)           &kp N7            &kp N8            &kp N9            &kp MINUS
-                    &kp F13                  &kp LS(N3)     &kp LS(LEFT_BRACKET) &kp LS(RIGHT_BRACKET) &kp LS(SEMICOLON)  &kp EQUAL               &kp N4            &kp N5            &kp N6            &kp SEMICOLON
-                    &trans                   &kp LS(MINUS)  &kp GRAVE      &kp LS(GRAVE)          &kp LS(BACKSLASH)      &trans                  &kp LS(N8)            &kp N1         &kp N2            &kp N3          &kp COMMA
-                    &kp LCTRL                &trans         &trans         &trans                 &trans                 &trans              &kp ENTER         &kp LS(N7)        &kp BSPC          &kp N0          &kp LS(MINUS)
+                    &kp F1                   &kp F2         &kp F3         &kp F4                 &kp F5                 &kp LS(EQUAL)           &kp N7            &kp N8            &kp N9            &kp MINUS
+                    &kp F6                   &kp LS(N3)     &kp LS(LEFT_BRACKET) &kp LS(RIGHT_BRACKET) &kp LS(SEMICOLON)  &kp EQUAL               &kp N4            &kp N5            &kp N6            &kp SEMICOLON
+                    &kp F7                   &kp LS(MINUS)  &kp GRAVE      &kp LS(GRAVE)          &kp LS(BACKSLASH)      &trans                  &kp LS(N8)            &kp N1         &kp N2            &kp N3          &kp COMMA
+                    &kp LCTRL                &kp F8         &kp F9         &kp F10                &kp F11                &kp F12             &kp ENTER         &kp LS(N7)        &kp BSPC          &kp N0          &kp LS(MINUS)
             >;
         };
 
