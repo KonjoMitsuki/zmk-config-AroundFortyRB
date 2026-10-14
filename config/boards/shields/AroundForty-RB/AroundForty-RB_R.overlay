@@ -24,7 +24,7 @@
     zip_temp_layer_aml: zip_temp_layer_aml {
         compatible = "zmk,input-processor-temp-layer";
         #input-processor-cells = <2>;
-        // P1C9のスクロール上とP3C10の中クリックもAMLを維持する。
+        // R1C4のスクロール上とR3C5の中クリックもAMLを維持する。
         excluded-positions = <7 8 16 17 18 19 28 29 30>;
     };
 

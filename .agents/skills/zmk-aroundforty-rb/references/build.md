@@ -1,6 +1,6 @@
 # ビルド・静的確認・表示表
 
-確認版: 000496ebf、2026-10-07。
+確認版: 23966d9、2026-10-14。
 
 | board | shield | snippet |
 |---|---|---|
@@ -29,7 +29,7 @@ settings_resetはmatrixのfirmware生成と実機への書込みを区別する�
 
 ## 静的確認
 
-- keymap nodeからlayerを列挙する。現在12node、各42phandle binding。
+- keymap nodeからlayerを列挙する。現在13node、各42phandle binding。
 - 行は10/10/11/11。コメントを除外し、binding引数をキー数として数えない。
 - layer参照、ラベル、binding-cells、comboとexcluded indexを照合する。
 - dtsiのtransformとphysical attrsも42個あることを確認する。
@@ -37,16 +37,14 @@ settings_resetはmatrixのfirmware生成と実機への書込みを区別する�
 
 ## 表生成の注意
 
-既存references/layout.mdはDのlt_typ、settings_hold_tap、AML-Off等が古い。
-keymap.mdやhtmlも生成物なのでsource keymapより優先しない。
+`tools/zmk_keymap_physical.py`が表生成の本体。
+`tools/around_forty_rb_mapping.json`のrowsとbinding_orderを使い、
+各レイヤー42bindingをL/R座標の物理図へ並べ直す。
+`keymap-physical-template.md`とreferences/layout.mdの座標・キー対応も照合する。
+座標名を変更する際はmappingと生成ツールを同時に更新する。
 
-scripts/generate_keymap_table.pyはdisplay-nameを持つlayerのみ抽出し、
-2個以上の空白でbindingを分割する。現行6/8を落とし、
-1空白で記述されたAML-Offを誤って数える可能性がある。
-そのまま--applyでkeymap.mdを置換しない。
-
-tools/zmk_keymap_physical.pyも未登録custom behaviorやJIS表示の解釈を確認する。
-どちらもコードを読み、--helpを確認し、一時出力で12layer/42位置を照合する。
-必要ならユーザーの変更範囲内でparserを修正するか、手動で該当表を更新する。
-JIS baseのLEFT_BRACKETを印字された「[」と断定しない。
+`scripts/generate_keymap_table.py`は同じ生成ツールへの互換入口。
+`--apply`なしでは出力のみ、指定するとバックアップを作って反映する。
+一時出力で13layer/42位置を確認してからkeymap.mdへ反映する。
+JIS/USの記号表示は現行keymapのdefineとmappingの表示ルールも確認する。
 生成物の確認だけではfirmwareビルドの代わりにならない。

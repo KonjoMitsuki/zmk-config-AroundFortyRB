@@ -17,6 +17,9 @@ description: >
    設定が読めなければ具体bindingを捏造せず、一般案と未確認事項を区別する。
 2. keymap、dtsi/transform、mapping、R.overlayとbehaviorを読む。
    zmk-aroundforty-rbが使えればその物理座標・診断手順も適用する。
+   座標はL/R＋上からの段＋C＋各段の中央から外側への番号とする。
+   `keymap-physical-template.md`の対応・物理図とmappingのrows/binding_orderを照合し、
+   スキルの座標対応が異なれば現行keymapとphysical attrsを確認して修正する。
    このSKILL単独でもソースから42位置とlayer順を確定する。
 3. [current-keymap.md](references/current-keymap.md)は相談開始の案内として読む。
    snapshotと現行ソースの差を確認する。基準コミットを示す。

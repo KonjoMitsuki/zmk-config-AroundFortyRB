@@ -4,7 +4,7 @@ description: >
   AroundFortyRB専用のZMK設定編集・診断。KonjoMitsuki/zmk-config-AroundFortyRBの
   keymap、behavior、レイヤー、JIS/US記号、IME、PMW3610、AML、スクロール、
   split BLE、Studio、GPIO、Kconfig、ビルドを変更・調査する際に使う。
-  P1C1～P4C11の物理座標指定に対応する。配置の比較相談には
+  L/R＋段＋C（中央から外側）の物理座標指定に対応する。配置の比較相談には
   aroundforty-keymap-designも併用する。
 ---
 
@@ -19,8 +19,16 @@ description: >
    未コミット変更を保持する。ローカル変更があればremote mainより優先する。
 3. `rg --files --hidden -g '!.git' -g '!build*'` で実ファイルを探す。
    パスやレイヤー番号を参照資料だけから決めない。
+   座標は`L/R＋段＋C＋中央からの番号`（例: L1C1=T、R3C1=Winの@）。
+   各段の実在キーだけを中央から外側へ数え、空白は数えない。
+   `keymap-physical-template.md`の対応と物理図を、
+   `tools/around_forty_rb_mapping.json`のrows/binding_order、
+   dtsiのphysical attrs、references/layout.mdと照合する。
+   スキル内の対応がテンプレートと異なれば、現行keymapと物理配置も確認して修正する。
+   キー表示は現行keymapを正とし、テンプレート側の古い割り当ても更新する。
+   座標名の段とkeymapソース上の行は一致しない場合があるため、indexはbinding_orderで引く。
 4. keymap、build.yaml、west.ymlを読み、関連するoverlay/conf/dtsi/Kconfigと
-   behavior定義を読む。参照資料は2026-10-07時点の案内であり実装を正とする。
+   behavior定義を読む。参照資料はスナップショットであり実装を正とする。
 5. ZMKは現在v0.3.0。汎用ZMK/Zephyr SKILLの新しい例を使う際は、
    manifestが取り込むZephyr、モジュールの実binding/Kconfigで互換性を確認する。
    調整に便乗したZMK・モジュールのアップグレードを行わない。
@@ -71,7 +79,7 @@ description: >
 1. 全レイヤーのbinding数、behaviorの引数数、定義済ラベル、
    layer参照、combo/index、AML excluded-positionsを確認する。
 2. keymap表を更新する必要があれば、生成スクリプトを読む。
-   一時ファイルへ生成し、12レイヤーと42座標が失われないか確認してから反映する。
+   一時ファイルへ生成し、13レイヤーと42座標が失われないか確認してから反映する。
    詳細はbuild.mdに従う。
 3. 利用可能なv0.3対応ツールチェーンでR/Lをビルドする。
    利用できなければ静的確認までと明示する。CI成功を推定しない。

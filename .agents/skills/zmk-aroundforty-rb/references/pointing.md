@@ -1,6 +1,6 @@
 # PMW3610とAML
 
-確認版: 000496ebf、2026-10-07。R.overlayを実装の正とする。
+確認版: 23966d9、2026-10-14。R.overlayを実装の正とする。
 
 | 項目 | 現行値 |
 |---|---|
@@ -14,7 +14,7 @@
 | wake | force-awake |
 | report interval | R.confで15ms |
 | AML | layer 10、2000ms |
-| excluded positions | 7 16 17 18 19 28 30 |
+| excluded positions | 7 8 16 17 18 19 28 29 30 |
 
 通常input-processorsはX反転 → XY scaler 1/1 → AML temp-layer。
 layer別overrideは記載順に6/7、8、11。
@@ -25,17 +25,19 @@ overrideの実際の優先規則・継承はv0.3実装で確認する。
 
 | excluded index（0始まり） | 座標 |
 |---|---|
-| 7 | P1C8 |
-| 16 | P2C7 |
-| 17 | P2C8 |
-| 18 | P2C9 |
-| 19 | P2C10 |
-| 28 | P3C9 |
-| 30 | P3C11 |
+| 7 | R1C3 |
+| 8 | R1C4 |
+| 16 | R2C2 |
+| 17 | R2C3 |
+| 18 | R2C4 |
+| 19 | R2C5 |
+| 28 | R3C4 |
+| 29 | R3C5 |
+| 30 | R3C6 |
 
 excluded位置とAMLで非transの位置は必ずしも一致しない。
-例えばAMLのscroll upはindex8/P1C9、MB3はindex29/P3C10で、
-現在のexcluded一覧には含まれない。
+AMLのscroll upはindex8/R1C4、MB3はindex29/R3C5で、
+どちらも現在のexcluded一覧に含まれ、押してもAMLを維持する。
 挙動変更を提案する際はtemp-layerのkeyイベント処理を確認し、
 実機でレイヤー解除のタイミングを検証する。勝手に同期させない。
 

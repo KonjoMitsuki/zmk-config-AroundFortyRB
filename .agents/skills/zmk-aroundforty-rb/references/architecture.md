@@ -1,7 +1,6 @@
 # 構造と実装の案内
 
-確認: 2026-10-07、main `000496ebfc86823ff2c5f797dcfded358e1243bf`。
-取得元: https://github.com/KonjoMitsuki/zmk-config-AroundFortyRB/tree/000496ebfc86823ff2c5f797dcfded358e1243bf
+確認: 2026-10-14、main `23966d9`。ローカルcheckoutを確認。
 以下はスナップショット。現在のcheckoutを優先する。
 
 | 対象 | 現行パス |
@@ -13,7 +12,8 @@
 | build matrix | build.yaml |
 | CI | .github/workflows/build.yml |
 | 物理表ツール・対応表 | tools/zmk_keymap_physical.py、tools/around_forty_rb_mapping.json |
-| 旧表生成ツール | scripts/generate_keymap_table.py |
+| 表生成の互換入口 | scripts/generate_keymap_table.py |
+| 編集用座標対応・物理図 | keymap-physical-template.md |
 | 既存の説明用表 | keymap.md |
 
 Boardはseeeduino_xiao_ble。Kconfig.defconfigでRはsplit central、Lはsplit peripheral。
@@ -33,6 +33,7 @@ Boardはseeeduino_xiao_ble。Kconfig.defconfigでRはsplit central、Lはsplit p
 | 9 | Settings | OS、BT、reset、Studio |
 | 10 | AML | 一時mouse layer |
 | 11 | AML-Off | 全transのAML抑止フラグ |
+| 12 | Mac-Settings | Mac用OS、BT、reset、Studio |
 
 display-nameがないnodeもある。番号はnode順から読む。
 Settingsからの`&to 0`/`&to 1`をOS切替と解釈するが、

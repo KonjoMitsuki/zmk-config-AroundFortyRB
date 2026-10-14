@@ -274,7 +274,17 @@ def apply_mapping(
     grid: List[List[str]],
     layout_rows: List[List[str]],
     center_label: str,
+    binding_order: List[str],
 ) -> List[List[str]]:
+    bindings = [binding for row in grid for binding in row]
+    if len(bindings) != len(binding_order):
+        raise ValueError("binding_order must have one coordinate per binding")
+    if len(set(binding_order)) != len(binding_order):
+        raise ValueError("binding_order contains duplicate coordinates")
+    layout_positions = [cell for row in layout_rows for cell in row if cell and cell != "CENTER"]
+    if len(layout_positions) != len(set(layout_positions)) or set(layout_positions) != set(binding_order):
+        raise ValueError("layout rows and binding_order must contain the same unique coordinates")
+    by_position = dict(zip(binding_order, bindings))
     out_rows: List[List[str]] = []
     for phys_row in layout_rows:
         row_out: List[str] = []
@@ -285,16 +295,7 @@ def apply_mapping(
             if not cell:
                 row_out.append("")
                 continue
-            match = re.match(r"P(\d+)C(\d+)", cell)
-            if not match:
-                row_out.append(cell)
-                continue
-            r = int(match.group(1)) - 1
-            c = int(match.group(2)) - 1
-            if r < 0 or r >= len(grid) or c < 0 or c >= len(grid[r]):
-                row_out.append("")
-            else:
-                row_out.append(grid[r][c])
+            row_out.append(by_position[cell])
         out_rows.append(row_out)
     return out_rows
 
@@ -336,6 +337,7 @@ def main() -> int:
     header = mapping["header"]
     center_label = mapping.get("center_label", "中心")
     layout_rows = mapping["rows"]
+    binding_order = mapping["binding_order"]
 
     keymap_block = extract_block(src_text, "keymap")
     if not keymap_block:
@@ -352,6 +354,7 @@ def main() -> int:
         "太字は長押し、カンマの後はタップの動作です。数字はレイヤー番号、`trans` は下位レイヤーの動作を使います。",
         "Settingsキーは1回タップでAML自動OFF、2回タップで自動ON、長押しでSettingsです。\n",
         "### 物理座標\n",
+        "`L` / `R` は左手 / 右手、続く数字は上から数えた段、`C` の数字は各段の実在キーを中央から外側へ数えた順です。空白は数えません。\n",
         render_table(header, [[center_label if c == "CENTER" else c for c in row] for row in layout_rows]),
         "",
     ]
@@ -377,7 +380,7 @@ def main() -> int:
             hold_only,
         )
         grid = build_grid(rows, formatter)
-        phys_rows = apply_mapping(grid, layout_rows, center_label)
+        phys_rows = apply_mapping(grid, layout_rows, center_label, binding_order)
         output_lines.append(f"### {name} Physical Layout\n")
         output_lines.append(render_table(header, phys_rows))
         output_lines.append("")

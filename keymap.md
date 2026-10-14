@@ -7,12 +7,14 @@ Settingsキーは1回タップでAML自動OFF、2回タップで自動ON、長�
 
 ### 物理座標
 
+`L` / `R` は左手 / 右手、続く数字は上から数えた段、`C` の数字は各段の実在キーを中央から外側へ数えた順です。空白は数えません。
+
 | 小 | 薬 | 中 | 人 | 人 | 親 | 中心 | 親 | 人 | 人 | 中 | 薬 | 小 |
 | --- | --- | --- | --- | --- | --- | :--: | --- | --- | --- | --- | --- | --- |
-| P1C1 | P1C2 | P1C3 | P1C4 | P1C5 |  | 中心 |  | P1C6 | P1C7 | P1C8 | P1C9 | P1C10 |
-| P2C1 | P2C2 | P2C3 | P2C4 | P2C5 |  | 中心 |  | P2C6 | P2C7 | P2C8 | P2C9 | P2C10 |
-| P3C1 | P3C2 | P3C3 | P3C4 | P3C5 | P3C6 | 中心 | P4C8 | P3C7 | P3C8 | P3C9 | P3C10 | P3C11 |
-| P4C1 | P4C2 | P4C3 | P4C4 | P4C5 | P4C6 | 中心 | P4C9 | P4C7 |  |  | P4C10 | P4C11 |
+| L1C5 | L1C4 | L1C3 | L1C2 | L1C1 |  | 中心 |  | R1C1 | R1C2 | R1C3 | R1C4 | R1C5 |
+| L2C5 | L2C4 | L2C3 | L2C2 | L2C1 |  | 中心 |  | R2C1 | R2C2 | R2C3 | R2C4 | R2C5 |
+| L3C6 | L3C5 | L3C4 | L3C3 | L3C2 | L3C1 | 中心 | R3C1 | R3C2 | R3C3 | R3C4 | R3C5 | R3C6 |
+| L4C6 | L4C5 | L4C4 | L4C3 | L4C2 | L4C1 | 中心 | R4C1 | R4C2 |  |  | R4C3 | R4C4 |
 
 ### Win-Base Physical Layout
 
@@ -54,7 +56,7 @@ Settingsキーは1回タップでAML自動OFF、2回タップで自動ON、長�
 
 | 小 | 薬 | 中 | 人 | 人 | 親 | 中心 | 親 | 人 | 人 | 中 | 薬 | 小 |
 | --- | --- | --- | --- | --- | --- | :--: | --- | --- | --- | --- | --- | --- |
-| ESC | trans | trans | LG(UP_ARROW) | LA(UP_ARROW) |  | 中心 |  | LC(W) | LA(LEFT_ARROW) | mkp(MB3) | LA(RIGHT_ARROW) | HOME |
+| ESC | ime_tog | trans | LG(UP_ARROW) | LA(UP_ARROW) |  | 中心 |  | LC(W) | LA(LEFT_ARROW) | mkp(MB3) | LA(RIGHT_ARROW) | HOME |
 | TAB | LEFT_ALT | LS(TAB) | LG(LEFT_ARROW) | LG(RIGHT_ARROW) |  | 中心 |  | LC(PAGE_UP) | mkp(MB1) | UP_ARROW | mkp(MB2) | PAGE_UP |
 | LSHFT | trans | trans | LG(DOWN_ARROW) | LA(DOWN_ARROW) | LG(LS(S)) | 中心 | LC(T) | LC(PAGE_DOWN) | LEFT_ARROW | DOWN_ARROW | RIGHT_ARROW | PAGE_DOWN |
 | LCTRL | trans | trans | trans | trans | trans | 中心 | trans | trans |  |  | trans | END |
@@ -63,7 +65,7 @@ Settingsキーは1回タップでAML自動OFF、2回タップで自動ON、長�
 
 | 小 | 薬 | 中 | 人 | 人 | 親 | 中心 | 親 | 人 | 人 | 中 | 薬 | 小 |
 | --- | --- | --- | --- | --- | --- | :--: | --- | --- | --- | --- | --- | --- |
-| ESC | trans | trans | LC(UP_ARROW) | LG(UP_ARROW) |  | 中心 |  | LG(W) | LG(LEFT_ARROW) | mkp(MB3) | LG(RIGHT_ARROW) | HOME |
+| ESC | mac_ime | trans | LC(UP_ARROW) | LG(UP_ARROW) |  | 中心 |  | LG(W) | LG(LEFT_ARROW) | mkp(MB3) | LG(RIGHT_ARROW) | HOME |
 | TAB | LEFT_GUI | LS(TAB) | LC(LEFT_ARROW) | LC(RIGHT_ARROW) |  | 中心 |  | LC(TAB) | mkp(MB1) | UP_ARROW | mkp(MB2) | PAGE_UP |
 | LSHFT | trans | trans | LC(DOWN_ARROW) | LG(DOWN_ARROW) | LG(LS(N4)) | 中心 | LG(T) | LS(LC(TAB)) | LEFT_ARROW | DOWN_ARROW | RIGHT_ARROW | PAGE_DOWN |
 | LCTRL | trans | trans | trans | trans | trans | 中心 | trans | trans |  |  | trans | END |
@@ -72,19 +74,19 @@ Settingsキーは1回タップでAML自動OFF、2回タップで自動ON、長�
 
 | 小 | 薬 | 中 | 人 | 人 | 親 | 中心 | 親 | 人 | 人 | 中 | 薬 | 小 |
 | --- | --- | --- | --- | --- | --- | :--: | --- | --- | --- | --- | --- | --- |
-| trans | trans | trans | trans | trans |  | 中心 |  | + | 7 | 8 | 9 | - |
-| F13 | # | { | } | : |  | 中心 |  | = | 4 | 5 | 6 | ; |
-| trans | _ | &#96; | ~ | &#124; | trans | 中心 | & | * | 1 | 2 | 3 | , |
-| LCTRL | trans | trans | trans | trans | trans | 中心 | BSPC | ENTER |  |  | 0 | _ |
+| F1 | F2 | F3 | F4 | F5 |  | 中心 |  | + | 7 | 8 | 9 | - |
+| F6 | # | { | } | : |  | 中心 |  | = | 4 | 5 | 6 | ; |
+| F7 | _ | &#96; | ~ | &#124; | trans | 中心 | & | * | 1 | 2 | 3 | , |
+| LCTRL | F8 | F9 | F10 | F11 | F12 | 中心 | BSPC | ENTER |  |  | 0 | _ |
 
 ### Mac_Num_Scroll Physical Layout
 
 | 小 | 薬 | 中 | 人 | 人 | 親 | 中心 | 親 | 人 | 人 | 中 | 薬 | 小 |
 | --- | --- | --- | --- | --- | --- | :--: | --- | --- | --- | --- | --- | --- |
-| trans | trans | trans | trans | trans |  | 中心 |  | + | 7 | 8 | 9 | - |
-| F13 | # | { | } | : |  | 中心 |  | = | 4 | 5 | 6 | ; |
-| trans | _ | &#96; | ~ | &#124; | trans | 中心 | & | * | 1 | 2 | 3 | , |
-| LCTRL | trans | trans | trans | trans | trans | 中心 | BSPC | ENTER |  |  | 0 | _ |
+| F1 | F2 | F3 | F4 | F5 |  | 中心 |  | + | 7 | 8 | 9 | - |
+| F6 | # | { | } | : |  | 中心 |  | = | 4 | 5 | 6 | ; |
+| F7 | _ | &#96; | ~ | &#124; | trans | 中心 | & | * | 1 | 2 | 3 | , |
+| LCTRL | F8 | F9 | F10 | F11 | F12 | 中心 | BSPC | ENTER |  |  | 0 | _ |
 
 ### V_Scroll Physical Layout
 

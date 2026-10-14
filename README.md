@@ -36,20 +36,24 @@ https://note.com/razily/n/n0b3c5ff58d92
 設定の本体は [config/AroundForty-RB.keymap](config/AroundForty-RB.keymap) です。
 WindowsはJIS、macOSはUS配列を前提としています。
 
+座標は `L/R`（左手/右手）＋上からの段＋`C`＋各段の中央から外側への順番です。
+空白は数えず、各段で番号を数え直します。例: `L1C1(T)`、`L4C2(SPACE)`、`R4C2(ENTER)`。
+キー名付きの物理図は [keymap-physical-template.md](keymap-physical-template.md) を参照してください。
+
 | 操作 | Windows | macOS |
 | --- | --- | --- |
-| P4C7をタップ／長押し | Enter／Num（6） | Enter／Mac-Num（7） |
-| P4C10を1回タップ | AML自動OFF、Win配列へ復帰 | AML自動OFF、Mac配列へ復帰 |
-| P4C10を2回タップ | AML自動ON、Win配列へ復帰 | AML自動ON、Mac配列へ復帰 |
-| P4C10を長押し | Settings（9） | Mac-Settings（12） |
-| Settingsを保持してP1C1 | AML自動ON、Win配列へ復帰 | AML自動ON、Mac配列へ復帰 |
-| Settingsを保持してP1C2を1回／2回タップ | AML自動OFF／ON、Win配列へ復帰 | AML自動OFF／ON、Mac配列へ復帰 |
-| P4C8をタップ | @ | [ |
+| R4C2をタップ／長押し | Enter／Num（6） | Enter／Mac-Num（7） |
+| R4C3を1回タップ | AML自動OFF、Win配列へ復帰 | AML自動OFF、Mac配列へ復帰 |
+| R4C3を2回タップ | AML自動ON、Win配列へ復帰 | AML自動ON、Mac配列へ復帰 |
+| R4C3を長押し | Settings（9） | Mac-Settings（12） |
+| Settingsを保持してL1C5 | AML自動ON、Win配列へ復帰 | AML自動ON、Mac配列へ復帰 |
+| Settingsを保持してL1C4を1回／2回タップ | AML自動OFF／ON、Win配列へ復帰 | AML自動OFF／ON、Mac配列へ復帰 |
+| R3C1をタップ | @ | [ |
 
-P4C8は見た目の3行目右中央のキーです。座標は `keymap.md` 冒頭の表を参照してください。
-Settingsを保持してP3C6を押すとWin、P4C6を押すとMacへ切り替わります。
+R3C1は見た目の3行目右中央のキーです。座標は `keymap.md` 冒頭の表を参照してください。
+Settingsを保持してL3C1を押すとWin、L4C1を押すとMacへ切り替わります。
 
-AML中のP1C9（スクロール上）とP3C10（中クリック）は、押してもAMLを解除しません。
+AML中のR1C4（スクロール上）とR3C5（中クリック）は、押してもAMLを解除しません。
 AMLは最後のトラックボール入力から2000msで解除され、その他の解除対象キーでも解除されます。
 AML-Off（11）中も数字レイヤーと縦スクロールレイヤーでのスクロールは使えます。
 
