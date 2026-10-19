@@ -6,10 +6,10 @@
 | --- | --- |
 | 1 | Undo `Ctrl+Z` / Redo `Ctrl+Y` / 変形 `Ctrl+T` / 新規ラスターレイヤー `Ctrl+Shift+N` / 回転リセット `F13` |
 | 2 | `Left Ctrl` / ブラシ `B` / 消しゴム `E` / スポイト `I` / 透明色 `C` |
-| 3 | `Left Shift` / 選択範囲 `M` / 回転 `R` / `Ctrl+Alt` / `Ctrl+Space` / 下のレイヤー `Alt+[`（長押しでSettings） |
+| 3 | `Left Shift` / 選択範囲 `M` / 回転 `R` / `Ctrl+Alt` / `Ctrl+Space` / 下のレイヤー `Alt+[`（長押しでCLIPをOFF） |
 | 4 | `Delete` / 選択解除 `Ctrl+D` / `Left Alt` / `Enter` / キャンバス移動 `Space` / 上のレイヤー `Alt+]` |
 
-左3段目の中央側端キー `L3C0` は、Win-Baseではタップで `PRINTSCREEN`、長押しでSettingsです。従来の長押し先Num/ScrollをSettingsへ変更しました。CLIP_STUDIO中は同じキーをタップで `Alt+[`、長押しでSettingsにします。約200ms長押ししてからSettingsの `L1C3` を押すと `&tog` でCLIP_STUDIOのON/OFFが切り替わります。キーを離すとSettingsが解除されます。SettingsはCLIP_STUDIOより高いレイヤーです。
+左3段目の中央側端キー `L3C0` は、Win-Baseではタップで `PRINTSCREEN`、約200msの長押しでCLIP_STUDIOをONにします。CLIP_STUDIO中は同じキーをタップで `Alt+[`, 長押しでCLIP_STUDIOをOFFにします。長押し側は `&tog` を使う独自Hold-Tapです。Settingsの `L1C3` にある従来のCLIPトグルも利用できます。
 
 `Ctrl`、`Shift`、`Alt`、`Space`、`Ctrl+Alt`、`Ctrl+Space`、`R` はキーを押している間、押下状態が続き、離すと解除されます。`Ctrl+Alt` と `Ctrl+Space` はマクロによる一瞬の入力ではありません。
 

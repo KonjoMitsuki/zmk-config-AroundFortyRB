@@ -127,6 +127,7 @@
     "mt_z_shift": "mt",
     "lt_num": "lt",
     "lt_typ": "lt",
+    "lt_clip_toggle": "toggle_tap",
     "settings_hold_tap": "settings",
     "mac_settings_hold_tap": "settings"
   },

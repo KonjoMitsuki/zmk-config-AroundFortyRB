@@ -223,6 +223,10 @@ def format_binding(
         layer = f"`{args[0]}`"
         tap = render_key(args[1], macro_comments, macro_overrides, symbol_map, shift_map)
         return f"**{layer}**,{tap}"
+    if beh_type == "toggle_tap":
+        layer = f"tog(`{args[0]}`)"
+        tap = render_key(args[1], macro_comments, macro_overrides, symbol_map, shift_map)
+        return f"**{layer}**,{tap}"
     if beh_type == "settings":
         return f"**`{args[0]}`**,AML切替"
 

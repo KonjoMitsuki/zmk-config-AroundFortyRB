@@ -22,7 +22,7 @@ Settingsキーは1回タップでAML自動OFF、2回タップで自動ON、長�
 | --- | --- | --- | --- | --- | --- | :--: | --- | --- | --- | --- | --- | --- |
 | Q | W | E | R | T |  | 中心 |  | Y | U | I | O | P |
 | **LCTRL**,A | S | **`6`**,D | F | G |  | 中心 |  | H | J | K | L | **`8`**,- |
-| **LEFT_SHIFT**,Z | X | C | V | B | **`10`**,PRINTSCREEN | 中心 | @ | N | M | , | . | **`11`**,/ |
+| **LEFT_SHIFT**,Z | X | C | V | B | **tog(`9`)**,PRINTSCREEN | 中心 | @ | N | M | , | . | **`11`**,/ |
 | LCTRL | LGUI | LALT | **LSHFT**,LANGUAGE_1 | **`2`**,SPACE | **`4`**,LANGUAGE_2 | 中心 | BSPC | **`6`**,ENTER |  |  | **`10`**,AML切替 | DEL |
 
 ### Mac-Base Physical Layout
@@ -103,7 +103,7 @@ Settingsキーは1回タップでAML自動OFF、2回タップで自動ON、長�
 | --- | --- | --- | --- | --- | --- | :--: | --- | --- | --- | --- | --- | --- |
 | LC(Z) | LC(Y) | LC(T) | LC(LS(N)) | F13 |  | 中心 |  | trans | trans | trans | trans | trans |
 | LCTRL | B | E | I | C |  | 中心 |  | trans | trans | trans | trans | trans |
-| LSHFT | M | R | LC(LALT) | LC(SPACE) | **`10`**,LA(JP_LBKT) | 中心 | trans | trans | trans | trans | trans | trans |
+| LSHFT | M | R | LC(LALT) | LC(SPACE) | **tog(`9`)**,LA(JP_LBKT) | 中心 | trans | trans | trans | trans | trans | trans |
 | DELETE | LC(D) | LALT | ENTER | SPACE | LA(JP_RBKT) | 中心 | trans | trans |  |  | trans | trans |
 
 ### Settings Physical Layout

@@ -46,7 +46,7 @@ WindowsはJIS、macOSはUS配列を前提としています。
 | R4C4を1回タップ | AML自動OFF、Win配列へ復帰 | AML自動OFF、Mac配列へ復帰 |
 | R4C4を2回タップ | AML自動ON、Win配列へ復帰 | AML自動ON、Mac配列へ復帰 |
 | R4C4を長押し | Settings（10） | Mac-Settings（13） |
-| L3C0をタップ／長押し | PRINTSCREEN／Settings（10） | 入力切替（タップ・長押しの区別なし） |
+| L3C0をタップ／長押し | PRINTSCREEN／CLIP_STUDIO（9）をON/OFF | 入力切替（タップ・長押しの区別なし） |
 | Settingsを保持してL1C3 | CLIP_STUDIO（9）をON/OFF | CLIP_STUDIO（9）をON/OFF |
 | Settingsを保持してL1C5 | AML自動ON、Win配列へ復帰 | AML自動ON、Mac配列へ復帰 |
 | Settingsを保持してL1C4を1回／2回タップ | AML自動OFF／ON、Win配列へ復帰 | AML自動OFF／ON、Mac配列へ復帰 |

@@ -48,7 +48,7 @@ R3C0(JP_AT)、R4C0(BSPC)、R4C1(ENTER) はそれぞれ binding index 38、39、3
             bindings = <
                 &kp Q                    &kp W          &kp E          &kp R                  &kp T                                                           &kp Y                   &kp U            &kp I             &kp O             &kp P
                 &mt_a_ctrl LCTRL A       &kp S          &lt_typ 6 D      &kp F                  &kp G                                                         &kp H                   &kp J            &kp K             &kp L             &lt 8 MINUS
-                &mt_z_shift LEFT_SHIFT Z &kp X          &kp C          &kp V                  &kp B                  &lt 10 PRINTSCREEN                       &kp N            &kp M             &kp COMMA         &kp DOT   &lt 11 SLASH
+                &mt_z_shift LEFT_SHIFT Z &kp X          &kp C          &kp V                  &kp B                  &lt_clip_toggle 9 PRINTSCREEN             &kp N            &kp M             &kp COMMA         &kp DOT   &lt 11 SLASH
                 &kp LCTRL                &kp LGUI       &kp LALT       &mt LSHFT LANGUAGE_1   &lt 2 SPACE            &lt 4 LANGUAGE_2        &lt_num 6 ENTER  &kp JP_AT         &kp BSPC          &settings_hold_tap 10 0  &kp DEL
             >;
         };
