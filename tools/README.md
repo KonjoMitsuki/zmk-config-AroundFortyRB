@@ -26,10 +26,10 @@ python3 tools/zmk_keymap_physical.py \
 
 Edit the layout or symbol behavior in `tools/around_forty_rb_mapping.json`.
 
-- Coordinates use `L` / `R` for the hand, a row number from top to bottom, and `C` followed by the key's order from the center outward in that row. Gaps are not counted, and numbering restarts in each row.
+- Coordinates use `L` / `R` for the hand, a row number from top to bottom, and `C` for the center aligned column. The innermost thumb keys on rows 3 and 4 are `C0`; rows 1 and 2 start at `C1`. Missing columns retain their numbers, so row 4 on the right has `C0`, `C1`, `C4`, and `C5`.
 - `rows` holds the physical display grid, including blank cells and `CENTER`.
 - `binding_order` lists the 42 coordinates in zero-based ZMK binding index order. The generator looks up bindings through this list; it does not infer a binding index from the coordinate name.
-- Physical rows contain 10/10/12/10 keys; source binding lines contain 10/10/11/11 entries. In particular, `R3C1` (`JP_AT` on Win-Base) is index 38, `R4C1` (`BSPC`) is 39, and `R4C2` (`ENTER`) is 37.
+- Physical rows contain 10/10/12/10 keys; source binding lines contain 10/10/11/11 entries. In particular, `R3C0` (`JP_AT` on Win-Base) is index 38, `R4C0` (`BSPC`) is 39, and `R4C1` (`ENTER`) is 37.
 
 The key labels and physical diagram in [keymap-physical-template.md](../keymap-physical-template.md) document the same correspondence. Compare them with the keymap and physical attributes when editing the mapping.
 

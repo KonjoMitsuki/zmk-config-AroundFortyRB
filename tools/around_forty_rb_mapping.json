@@ -1,5 +1,5 @@
 {
-  "coordinate_system": "L/R = left/right; row = top to bottom; C = existing keys from center outward in each row; gaps are not counted",
+  "coordinate_system": "L/R = left/right; row = top to bottom; C = center-aligned column. Thumb keys in rows 3 and 4 are C0; rows 1 and 2 start at C1. Missing columns retain their numbers",
   "binding_order": [
     "L1C5",
     "L1C4",
@@ -21,28 +21,28 @@
     "R2C3",
     "R2C4",
     "R2C5",
-    "L3C6",
     "L3C5",
     "L3C4",
     "L3C3",
     "L3C2",
     "L3C1",
+    "L3C0",
+    "R3C1",
     "R3C2",
     "R3C3",
     "R3C4",
     "R3C5",
-    "R3C6",
-    "L4C6",
     "L4C5",
     "L4C4",
     "L4C3",
     "L4C2",
     "L4C1",
-    "R4C2",
-    "R3C1",
+    "L4C0",
     "R4C1",
-    "R4C3",
-    "R4C4"
+    "R3C0",
+    "R4C0",
+    "R4C4",
+    "R4C5"
   ],
   "header": [
     "小",
@@ -92,34 +92,34 @@
       "R2C5"
     ],
     [
-      "L3C6",
       "L3C5",
       "L3C4",
       "L3C3",
       "L3C2",
       "L3C1",
+      "L3C0",
       "CENTER",
+      "R3C0",
       "R3C1",
       "R3C2",
       "R3C3",
       "R3C4",
-      "R3C5",
-      "R3C6"
+      "R3C5"
     ],
     [
-      "L4C6",
       "L4C5",
       "L4C4",
       "L4C3",
       "L4C2",
       "L4C1",
+      "L4C0",
       "CENTER",
+      "R4C0",
       "R4C1",
-      "R4C2",
       "",
       "",
-      "R4C3",
-      "R4C4"
+      "R4C4",
+      "R4C5"
     ]
   ],
   "custom_behaviors": {

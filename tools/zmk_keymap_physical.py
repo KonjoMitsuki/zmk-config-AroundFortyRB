@@ -53,6 +53,7 @@ ARG_COUNTS = {
     "mt": 2,
     "mo": 1,
     "to": 1,
+    "tog": 1,
     "mkp": 1,
     "msc": 1,
     "bt": 2,
@@ -240,6 +241,8 @@ def format_binding(
         return layer
     if beh == "to":
         return f"to(`{args[0]}`)"
+    if beh == "tog":
+        return f"tog(`{args[0]}`)"
     if beh == "kp":
         return render_key(args[0], macro_comments, macro_overrides, symbol_map, shift_map)
     if beh == "mkp":
@@ -326,6 +329,7 @@ def main() -> int:
 
     src_text = Path(args.src).read_text(encoding="utf-8")
     mapping = json.loads(Path(args.map).read_text(encoding="utf-8"))
+    layer_numbers = dict(re.findall(r"^#define\s+(L_[A-Z_]+)\s+(\d+)\s*$", src_text, re.M))
 
     macro_comments = parse_defines(src_text)
     macro_overrides = mapping.get("macro_overrides", {})
@@ -354,12 +358,15 @@ def main() -> int:
         "太字は長押し、カンマの後はタップの動作です。数字はレイヤー番号、`trans` は下位レイヤーの動作を使います。",
         "Settingsキーは1回タップでAML自動OFF、2回タップで自動ON、長押しでSettingsです。\n",
         "### 物理座標\n",
-        "`L` / `R` は左手 / 右手、続く数字は上から数えた段、`C` の数字は各段の実在キーを中央から外側へ数えた順です。空白は数えません。\n",
+        "`L` / `R` は左手 / 右手、続く数字は上から数えた段です。3・4段目の中央寄りの親指キーは `C0`、隣の縦列は `C1` です。1・2段目は `C1` から始まります。空白は数えず、4段目右側の欠けた縦列 `C2`・`C3` は飛ばします。\n",
         render_table(header, [[center_label if c == "CENTER" else c for c in row] for row in layout_rows]),
         "",
     ]
     for name, body in layers:
-        rows = parse_bindings(body)
+        rows = [
+            [(behavior, [layer_numbers.get(arg, arg) for arg in arguments]) for behavior, arguments in row]
+            for row in parse_bindings(body)
+        ]
         if [len(row) for row in rows] != [10, 10, 11, 11]:
             raise SystemExit(f"{name}: expected 10/10/11/11 bindings, got {[len(row) for row in rows]}")
         layer_symbol_map = {**symbol_map, **mapping.get("layer_symbol_maps", {}).get(name, {})}

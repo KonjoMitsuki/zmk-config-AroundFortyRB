@@ -24,17 +24,17 @@
     zip_temp_layer_aml: zip_temp_layer_aml {
         compatible = "zmk,input-processor-temp-layer";
         #input-processor-cells = <2>;
-        // R1C4のスクロール上とR3C5の中クリックもAMLを維持する。
+        // R1C4のスクロール上とR3C4の中クリックもAMLを維持する。
         excluded-positions = <7 8 16 17 18 19 28 29 30>;
     };
 
     trackball_listener: trackball_listener {
         compatible = "zmk,input-listener";
         device = <&trackball>;
-        // base: X反転 → スケール → AML自動発動（レイヤー10へ一時切替、2000ms）
+        // base: X反転 → スケール → AML自動発動（レイヤー11へ一時切替、2000ms）
         input-processors = <&zip_xy_transform INPUT_TRANSFORM_X_INVERT>,
                            <&zip_xy_scaler 1 1>,
-                           <&zip_temp_layer_aml 10 2000>;
+                           <&zip_temp_layer_aml 11 2000>;
 
         // レイヤー6/7（通常の全方向スクロール）← 先に評価されるよう上に配置
         scroll-layer-6 {
@@ -54,10 +54,10 @@
                                <&zip_scroll_scaler 1 45>;
         };
 
-        // レイヤー11（AML-Off フラグ）がONのとき: AML自動発動をスキップして通常カーソル
+        // レイヤー12（AML-Off フラグ）がONのとき: AML自動発動をスキップして通常カーソル
         // ※スクロール系（6/7/8）が先にマッチするので、スクロールはAML-Off中でも有効
-        aml-off-layer-11 {
-            layers = <11>;
+        aml-off-layer-12 {
+            layers = <12>;
             input-processors = <&zip_xy_transform INPUT_TRANSFORM_X_INVERT>,
                                <&zip_xy_scaler 1 1>;
         };
