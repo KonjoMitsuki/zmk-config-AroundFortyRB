@@ -110,7 +110,7 @@ Settingsキーは1回タップでAML自動OFF、2回タップで自動ON、長�
 
 | 小 | 薬 | 中 | 人 | 人 | 親 | 中心 | 親 | 人 | 人 | 中 | 薬 | 小 |
 | --- | --- | --- | --- | --- | --- | :--: | --- | --- | --- | --- | --- | --- |
-| to(`0`) | aml_toggle_td | tog(`9`) | trans | trans |  | 中心 |  | bt(BT_SEL 0) | bt(BT_SEL 1) | bt(BT_SEL 2) | bt(BT_SEL 3) | bt(BT_SEL 4) |
+| tog(`12`) | aml_toggle_td | tog(`9`) | trans | trans |  | 中心 |  | bt(BT_SEL 0) | bt(BT_SEL 1) | bt(BT_SEL 2) | bt(BT_SEL 3) | bt(BT_SEL 4) |
 | trans | trans | trans | trans | trans |  | 中心 |  | trans | trans | trans | trans | trans |
 | trans | trans | trans | trans | trans | to(`0`) | 中心 | studio_unlock | trans | trans | trans | trans | bt(BT_CLR) |
 | trans | trans | trans | trans | trans | to(`1`) | 中心 | bootloader | sys_reset |  |  | trans | bt(BT_CLR_ALL) |
@@ -124,7 +124,7 @@ Settingsキーは1回タップでAML自動OFF、2回タップで自動ON、長�
 | trans | trans | trans | trans | trans | trans | 中心 | trans | trans | trans | trans | mkp(MB3) | trans |
 | trans | trans | trans | trans | trans | trans | 中心 | trans | trans |  |  | trans | trans |
 
-### AML-Off Physical Layout
+### AML-On Physical Layout
 
 | 小 | 薬 | 中 | 人 | 人 | 親 | 中心 | 親 | 人 | 人 | 中 | 薬 | 小 |
 | --- | --- | --- | --- | --- | --- | :--: | --- | --- | --- | --- | --- | --- |
@@ -137,7 +137,7 @@ Settingsキーは1回タップでAML自動OFF、2回タップで自動ON、長�
 
 | 小 | 薬 | 中 | 人 | 人 | 親 | 中心 | 親 | 人 | 人 | 中 | 薬 | 小 |
 | --- | --- | --- | --- | --- | --- | :--: | --- | --- | --- | --- | --- | --- |
-| to(`1`) | mac_aml_toggle_td | tog(`9`) | trans | trans |  | 中心 |  | bt(BT_SEL 0) | bt(BT_SEL 1) | bt(BT_SEL 2) | bt(BT_SEL 3) | bt(BT_SEL 4) |
+| tog(`12`) | mac_aml_toggle_td | tog(`9`) | trans | trans |  | 中心 |  | bt(BT_SEL 0) | bt(BT_SEL 1) | bt(BT_SEL 2) | bt(BT_SEL 3) | bt(BT_SEL 4) |
 | trans | trans | trans | trans | trans |  | 中心 |  | trans | trans | trans | trans | trans |
 | trans | trans | trans | trans | trans | to(`0`) | 中心 | studio_unlock | trans | trans | trans | trans | bt(BT_CLR) |
 | trans | trans | trans | trans | trans | to(`1`) | 中心 | bootloader | sys_reset |  |  | trans | bt(BT_CLR_ALL) |
