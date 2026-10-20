@@ -313,7 +313,7 @@
             display-name = "CLIP_STUDIO";
             bindings = <
                 &kp LC(Z)         &kp LC(Y)         &kp LC(T)         &kp LC(LS(N))     &kp F13           &trans             &trans       &trans       &trans       &trans
-                &kp LCTRL         &kp B             &kp E             &kp I             &kp C             &trans             &trans       &trans       &trans       &trans
+                &kp LCTRL         &kp B             &kp P             &kp E             &kp C             &trans             &trans       &trans       &trans       &trans
                 &kp LSHFT         &kp M             &kp R             &kp LC(LALT)      &kp LC(SPACE)     &lt_clip_toggle L_CLIP_STUDIO LA(JP_LBKT) &trans &trans &trans &trans &trans
                 &kp DELETE        &kp LC(D)         &kp LALT          &kp ENTER         &kp SPACE         &kp LA(JP_RBKT)   &trans       &trans       &trans       &trans       &trans
             >;

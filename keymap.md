@@ -102,7 +102,7 @@ Settingsキーは1回タップでAML自動OFF、2回タップで自動ON、長�
 | 小 | 薬 | 中 | 人 | 人 | 親 | 中心 | 親 | 人 | 人 | 中 | 薬 | 小 |
 | --- | --- | --- | --- | --- | --- | :--: | --- | --- | --- | --- | --- | --- |
 | LC(Z) | LC(Y) | LC(T) | LC(LS(N)) | F13 |  | 中心 |  | trans | trans | trans | trans | trans |
-| LCTRL | B | E | I | C |  | 中心 |  | trans | trans | trans | trans | trans |
+| LCTRL | B | P | E | C |  | 中心 |  | trans | trans | trans | trans | trans |
 | LSHFT | M | R | LC(LALT) | LC(SPACE) | **tog(`9`)**,LA(JP_LBKT) | 中心 | trans | trans | trans | trans | trans | trans |
 | DELETE | LC(D) | LALT | ENTER | SPACE | LA(JP_RBKT) | 中心 | trans | trans |  |  | trans | trans |
 
