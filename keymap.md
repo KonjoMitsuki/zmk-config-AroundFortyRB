@@ -56,7 +56,7 @@ Settingsキーは1回タップでAML自動OFF、2回タップで自動ON、長�
 
 | 小 | 薬 | 中 | 人 | 人 | 親 | 中心 | 親 | 人 | 人 | 中 | 薬 | 小 |
 | --- | --- | --- | --- | --- | --- | :--: | --- | --- | --- | --- | --- | --- |
-| ESC | ime_tog | trans | LG(UP_ARROW) | LA(UP_ARROW) |  | 中心 |  | LC(W) | LA(LEFT_ARROW) | mkp(MB3) | LA(RIGHT_ARROW) | HOME |
+| ESC | ime_tog | &#96; | LG(UP_ARROW) | LA(UP_ARROW) |  | 中心 |  | LC(W) | LA(LEFT_ARROW) | mkp(MB3) | LA(RIGHT_ARROW) | HOME |
 | TAB | LEFT_ALT | LS(TAB) | LG(LEFT_ARROW) | LG(RIGHT_ARROW) |  | 中心 |  | LC(PAGE_UP) | mkp(MB1) | UP_ARROW | mkp(MB2) | PAGE_UP |
 | LSHFT | trans | trans | LG(DOWN_ARROW) | LA(DOWN_ARROW) | LG(LS(S)) | 中心 | LC(T) | LC(PAGE_DOWN) | LEFT_ARROW | DOWN_ARROW | RIGHT_ARROW | PAGE_DOWN |
 | LCTRL | trans | trans | trans | trans | trans | 中心 | trans | trans |  |  | trans | END |
@@ -65,7 +65,7 @@ Settingsキーは1回タップでAML自動OFF、2回タップで自動ON、長�
 
 | 小 | 薬 | 中 | 人 | 人 | 親 | 中心 | 親 | 人 | 人 | 中 | 薬 | 小 |
 | --- | --- | --- | --- | --- | --- | :--: | --- | --- | --- | --- | --- | --- |
-| ESC | mac_ime | trans | LC(UP_ARROW) | LG(UP_ARROW) |  | 中心 |  | LG(W) | LG(LEFT_ARROW) | mkp(MB3) | LG(RIGHT_ARROW) | HOME |
+| ESC | mac_ime | &#96; | LC(UP_ARROW) | LG(UP_ARROW) |  | 中心 |  | LG(W) | LG(LEFT_ARROW) | mkp(MB3) | LG(RIGHT_ARROW) | HOME |
 | TAB | LEFT_GUI | LS(TAB) | LC(LEFT_ARROW) | LC(RIGHT_ARROW) |  | 中心 |  | LC(TAB) | mkp(MB1) | UP_ARROW | mkp(MB2) | PAGE_UP |
 | LSHFT | trans | trans | LC(DOWN_ARROW) | LG(DOWN_ARROW) | LG(LS(N4)) | 中心 | LG(T) | LS(LC(TAB)) | LEFT_ARROW | DOWN_ARROW | RIGHT_ARROW | PAGE_DOWN |
 | LCTRL | trans | trans | trans | trans | trans | 中心 | trans | trans |  |  | trans | END |
