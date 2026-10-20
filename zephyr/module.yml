@@ -1,0 +1,6 @@
+name: aroundforty-status-led
+build:
+  cmake: .
+  kconfig: Kconfig
+  settings:
+    dts_root: .

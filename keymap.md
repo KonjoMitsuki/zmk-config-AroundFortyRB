@@ -3,7 +3,9 @@
 `config/AroundForty-RB.keymap` から生成した物理配置表です。WinはJIS、MacはUS配列を前提とします。
 
 太字は長押し、カンマの後はタップの動作です。数字はレイヤー番号、`trans` は下位レイヤーの動作を使います。
-Settingsキーは1回タップでAML自動OFF、2回タップで自動ON、長押しでSettingsです。
+Settingsキーは1回タップでAML自動OFF、2回タップで自動ON/OFF、長押しでSettingsです。AML OFFでもクリスタとOS配列は維持します。
+
+左LEDはクリスタONで紫、右LEDはAML自動ONの待機中に緑、マウスレイヤー動作中に水色、各OFF時は消灯します。詳細は[左右の状態LED](docs/status-led.md)を参照してください。
 
 ### 物理座標
 

@@ -1,0 +1,4 @@
+config ARROUNDFORTY_STATUS_LED
+    bool "Independent Clip Studio (left) and AML (right) LED indicators"
+    depends on RGBLED_WIDGET && ZMK_SPLIT && ZMK_SPLIT_BLE
+    depends on SHIELD_ARROUNDFORTY_RB_L || SHIELD_ARROUNDFORTY_RB_R

@@ -48,6 +48,17 @@
 };
 
 / {
+    behaviors {
+        // Internal split command; the central sends the actual layer state.
+        af_led: af_led {
+            compatible = "zmk,behavior-aroundforty-status-led";
+            #binding-cells = <1>;
+            clip-layer = <L_CLIP_STUDIO>;
+            aml-layer = <L_AML>;
+            aml-on-layer = <L_AML_ON>;
+        };
+    };
+
     combos {
         compatible = "zmk,combos";
 
@@ -91,13 +102,14 @@
                 <&kp LCTRL>;
         };
 
-        // AMLをOFFにする（確定OFF）。AMLはレイヤー0起動時には無効。
+        // AMLだけ確定OFFにする。クリスタとOSベースは維持する。
         aml_off: aml_off {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             label = "AML_OFF";
+            wait-ms = <0>;
             bindings
-                = <&macro_tap>, <&to 0>;
+                = <&macro_release>, <&mo L_AML_ON>, <&mo L_AML>;
         };
 
         aml_toggle_td: aml_toggle_td {
@@ -108,13 +120,14 @@
             bindings = <&aml_off>, <&tog L_AML_ON>;
         };
 
-        // Mac側はレイヤー1へ戻し、AML切替後もUS配列を維持する。
+        // Mac側もAMLだけ解除し、クリスタとUS配列を維持する。
         mac_aml_off: mac_aml_off {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             label = "MAC_AML_OFF";
+            wait-ms = <0>;
             bindings
-                = <&macro_tap>, <&to 1>;
+                = <&macro_release>, <&mo L_AML_ON>, <&mo L_AML>;
         };
 
         mac_aml_toggle_td: mac_aml_toggle_td {

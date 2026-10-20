@@ -1,5 +1,6 @@
 build/
-zephyr/
+/zephyr/*
+!/zephyr/module.yml
 .west/
 modules/
 .DS_Store
