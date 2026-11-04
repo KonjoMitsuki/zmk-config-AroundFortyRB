@@ -3,19 +3,38 @@ menuconfig ZMK_ANALYTICS
     default n
     depends on !ZMK_SPLIT || ZMK_SPLIT_ROLE_CENTRAL
     help
-      RAM-only source-event counters for the v0.3.0 correctness PoC.
-      Optional read-only development USB transport. No persistence.
+      Source-event counters for the v0.3.0 correctness PoC.
+      Optional development USB transport and two-generation persistence.
       Not the analytics MVP.
       The linker wrapper requires the audited ZMK sources and LTO disabled.
 
 if ZMK_ANALYTICS
 
+config ZMK_ANALYTICS_PERSISTENCE
+    bool "Persist physical source counters using two settings records"
+    default n
+    depends on SETTINGS_NVS
+    help
+      Dedicated analytics_poc/a,b records; does not clear existing settings.
+      Only physical counts, not logical keymap data. Requires an explicit layout ID.
+
+config ZMK_ANALYTICS_LAYOUT_ID
+    string "Physical position mapping identity (manually versioned)"
+    default ""
+    depends on ZMK_ANALYTICS_PERSISTENCE
+
+config ZMK_ANALYTICS_SAVE_INTERVAL_SECONDS
+    int "Automatic save interval (seconds)"
+    default 600
+    range 600 86400
+    depends on ZMK_ANALYTICS_PERSISTENCE
+
 config ZMK_ANALYTICS_USB_POC
-    bool "Unprotected read-only analytics USB port (development only)"
+    bool "Unprotected analytics USB port (development only)"
     default n
     depends on USB_CDC_ACM && UART_LINE_CTRL && UART_INTERRUPT_DRIVEN && ZMK_USB
     help
-      A dedicated second CDC ACM port accepting GET requests for RAM counters.
+      A dedicated second CDC ACM port accepting GET and explicit SAVE requests.
       No unlock required: any connected host application can read statistics.
       Requires usb-poc.overlay. Never shares the Studio UART.
 

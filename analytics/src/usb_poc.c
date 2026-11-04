@@ -5,6 +5,7 @@
 #include <zephyr/drivers/uart.h>
 #include <zephyr/kernel.h>
 #include <analytics/collector.h>
+#include <analytics/persistence.h>
 
 #define ANALYTICS_UART DT_NODELABEL(analytics_cdc_acm_uart)
 
@@ -48,11 +49,24 @@ static bool send_text(const char *text) {
 
 static void send_snapshot(void) {
     struct analytics_poc_snapshot stats;
-    char buffer[112];
-    zmk_analytics_poc_copy(&stats);
-    if (!send_text("{\"protocol\":\"zmk-analytics-poc\",\"version\":1,"
-                   "\"development_unprotected\":true,\"persistent\":false,"
-                   "\"measurement\":\"source_events\",\"presses\":[")) {
+    struct analytics_storage_status storage;
+    char buffer[224];
+    zmk_analytics_capture(&stats, &storage);
+    if (!send_text("{\"protocol\":\"zmk-analytics-poc\",\"version\":2,"
+                   "\"development_unprotected\":true,\"persistent\":")) {
+        return;
+    }
+    snprintf(buffer, sizeof(buffer), "%s,\"storage\":{\"state\":\"%s\",\"generation\":%lu,"
+             "\"error_count_session\":%lu,\"last_error\":%d,\"dirty\":%s,\"recovered\":%s},",
+             storage.enabled ? "true" : "false", storage.state, (unsigned long)storage.generation,
+             (unsigned long)storage.error_count_session, storage.last_error,
+             storage.dirty ? "true" : "false", storage.recovered ? "true" : "false");
+    if (!send_text(buffer)) { return; }
+#if IS_ENABLED(CONFIG_ZMK_ANALYTICS_PERSISTENCE)
+    if (!send_text("\"physical_layout_id\":\"" CONFIG_ZMK_ANALYTICS_LAYOUT_ID "\","
+                   "\"layout_tracking\":\"manual\",")) { return; }
+#endif
+    if (!send_text("\"measurement\":\"source_events\",\"presses\":[")) {
         return;
     }
     for (unsigned int i = 0; i < ANALYTICS_POSITION_COUNT; ++i) {
@@ -98,6 +112,12 @@ static void diagnostic_thread(void *a, void *b, void *c) {
             command[used] = '\0';
             if (!overflow && strcmp(command, "GET") == 0) {
                 send_snapshot();
+            } else if (!overflow && strcmp(command, "SAVE") == 0) {
+                int error = zmk_analytics_save();
+                char reply[64];
+                snprintf(reply, sizeof(reply), "{\"saved\":%s,\"error\":%d}\n",
+                         error == 0 ? "true" : "false", error);
+                send_text(reply);
             } else {
                 send_text("{\"error\":\"unknown_command\"}\n");
             }
@@ -115,4 +135,4 @@ static void diagnostic_thread(void *a, void *b, void *c) {
     }
 }
 
-K_THREAD_DEFINE(analytics_usb_thread, 2048, diagnostic_thread, NULL, NULL, NULL, 14, 0, 0);
+K_THREAD_DEFINE(analytics_usb_thread, 3072, diagnostic_thread, NULL, NULL, NULL, 14, 0, 0);

@@ -23,7 +23,7 @@ class SnapshotTests(unittest.TestCase):
         self.assertEqual(reader.validate_snapshot(json.dumps(doc)), doc)
 
     def test_metadata(self):
-        for field, value in (("protocol", "studio"), ("version", 2), ("persistent", True),
+        for field, value in (("protocol", "studio"), ("version", 3), ("persistent", True),
                              ("development_unprotected", False), ("measurement", "physical")):
             with self.subTest(field=field):
                 doc = self.document()
@@ -47,6 +47,24 @@ class SnapshotTests(unittest.TestCase):
             doc["presses"] = presses
             with self.assertRaises(ValueError):
                 reader.validate_snapshot(json.dumps(doc))
+
+    def test_persistent_v2(self):
+        doc = self.document()
+        doc.update(version=2, persistent=True, physical_layout_id="test:1", layout_tracking="manual",
+                   storage=dict(state="ok", generation=2, error_count_session=0, last_error=0,
+                                dirty=False, recovered=False))
+        self.assertEqual(reader.validate_snapshot(json.dumps(doc)), doc)
+        for field, value in (("generation", -1), ("dirty", 1), ("state", "made_up")):
+            bad = {**doc, "storage": {**doc["storage"], field: value}}
+            with self.subTest(field=field), self.assertRaises(ValueError):
+                reader.validate_snapshot(json.dumps(bad))
+
+    def test_stream_response(self):
+        import io
+        reply = reader.read_response(io.BytesIO(b'{"error":"unknown_command"}\n{"saved":true,"error":0}\n'))
+        self.assertEqual(reply, dict(saved=True, error=0))
+        with self.assertRaises(ValueError):
+            reader.read_response(io.BytesIO(b'x' * 16385))
 
 
 if __name__ == "__main__":

@@ -24,3 +24,10 @@ void zmk_analytics_poc_copy(struct analytics_poc_snapshot *destination) {
     *destination = counters;
     k_spin_unlock(&counters_lock, key);
 }
+
+void zmk_analytics_poc_restore(const struct analytics_poc_snapshot *saved) {
+    k_spinlock_key_t key = k_spin_lock(&counters_lock);
+    /* Input may already have arrived before settings_load(): retain it. */
+    analytics_poc_merge(&counters, saved);
+    k_spin_unlock(&counters_lock, key);
+}

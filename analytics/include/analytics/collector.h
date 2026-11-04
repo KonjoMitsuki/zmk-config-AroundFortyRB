@@ -31,6 +31,9 @@ struct analytics_poc_snapshot {
 /* Caller serializes access. source == UINT8_MAX is local in ZMK v0.3.0. */
 void analytics_poc_record(struct analytics_poc_snapshot *stats, uint32_t position,
                           uint8_t source, bool pressed);
+void analytics_poc_merge(struct analytics_poc_snapshot *destination,
+                         const struct analytics_poc_snapshot *saved);
 
 /* In-firmware diagnostic API only; not a host-facing authorization boundary. */
 void zmk_analytics_poc_copy(struct analytics_poc_snapshot *destination);
+void zmk_analytics_poc_restore(const struct analytics_poc_snapshot *saved);

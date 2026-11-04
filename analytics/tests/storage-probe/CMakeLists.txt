@@ -1,0 +1,8 @@
+if(NOT CONFIG_ZMK_ANALYTICS_PERSISTENCE OR NOT CONFIG_BOARD_NATIVE_POSIX_64BIT OR NOT CONFIG_ASSERT)
+  message(FATAL_ERROR "Storage probe requires persistence and assertions on native_posix_64")
+endif()
+zephyr_library()
+zephyr_library_include_directories(../../include ${APPLICATION_SOURCE_DIR}/include)
+zephyr_library_compile_definitions(ANALYTICS_ZMK_BUILD=1)
+zephyr_library_sources(storage_probe.c)
+zephyr_link_libraries(-Wl,--wrap=settings_save_one)

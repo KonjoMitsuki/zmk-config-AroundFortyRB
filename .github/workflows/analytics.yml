@@ -59,6 +59,11 @@ jobs:
             -DCONFIG_ZMK_ANALYTICS=y -DCONFIG_ASSERT=y
           timeout 20s source-probe/zephyr/zmk.exe | tee source-probe.log
           grep -q '^PASS: new local/peripheral events' source-probe.log
+      - name: Settings and NVS persistence across restarts
+        run: >-
+          python config-repo/analytics/tests/run_storage.py
+          --workspace workspace --zmk workspace/zmk
+          --build-dir storage-results
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -69,3 +74,5 @@ jobs:
             native-results/**/synthetic-input.log
             native-results/**/keycode_events.actual
             workspace/source-probe.log
+            storage-results/results.json
+            storage-results/*.log
