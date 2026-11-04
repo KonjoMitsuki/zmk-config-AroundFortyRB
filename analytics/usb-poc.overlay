@@ -1,0 +1,7 @@
+/* Dedicated read-only DEVELOPMENT port. The Studio CDC remains unchanged. */
+&zephyr_udc0 {
+    analytics_cdc_acm_uart: analytics_cdc_acm_uart {
+        compatible = "zephyr,cdc-acm-uart";
+        label = "Analytics PoC";
+    };
+};

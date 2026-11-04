@@ -1,0 +1,17 @@
+if(CONFIG_ZMK_ANALYTICS)
+  if(CONFIG_LTO OR CMAKE_INTERPROCEDURAL_OPTIMIZATION OR
+     "${CMAKE_C_FLAGS} ${EXTRA_CFLAGS}" MATCHES "-flto")
+    message(FATAL_ERROR "Analytics PoC requires LTO disabled for linker wrapping")
+  endif()
+  # Refuse unreviewed source changes instead of silently losing the exactly-once property.
+  include(${CMAKE_CURRENT_LIST_DIR}/cmake/audited-sources.cmake)
+  zephyr_library()
+  zephyr_library_include_directories(include ${APPLICATION_SOURCE_DIR}/include)
+  zephyr_library_sources(src/collector.c src/position_hook.c)
+  zephyr_library_compile_definitions(ANALYTICS_ZMK_BUILD=1)
+  zephyr_link_libraries(-Wl,--wrap=raise_zmk_position_state_changed)
+  zephyr_library_sources_ifdef(CONFIG_ZMK_ANALYTICS_USB_POC src/usb_poc.c)
+  if(CONFIG_ZMK_ANALYTICS_POC_REPORT)
+    zephyr_library_sources(tests/native_report.c)
+  endif()
+endif()

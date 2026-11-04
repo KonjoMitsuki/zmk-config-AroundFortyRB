@@ -1,0 +1,71 @@
+name: Analytics PoC
+
+on:
+  push:
+    paths: ["analytics/**", ".github/workflows/analytics.yml"]
+  pull_request:
+    paths: ["analytics/**", ".github/workflows/analytics.yml"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  native:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: config-repo
+      - uses: actions/checkout@v4
+        with:
+          repository: zmkfirmware/zmk
+          ref: edf5c0814fd3ea202e43aad2d68fd32e882a518c
+          path: workspace/zmk
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ninja-build device-tree-compiler
+          python -m pip install west pyelftools pyyaml packaging pykwalify
+      - name: Initialize pinned ZMK workspace
+        run: |
+          west init -l workspace/zmk --mf app/west.yml
+          cd workspace
+          west update --narrow -o=--depth=1
+      - name: Collector boundary and saturation tests
+        run: |
+          cmake -S config-repo/analytics/tests -B unit -G Ninja
+          cmake --build unit
+          ctest --test-dir unit --output-on-failure
+          python -B -m unittest discover -s config-repo/analytics/tests -p test_read_poc.py -v
+      - name: Upstream Combo and hold-tap regression suite
+        run: >-
+          python config-repo/analytics/tests/run_native.py
+          --workspace workspace --zmk workspace/zmk
+          --build-dir native-results --jobs 2
+      - name: Event replay and source classification probe
+        env:
+          ZEPHYR_TOOLCHAIN_VARIANT: host
+        working-directory: workspace
+        run: |
+          west build -s zmk/app -d source-probe -b native_posix_64 -- \
+            -DZephyr_DIR="$PWD/zephyr/share/zephyr-package/cmake" \
+            -DZMK_CONFIG="$GITHUB_WORKSPACE/config-repo/analytics/tests/source-probe" \
+            -DZMK_EXTRA_MODULES="$GITHUB_WORKSPACE/config-repo/analytics;$GITHUB_WORKSPACE/config-repo/analytics/tests/source-probe" \
+            -DCONFIG_ZMK_ANALYTICS=y -DCONFIG_ASSERT=y
+          timeout 20s source-probe/zephyr/zmk.exe | tee source-probe.log
+          grep -q '^PASS: new local/peripheral events' source-probe.log
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: analytics-synthetic-test-results
+          path: |
+            native-results/results.json
+            native-results/*.build.log
+            native-results/**/synthetic-input.log
+            native-results/**/keycode_events.actual
+            workspace/source-probe.log

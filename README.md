@@ -65,3 +65,10 @@ AML-On中も数字レイヤーと縦スクロールレイヤーでのスクロ�
 ```bash
 python3 tools/zmk_keymap_physical.py --src config/AroundForty-RB.keymap --out keymap.md --map tools/around_forty_rb_mapping.json
 ```
+
+## Keyboard Analytics（実験中）
+
+打鍵統計のためのイベント正確性PoCを [analytics/](analytics/README.md) に追加しています。デフォルトは無効で、現在はRAM上の位置別集計と回帰試験までの実装です。USB取得・永続保存を含むMVPは実機検証待ちです。
+
+- [要件・仕様書](Data/docs/zmk-keyboard-analytics-spec-v0.3.md)
+- [レビュー結果・PoC検証記録](Data/docs/zmk-keyboard-analytics-poc.md)

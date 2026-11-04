@@ -1,0 +1,8 @@
+cmake_minimum_required(VERSION 3.20)
+project(analytics_collector_tests C)
+enable_testing()
+add_executable(test_collector test_collector.c ../src/collector.c)
+target_include_directories(test_collector PRIVATE ../include)
+target_compile_definitions(test_collector PRIVATE ANALYTICS_POSITION_COUNT=42)
+target_compile_options(test_collector PRIVATE -Wall -Wextra -Werror -UNDEBUG)
+add_test(NAME collector COMMAND test_collector)

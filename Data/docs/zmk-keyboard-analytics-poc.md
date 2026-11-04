@@ -1,0 +1,158 @@
+# Keyboard Analytics — 実装レビューとPoC記録
+
+更新日: 2026-11-04。対象仕様: [v0.3](zmk-keyboard-analytics-spec-v0.3.md)。実装: [`analytics/`](../../analytics/README.md)。
+
+## 結論と実装範囲
+
+仕様の方向性は妥当だが、そのままMVPへ進むには認可・計時・集計定義・保存方式の修正が必要だった。修正を仕様書へ反映し、最優先のイベント正確性PoCを実装した。
+
+**現在はPoC-Aのソフトウェア検証まで完了。§8.1の実機条件は未達のため、MVPは未実装。**
+モジュールはデフォルトOFFで、Central上のRAMに位置別押下数などを集計する。永続保存、停止・アンロック操作、ダッシュボード、Optimizer、BLE閲覧は未実装。実機書込みは実施していない。
+
+### Windows向けUSB開発モードの追補
+
+利用者はSWDデバッガーを持っておらず、Windowsでの検証と読出し認可の省略を希望したため、明示的に有効化する読出し専用の別CDCを追加した。Studio側のCDCは変更していない。USBは要求時だけ1回コピーしたRAM集計値を返し、入力ホットパスでは送信しない。認可付きMVPの代替ではなく、実機PoC用の例外である。
+
+R・Studio USB＋Analytics別CDCのビルドに成功した。Flash 272,844 B、RAM 94,406 B（OFF版比は1,464 B／5,016 B）。**WindowsでのUSB列挙・転送・Studio／HID共存は未検証。** クライアントのJSON検証4試験はホストで合格した。手順は [Windows実機確認](../../analytics/WINDOWS-USB-POC.md) にまとめた。デバッガーを使う下記台本は任意の補助手段として残す。
+
+#### Windows実機接続の直接診断
+
+WSLからWindows側Python 3.11／PowerShellを実行して確認した。COM5はVID/PID `1D50:615E` のUSBデバイスで、Analyticsの `GET` には0バイト応答だった。一方、Studioの読出し専用 `get_lock_state` は要求 `ab08011a021001ad` に応答 `ab0a0608011a021001ad` を返した。従ってCOM5はStudioポートと確認できた。
+
+`windows_usb_descriptor.py` でUSBハブ経由の実機configuration descriptorを取得したところ、全長100バイト・interface数3（CDC control/data＋HID）、USB製品名は `AroundFortyRB` だった。Windows側のUF2ファイルは配布ファイルとSHA256一致だが、生成したUSB PoCのELFにはCDC定義が2個ある。現在動作中の実機構成と配布イメージの構成が一致していない。書込み先・書込みの反映は実機側で再確認が必要で、WindowsのCOM番号だけを変更しても解決しない。
+
+再確認を容易にするため、修正版のUSB名を `AroundFortyRB Analytics PoC` に変更した。Bluetooth名・キー配置は変更していない。修正版ビルドはFlash 272,872 B／RAM 94,438 B。ELF内のCDC定義2個と製品名、Windows PythonでのJSON検証4試験を確認した。`read_poc.py` のshebangによる別Python選択も避け、ImportErrorの実内容を表示するよう修正した。ファームウェア書込み・ドライバー置換・設定消去は実行していない。
+
+#### 利用者による再書込み後の確認
+
+利用者の再書込み後、実機のconfiguration descriptorは全長166バイト・interface数5（CDC 2組＋HID）へ変わり、COM7が追加された。COM7から42位置のスナップショットを取得でき、さらにポートを開閉して3回の読出しが成功した。不正位置0、飽和なし。COM5のStudio `get_lock_state` も、Analytics読出し試験と並行して正常応答した。
+
+この時点で集計値は全て0だったため、実際の打鍵の計数・Comboの実機正確性はまだ確認していない。文字入力・トラックボールの動作もこの通信試験だけでは合格としない。なおハブ経由で取得した製品名は引き続き `AroundFortyRB` であり、実行イメージが修正版v2かどうかは製品名から確定していない。USB構成と通信成功を根拠に、Analytics USB機能の稼働を確認した。
+
+続いて利用者がQを10回押した後、位置0のPeripheral押下数が0→10となった。Q/W同時押しを10回試したとの報告後には、位置0が10→20、位置1が0→10となり、対象位置の増分は各10だった。いずれも不正位置0、飽和なし。単独押下と同時押下の位置計数はこの台本で期待値に一致したが、Combo成立フックやホストのEsc出力を観測したわけではなく、Esc成立10回を確認済みとは扱わない。利用者はQ/W→Escの設定に心当たりがないと述べている。ビルド元の既存 `config/AroundForty-RB.keymap` には位置0/1のEscape Comboがあるが、今回追加した設定ではない。
+
+## レビューで修正した点
+
+| 項目 | 確認した問題 | 仕様への反映／判断 |
+|---|---|---|
+| Studio認可 | R側confが `CONFIG_ZMK_STUDIO_LOCKING=n`。Studioのロック状態を参照するだけでは起動時から許可される | Analyticsの起動時ロックと専用期限を必須にした |
+| アンロック期限 | `studio/rpc.c:handle_request()` は要求ごとにidle期限を延長する | ホスト要求では延長できない、物理操作起点の絶対期限を明記した |
+| USB拡張 | 現行protobufの `oneof` にAnalyticsがなく、登録マクロだけでは追加できない | メッセージ／クライアント変更を伴うStudio拡張案と、別CDC案を実機PoCで比較する。同一CDCへの2パーサー接続は採用しない |
+| イベント計数 | Combo前listenerでは再投入を区別できない | 新規イベント生成関数へのlinker wrapperをPoC実装した |
+| 時刻の出所 | 両側ともキューを経由してからtimestampを生成する。P側はBLE通知からさらに位置ごとに展開する | C–Cも物理スキャンの取得時刻ではないことを明記した。精度数値は実機測定まで保留 |
+| 切断・欠落 | BLE切断時の解放は合成される。上流 `k_msgq_put()` の一部は戻り値未検査 | 合成解放の扱いと、未計装の欠落値を `null` にする条件を追加した |
+| N1とN2 | 「重なった場合だけペア」とすると重ならないN1が集計できない | 連続する異位置押下をN1、重なった部分集合をN2と定義した |
+| ビンと閾値 | `100+` に上限がなく、任意閾値の再計算もできない | 候補上限250ms、左閉右開のビン、ビン境界だけの厳密再計算を定義した |
+| 分母とidle | 後から追加したペアの分母に生涯累計を使うと比率が歪む。周辺ヒストグラムではidle条件付き比率を復元できない | 同じ収集区間の分母と、条件付き評価に必要な同時分布を明記した |
+| 保存容量 | 32KBのパーティションがあっても、大きなNVSレコードは書けない | セクター内レコード上限、チャンクcommit、GC空き領域の検証を追加した |
+| 全消去 | 片方の世代だけ消したところで電断すると旧世代が復活し得る | reset epoch、保存との直列化、成功応答の条件を明記した |
+
+### 保存予算の静的確認
+
+今回のRビルドでは、storageパーティションは `0xec000` から32KB、NVSは4KB×8セクター。
+Zephyr `subsys/fs/nvs/nvs.c:nvs_write()` の上限は `sector_size - 4 * ate_size` で、4KBセクターなら1レコードは4064バイトまでとなる。
+
+42位置×14レイヤー×4バイト = 2352バイト。
+32ペア×3精度クラス×6ビン×2種類×4バイト = 4608バイト。
+この2種類だけでも6960バイトになり、単一のsettings値へ保存できない。二世代分、既存Bluetooth／Studio設定、GC用領域も必要となる。ペアごとの発生元が固定なら精度クラスの格納を減らせる可能性はあるが、まだ採用していない。
+
+この計算は容量上の制約の確認であり、電断耐性・書換寿命・保存時間の実測ではない。
+
+## 採用した観測点
+
+```text
+Centralのphysical_layouts.c ─────┐
+                                ├─ raise_zmk_position_state_changed(data)
+split/central.c（受信処理）──────┘     └─ linker wrapper → RAM加算 → 元の生成関数
+                                                                    └─ event manager
+                                                                        └─ Combo / hold-tap
+                                                                            └─ 再投入 → event manager
+```
+
+`raise_zmk_position_state_changed()` はイベントの新規生成関数。Comboの再投入はコピー済みのイベントを `zmk_event_manager_raise/release()` に渡すため、wrapperを再度通らない。hold-tapの `RAISE_AT` も同様である。
+
+listenerの順序、最後に見たtimestamp、イベントのアドレスに依存しない。同一ms内に異なる押下があっても失わない。引数をそのまま元の関数へ渡し、戻り値も維持する。spinlockはカウンタ更新中だけ保持し、下流listenerを呼ぶ前に解放する。
+
+本体の `position_hook.c` はイベントをログ出力しない。native試験専用の `native_report.c` は終了時に集計結果だけを出力する。テスト実行時には、既存ZMKのデバッグログへ合成入力が出る。
+
+**限界**: 生成関数へ到達したdownの数を検証する方式であり、物理スイッチからそこまでの無欠落を証明しない。PoCは押下状態や接続境界を管理しないため、上流の重複downも到達したイベントとして数える。MVPでの重複down品質カウンタ、接続境界、時刻、マッピング追跡は別途必要となる。
+
+## 検証環境
+
+| 対象 | 固定値／今回取得したcommit |
+|---|---|
+| 設定repo基準 | `fe12987` |
+| ZMK | `v0.3.0` / `edf5c0814fd3ea202e43aad2d68fd32e882a518c` |
+| Zephyr | `v3.5.0+zmk-fixes` / `dacab4875df72109b96cc8977547a0dc04875bcd` |
+| PMW3610 | `5c5af40de4d8cdf55dc63c4c5907af1e52da6a95` |
+| RGB widget | `8756cb7b8114069fa3c25c6f6c990f24988fceff` |
+| Tri-state | `ebbc1f0ccdb51669650bb0ac3e34920d09e62400` |
+| ARM SDK | Zephyr SDK 0.16.8 / GCC 12.2.0 |
+| Native | Linux、GCC 13.3.0、Python 3.12.3、CMake 3.28.3 |
+
+west workspaceとSDKは `/tmp/opencode/` に用意した。通常の設定ファイルやwestの依存版は変更していない。manifestのブランチ指定は将来別commitを指し得るため、上表は今回の測定条件を示す。
+
+## 実行結果
+
+### 自動試験
+
+| 試験 | 結果 | 確認範囲 |
+|---|---|---|
+| ホストC/CTest | PASS | source分類、解放で押下数が増えないこと、不正位置、上限到達・超過時の飽和 |
+| ZMK上流Combo試験25件 | 25/25 PASS | 132回の生成元押下と位置別集計が一致。HID／behavior出力も全件で上流snapshotと一致 |
+| Source probe | PASS | local／peripheral sourceを模擬、同一timestampの再押下、`RAISE`／`RELEASE`／`RAISE_AT`／`RAISE_AFTER` で追加計上なし |
+| 最終R ELF | PASS | ローカル生成元とsplit受信処理の両方からwrapperへの分岐を逆アセンブルで確認 |
+| OFF版R/L ELF | PASS | wrapperとAnalytics集計シンボルが存在しないことを確認 |
+
+上流試験にはCombo成立、タイムアウト、先離し、第三キー、重複Combo、異なるtimeout、prior idle、hold-tap、レイヤー条件、slow releaseが含まれる。BLE通信と実スイッチの品質はこの試験で検証していない。
+
+### AroundFortyRBビルド
+
+| 構成 | 結果 | Flash使用量 | RAM使用量 |
+|---|---|---:|---:|
+| R・Analytics OFF・Studio USBあり | 成功 | 271,380 B | 89,390 B |
+| R・Analytics ON・Studio USBあり | 成功 | 271,524 B | 89,742 B |
+| **Rの増分** | | **144 B** | **352 B** |
+| L・Analytics OFF | 成功 | 177,060 B | 67,896 B |
+
+Zephyrの最終リンク時の使用量。RのRAM増分352バイトは42位置の集計構造体と一致する。PoCだけの値であり、将来のヒストグラム・保存バッファ・USB転送を含むMVP予算ではない。
+
+既存のdeprecated設定、R側のPeripheral専用stack設定、上流のtemp-layer／sensor関連警告等は残る。Analytics由来のCコンパイル警告はなかった。CI定義は追加したが、GitHub Actions上ではまだ実行していない。
+
+## 残る実機条件と次の作業
+
+| 仕様条件 | 状態 | 次に必要な確認 |
+|---|---|---|
+| PoC-A / T01〜T04 | ソフトウェア試験合格、実機待ち | 現行Q+W→Esc、タイムアウト、先離し、第三キー、rollをR上で再確認 |
+| T05 | source模擬と実機向けリンク確認済み | 左のみ／右のみ／左右交差の物理押下に対する時刻誤差分布 |
+| T06 | 未実装・未測定 | Peripheral切断／再接続の観測、合成解放、受信キュー欠落の計装 |
+| PoC-B | 静的メモリ測定済み | 追加処理時間、HID遅延、待機／打鍵電流のON/OFF比較 |
+| PoC-C / T08〜T09 | ソースレビューまで | Studioメッセージ拡張または別CDCの共存、専用物理アンロック、絶対期限と切断失効 |
+| T07、T10〜T11、T14 | MVP未着手 | 停止状態の保存、チャンクcommitとreset epoch、Studio変更検出、アクティブ時間 |
+| T12 | ビルド・合成入力のみ確認 | 実機のキー／トラックボール／Studio／分割BLEのON/OFF比較 |
+| T13 | PoCカウンタで合格 | MVPで追加する全カウンタにも適用 |
+
+実機検証では、同じ台本をON/OFFで実行し、デバッガーでRAM上の `counters` を確認する。時計精度は外部の押下基準と比較する必要があり、Centralのイベントログだけでは物理押下の誤差を測れない。
+
+### 実機PoC-Aの台本
+
+実機へ書き込む場合は、ビルド手順で生成したRのON版と、対応するLを使用する。SWDデバッガーを接続し、Rの同じELFをGDBへ読み込む。試行の前後だけ停止して、次の値の差分を確認する。打鍵中のブレークポイントは通信・タイマーを変えるため使わない。
+
+```text
+p 'position_hook.c'::counters
+```
+
+`presses[position][0]` がRローカル、`presses[position][1]` がPeripheral由来。現行キーマップのQ/Wは位置0/1で、どちらも左側から受信する。
+
+| 操作 | 期待する押下差分 | 出力側の確認 |
+|---|---|---|
+| Qを十分な間隔で20回押して離す | `[0][1]` が+20、`[1][1]` は変化なし | 通常のQ入力 |
+| Q+WのEsc Comboを20回 | `[0][1]` と `[1][1]` が各+20 | Escが20回 |
+| Qを押し、Combo timeoutより十分長く待ってWを押す。両方離す。20回 | Q/Wが各+20 | 通常のQ/W入力 |
+| Qを押して離した後にW。20回 | Q/Wが各+20 | 通常入力、余分な押下加算なし |
+| Q候補中に第三キーを押す。20回 | Qと第三キーが各+20 | ON/OFFで入力結果が一致 |
+| 右の単独キーを20回 | 対応位置の `[position][0]` が+20 | 通常入力 |
+
+上記は最小台本。重複Comboはnative試験で確認済みだが、実機で追加検証するには専用のテストキーマップが必要となる。切断試験でPeripheral解放数が増えても、合成解放を含むため実際の解放回数と比較しない。試行中に通信断やキュー欠落が疑われる場合は、回数が一致しない原因を再投入問題と混同せず記録する。
+
+次の実装判断は、PoC-Aの実機結果とPoC-B/Cを記録してから行う。MVPの認可経路を提供する前に、ロック無効のStudio設定に依存しない認可と停止状態表示を確定する。

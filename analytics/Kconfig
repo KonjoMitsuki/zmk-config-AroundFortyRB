@@ -1,0 +1,30 @@
+menuconfig ZMK_ANALYTICS
+    bool "Keyboard analytics event-source PoC (experimental)"
+    default n
+    depends on !ZMK_SPLIT || ZMK_SPLIT_ROLE_CENTRAL
+    help
+      RAM-only source-event counters for the v0.3.0 correctness PoC.
+      Optional read-only development USB transport. No persistence.
+      Not the analytics MVP.
+      The linker wrapper requires the audited ZMK sources and LTO disabled.
+
+if ZMK_ANALYTICS
+
+config ZMK_ANALYTICS_USB_POC
+    bool "Unprotected read-only analytics USB port (development only)"
+    default n
+    depends on USB_CDC_ACM && UART_LINE_CTRL && UART_INTERRUPT_DRIVEN && ZMK_USB
+    help
+      A dedicated second CDC ACM port accepting GET requests for RAM counters.
+      No unlock required: any connected host application can read statistics.
+      Requires usb-poc.overlay. Never shares the Studio UART.
+
+config ZMK_ANALYTICS_POC_REPORT
+    bool "Print aggregate counters on native simulator exit (tests only)"
+    default n
+    depends on BOARD_NATIVE_POSIX_64BIT && !ZMK_BLE && !ZMK_USB
+    help
+      Only for synthetic native_posix_64 regression tests. Never enable
+      aggregate logging on a keyboard used for real input.
+
+endif
