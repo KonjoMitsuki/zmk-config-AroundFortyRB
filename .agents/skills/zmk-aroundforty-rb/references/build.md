@@ -29,7 +29,7 @@ settings_resetはmatrixのfirmware生成と実機への書込みを区別する�
 
 ## 静的確認
 
-- keymap nodeからlayerを列挙する。現在13node、各42phandle binding。
+- keymap nodeからlayerを列挙する。現行の全nodeについて、各42phandle bindingを確認する。
 - 行は10/10/11/11。コメントを除外し、binding引数をキー数として数えない。
 - layer参照、ラベル、binding-cells、comboとexcluded indexを照合する。
 - dtsiのtransformとphysical attrsも42個あることを確認する。
@@ -45,6 +45,28 @@ settings_resetはmatrixのfirmware生成と実機への書込みを区別する�
 
 `scripts/generate_keymap_table.py`は同じ生成ツールへの互換入口。
 `--apply`なしでは出力のみ、指定するとバックアップを作って反映する。
-一時出力で13layer/42位置を確認してからkeymap.mdへ反映する。
+一時出力で現行の全layer/各42位置を確認してからkeymap.mdへ反映する。
 JIS/USの記号表示は現行keymapのdefineとmappingの表示ルールも確認する。
 生成物の確認だけではfirmwareビルドの代わりにならない。
+
+## MarkdownとHTMLの同期
+
+キーマップ変更時は`keymap.md`だけでなく
+`Data/Firmware/aroundforty_rb_keymap.html`も同時に更新する。
+
+```bash
+python3 tools/zmk_keymap_physical.py --src config/AroundForty-RB.keymap \
+  --map tools/around_forty_rb_mapping.json --out /tmp/aroundforty-keymap.md
+```
+
+Markdownの生成結果を確認して反映する。生成ツール内の共通操作説明も、
+変更したbehaviorと一致させる。現在HTML用の生成スクリプトはないため、
+HTMLの該当キー・説明を直接更新する。Markdown用スクリプトでHTMLを上書きしない。
+
+- HTMLの`section id="lN"`とナビゲーションを現行レイヤー順・名前に揃える。
+- 各レイヤー内の42個の`.k`をbinding順で照合し、座標はmappingで確認する。
+- 表示ラベル、タップ／長押しの補足、`data-tooltip`の機能説明を更新する。
+  アプリ側の割当が不明なキーは、送信キーと設定依存である旨を示す。
+- レイヤー切替やAMLの挙動・LED表示が変わった場合は、ページ内の説明も揃える。
+- 座標情報、テーマ対応、ツールチップ、キーボード操作など既存機能を維持する。
+- Markdown・HTMLとも現行の全レイヤーがあり、各42キーが残っていることを確認する。

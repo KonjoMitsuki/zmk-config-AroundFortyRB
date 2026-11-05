@@ -3,7 +3,9 @@
 `config/AroundForty-RB.keymap` から生成した物理配置表です。WinはJIS、MacはUS配列を前提とします。
 
 太字は長押し、カンマの後はタップの動作です。数字はレイヤー番号、`trans` は下位レイヤーの動作を使います。
-Settingsキーは1回タップでAML自動OFF、2回タップで自動ON、長押しでSettingsです。
+Settingsキーは1回タップでAML自動OFF、2回タップで自動ON/OFF、長押しでSettingsです。AML OFFでもクリスタとOS配列は維持します。
+
+左LEDはクリスタONで紫、右LEDはAML自動ONの待機中に緑、マウスレイヤー動作中に水色、各OFF時は消灯します。詳細は[左右の状態LED](docs/status-led.md)を参照してください。
 
 ### 物理座標
 
@@ -102,7 +104,7 @@ Settingsキーは1回タップでAML自動OFF、2回タップで自動ON、長�
 | 小 | 薬 | 中 | 人 | 人 | 親 | 中心 | 親 | 人 | 人 | 中 | 薬 | 小 |
 | --- | --- | --- | --- | --- | --- | :--: | --- | --- | --- | --- | --- | --- |
 | LC(Z) | LC(Y) | LC(T) | LC(LS(N)) | F13 |  | 中心 |  | trans | trans | trans | trans | trans |
-| LCTRL | B | E | I | C |  | 中心 |  | trans | trans | trans | trans | trans |
+| LCTRL | B | P | E | C |  | 中心 |  | trans | trans | trans | trans | trans |
 | LSHFT | M | R | LC(LALT) | LC(SPACE) | **tog(`9`)**,LA(JP_LBKT) | 中心 | trans | trans | trans | trans | trans | trans |
 | DELETE | LC(D) | LALT | ENTER | SPACE | LA(JP_RBKT) | 中心 | trans | trans |  |  | trans | trans |
 

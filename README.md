@@ -43,13 +43,13 @@ WindowsはJIS、macOSはUS配列を前提としています。
 | 操作 | Windows | macOS |
 | --- | --- | --- |
 | R4C1をタップ／長押し | Enter／Num（6） | Enter／Mac-Num（7） |
-| R4C4を1回タップ | AML自動OFF、Win配列へ復帰 | AML自動OFF、Mac配列へ復帰 |
-| R4C4を2回タップ | AML自動ON、Win配列へ復帰 | AML自動ON、Mac配列へ復帰 |
+| R4C4を1回タップ | AML自動OFF（クリスタを維持） | AML自動OFF（クリスタを維持） |
+| R4C4を2回タップ | AML自動ON/OFF | AML自動ON/OFF |
 | R4C4を長押し | Settings（10） | Mac-Settings（13） |
 | L3C0をタップ／長押し | PRINTSCREEN／CLIP_STUDIO（9）をON/OFF | 入力切替（タップ・長押しの区別なし） |
 | Settingsを保持してL1C3 | CLIP_STUDIO（9）をON/OFF | CLIP_STUDIO（9）をON/OFF |
-| Settingsを保持してL1C5 | AML自動ON、Win配列へ復帰 | AML自動ON、Mac配列へ復帰 |
-| Settingsを保持してL1C4を1回／2回タップ | AML自動OFF／ON、Win配列へ復帰 | AML自動OFF／ON、Mac配列へ復帰 |
+| Settingsを保持してL1C5 | AML自動ON/OFF | AML自動ON/OFF |
+| Settingsを保持してL1C4を1回／2回タップ | AML自動OFF／切替（クリスタを維持） | AML自動OFF／切替（クリスタを維持） |
 | R3C0をタップ | @ | [ |
 
 R3C0は見た目の3行目右中央のキーです。座標は `keymap.md` 冒頭の表を参照してください。
@@ -59,6 +59,10 @@ AML中のR1C4（スクロール上）とR3C4（中クリック）は、押して
 AMLは最後のトラックボール入力から2000msで解除され、その他の解除対象キーでも解除されます。
 起動時はAML自動OFFです。AML-On（12）を有効にしたときだけ、トラックボール入力でAMLが自動発動します。
 AML-On中も数字レイヤーと縦スクロールレイヤーでのスクロールは使えます。
+
+左のLEDはクリスタONで紫、右はAML自動ONで緑、マウスレイヤー動作中は水色です。
+両方ONなら左右で同時に表示します。設定と左右両方への書き込み手順は
+[左右の状態LED](docs/status-led.md)を参照してください。
 
 配置表の再生成:
 

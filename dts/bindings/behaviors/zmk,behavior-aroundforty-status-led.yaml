@@ -1,0 +1,13 @@
+description: Internal split command for the AroundForty left Clip Studio LED
+compatible: "zmk,behavior-aroundforty-status-led"
+include: one_param.yaml
+properties:
+  clip-layer:
+    type: int
+    required: true
+  aml-layer:
+    type: int
+    required: true
+  aml-on-layer:
+    type: int
+    required: true

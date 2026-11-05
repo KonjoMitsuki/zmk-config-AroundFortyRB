@@ -78,9 +78,13 @@ description: >
 
 1. 全レイヤーのbinding数、behaviorの引数数、定義済ラベル、
    layer参照、combo/index、AML excluded-positionsを確認する。
-2. keymap表を更新する必要があれば、生成スクリプトを読む。
-   一時ファイルへ生成し、13レイヤーと42座標が失われないか確認してから反映する。
-   詳細はbuild.mdに従う。
+2. keymapを変更したら、`keymap.md`と
+   `Data/Firmware/aroundforty_rb_keymap.html`を両方更新する。
+   Markdownは生成スクリプトを読み、一時ファイルへ生成してから反映する。
+   HTMLは現行keymapと同じ配置・レイヤー名・操作説明・ツールチップに揃え、
+   既存のデザインと操作機能を維持する。全レイヤー各42座標が失われず、
+   タップ・長押し・AML切替の説明も実装と一致することを確認する。
+   生成方法とHTML更新時の確認項目は[build.md](references/build.md)に従う。
 3. 利用可能なv0.3対応ツールチェーンでR/Lをビルドする。
    利用できなければ静的確認までと明示する。CI成功を推定しない。
 4. 実機でのIME、連打、roll、hold、scroll、AML復帰、BLEの確認項目を示す。
