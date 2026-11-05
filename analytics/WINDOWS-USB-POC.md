@@ -137,7 +137,7 @@ py .\read_poc.py --port COM7 --out trial-01.json
 
 ## 開発者向けビルド差分
 
-既存の右側ビルドに `ZMK_EXTRA_MODULES` で `analytics/` を追加したうえで、次の2引数を指定します。保存も有効にする場合は、設定ファイルのリストへ `analytics/persistence.conf` を追加します。StudioのUSB snippetは残します。
+既存の右側ビルドに `ZMK_EXTRA_MODULES` でリポジトリ直下と `analytics/` を追加します。直下のモジュールには状態LEDが入っています。保存も有効にする場合は、設定ファイルのリストへ `analytics/persistence.conf` を追加します。StudioのUSB snippetは残します。
 
 ```sh
 -DEXTRA_CONF_FILE="$REPO/analytics/usb-poc.conf;$REPO/analytics/persistence.conf" \

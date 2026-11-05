@@ -1,0 +1,4 @@
+name: zmk-keyboard-analytics
+build:
+  cmake: .
+  kconfig: Kconfig

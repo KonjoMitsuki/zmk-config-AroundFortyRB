@@ -158,6 +158,8 @@ west workspaceとSDKは `/tmp/opencode/` に用意した。通常の設定ファ
 
 ### AroundFortyRBビルド
 
+2026-11-05に`origin/main`の`4ea165a`までをマージした。状態LEDとAnalyticsを併用する右側のビルドは成功し、Flash 282,096 B、RAM 171,902 B（65.58%）となった。以下の表はマージ前の測定値である。既存のv4バンドルもマージ前のため、mainの変更は含まない。
+
 | 構成 | 結果 | Flash使用量 | RAM使用量 |
 |---|---|---:|---:|
 | R・Analytics OFF・Studio USBあり | 成功 | 271,380 B | 89,390 B |

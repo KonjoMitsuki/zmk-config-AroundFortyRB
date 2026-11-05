@@ -48,10 +48,12 @@ west build -p always -s "$ZMK/app" -d build/analytics-right \
   -b seeeduino_xiao_ble -S studio-rpc-usb-uart -- \
   -DZMK_CONFIG="$REPO/config" \
   -DSHIELD="AroundForty-RB_R rgbled_adapter" \
-  -DZMK_EXTRA_MODULES="$REPO/analytics" \
+  -DZMK_EXTRA_MODULES="$REPO;$REPO/analytics" \
   -DCONFIG_ZMK_ANALYTICS=y \
   -DCONFIG_ZMK_ANALYTICS_PAIR_LIST="0:1,1:2,8:9"
 ```
+
+リポジトリ直下もZephyrモジュールです。状態LEDのbehaviorとKconfigを含むため、`ZMK_EXTRA_MODULES` の先頭へ `$REPO` を加えます。GitHub Actionsの設定リポジトリでは、`zephyr/module.yml` があるため自動で追加されます。
 
 `CONFIG_ZMK_ANALYTICS_PAIR_LIST`はカンマ区切りの位置ペアです。順序は問わず、同じペアの重複は1組にまとめます。不正な項目と17組目以降は`pair_config_errors`に数えて読み飛ばします。この値は起動時の設定なので、保存値へ累積しません。
 
