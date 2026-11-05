@@ -1,18 +1,18 @@
-# Windowsで打鍵数を確認する
+# Windowsで打鍵数とタイミングを確認する
 
 デバッガーは不要です。検証用ファームウェアを右側へ書き込み、USB接続してPythonから集計値を読みます。
-この開発モードではアンロック操作は不要です。接続したPCのアプリから集計値を読めますが、文字列や入力履歴を返す機能はありません。この版は統計をキーボード内へ保存し、右側を再起動しても復元します。ただし、最後の保存以降の入力は電源断で失われ得ます。
+この開発モードではアンロック操作は不要です。接続したPCのアプリから集計値を読めますが、文字列や入力履歴を返す機能はありません。この版は位置別の押下数、押下時間、キー間隔、指定ペアのタイミング、有向2連、品質カウンタをキーボード内へ保存し、右側を再起動しても復元します。直近の押下順はRAMだけに保持し、再起動で消えます。最後の保存以降の入力は電源断で失われ得ます。
 
 USB通信とHID／Studio共存は前版で確認済みです。フラッシュ保存・復元はホスト試験に加え、2026-11-04に実機の電源OFF/ONでも確認しました。最初に通常入力ができることを確認してください。
 検証版のUSB製品名は `AroundFortyRB Analytics PoC` です。USBシリアルポートが2つ現れることを確認してから、読出しを試します。1つしかない場合は、COM番号を変え続けるのではなく、実際に動いているファームウェアを確認します。
 
 ## 1. 用意するファイル
 
-識別用USB名を付けた保存対応版は `build/analytics-windows-poc-v3/` に用意しています。
+識別用USB名を付けた保存対応版は `build/analytics-windows-poc-v4/` に用意しています。
 
 | ファイル | 用途 |
 |---|---|
-| `AroundForty-RB_R-analytics-usb-poc-v3.uf2` | 右側用・USB読出し＋保存・識別用USB名あり |
+| `AroundForty-RB_R-analytics-usb-poc-v4.uf2` | 右側用・USB読出し＋保存・識別用USB名あり |
 | `AroundForty-RB_R-analytics-off.uf2` | 同じソースから作った右側用・計測なし |
 | `read_poc.py` | Windowsで読み出す／保存するスクリプト |
 | `watch_reboot.py` | 保存後に再起動を待ち、復元値を自動比較するスクリプト |
@@ -25,7 +25,7 @@ USB通信とHID／Studio共存は前版で確認済みです。フラッシュ�
 
 1. 可能なら、現在使っている右側UF2を戻すために手元へ残します。同梱OFF版は今回のソースからのビルドで、現在の実機のファームウェアそのものではありません。
 2. 右側をUSBでWindowsへ接続し、普段のファームウェア更新時と同じ方法でブートローダーを開きます。
-3. 表示されたドライブへ **R用** `AroundForty-RB_R-analytics-usb-poc-v3.uf2` をコピーします。L側へR用UF2を書かないでください。
+3. 表示されたドライブへ **R用** `AroundForty-RB_R-analytics-usb-poc-v4.uf2` をコピーします。L側へR用UF2を書かないでください。
 4. 再起動後、文字入力とトラックボールが動くことを確認します。
 
 settings_resetやペアリングの消去は不要です。戻す場合も同じ方法で元の右側UF2または同梱OFF版を書き込みます。
@@ -71,6 +71,23 @@ py -3.11 .\windows_usb_descriptor.py
 
 結果は「Qだけ10回後の増分」「Combo10回後の増分」「入力・トラックボール・Studioの異常の有無」を教えてください。差が合わなくても、通信欠落・ポート不調・再投入の問題を切り分ける材料になります。
 
+### タイミング・遷移・直近順序
+
+同じポートで、次のコマンドも試せます。取得コマンド自体の打鍵も集計に入ります。
+
+```powershell
+py .\read_poc.py --port COM7 --bigrams
+py .\read_poc.py --port COM7 --recent --recent-limit 100
+```
+
+- `--bigrams` は「A→B」の回数を多い順に表示します。Qの次にWを押す操作を10回行い、位置0→1の回数が10増えることを確認します。
+- `--recent` は直近の押下を古い順に、連番・起動後の経過ms・位置・発生元で表示します。Q、W、Eの順に押したとき、その順と間隔が表示されることを確認します。
+- 通常の `GET` は押下時間・同一キー間隔・直前押下からの間隔・指定ペアのヒストグラムを表示します。位置0のQをゆっくり5回押すと、`hold`と`same_key`の合計が5増えます。
+- 指定ペアの表示は `CONFIG_ZMK_ANALYTICS_PAIR_LIST` に含まれる組だけです。既定は`0:1`です。
+- `timing_discards`、`duplicate_downs`、`orphan_releases`、`pair_config_errors` は0のままが期待値です。増えた場合は、その値と操作内容を控えてください。
+
+`RECENT`はRAMだけなので、再起動後は空になります。保存・復元の判定には使わず、`GET`と`BIGRAMS`で確認します。
+
 ## 5. 保存と再起動の確認
 
 `--save` はPCのファイルではなく、**キーボードのフラッシュ**へ保存します。`--out` は取得したJSONをPCへ保存する別の操作です。
@@ -83,16 +100,12 @@ py .\read_poc.py --port COM7 --save
 
 復元を確実に確認するには、USBの抜き差しだけでは不十分です。バッテリー駆動のままUSBだけ抜くと、右側が動き続けてRAMが残る場合があります。次の順序で、保存後の未保存差分が再起動で消えることを確認します。
 
-1. `--save` で保存し、`generation` と対象位置の値を控えます。
+1. `--save` で保存し、`generation`、対象位置の値、timingの合計、`BIGRAMS`の遷移回数を控えます。
 2. 保存せずにQを3回押します（RAM上だけ増えます）。
 3. 右側を電源OFF/ONまたはリセットします。
-4. キーボードを触らず、次のコマンドで取得します。
+4. キーボードを触らず、`GET`と`BIGRAMS`で取得します。
 
-```powershell
-py .\read_poc.py --port COM7
-```
-
-`generation` が保存時と同じで、Q×3が加算されておらず、`dirty: false` なら復元成功です。再起動後に行った入力は復元値へ加算されます。自動保存は変更がある場合だけ10分間隔です。すぐに確認したいときは `--save` を使ってください。
+`generation` が保存時と同じで、Q×3が加算されておらず、`dirty: false` なら復元成功です。`BIGRAMS`も保存時の遷移回数と一致することを確認します。再起動後に行った入力は復元値へ加算されます。自動保存は変更がある場合だけ10分間隔です。すぐに確認したいときは `--save` を使ってください。
 
 この手順を自動化した `watch_reboot.py` も同梱しています。保存、COMポートの切断・再接続待ち、再起動後の比較をまとめて行います。
 
@@ -100,7 +113,7 @@ py .\read_poc.py --port COM7
 py .\watch_reboot.py --port COM7 --timeout 600
 ```
 
-`watch_reboot.py` の実行中はキーボードを触らないでください。保存後にQを3回押し、電源を切って入れ直します。`PASS: counters restored exactly at the same generation` が出れば成功です。
+`watch_reboot.py` の実行中はキーボードを触らないでください。保存後にQを3回押し、電源を切って入れ直します。`PASS: statistics and bigrams restored exactly at the same generation` が出れば成功です。
 
 2026-11-04の実機確認では、世代2を保存後にQ×3を未保存のまま電源OFF/ONし、再起動後も世代2、`dirty: false`、位置0のPeripheral押下数8が保存時と一致しました。
 
@@ -131,4 +144,4 @@ py .\read_poc.py --port COM7 --out trial-01.json
 -DEXTRA_DTC_OVERLAY_FILE="$REPO/analytics/usb-poc.overlay"
 ```
 
-プロトコルは専用CDCへの `GET\n` → 1行JSON（protocol `zmk-analytics-poc`、version 2）、`SAVE\n` → `{"saved":true,"error":0}` です。不明なコマンドはエラーのみ返します。消去コマンドはありません。集計は1回コピーしてから送信し、通信中に更新された値を混ぜません。途中のJSONはクライアントが採用しません。保存形式と障害時の扱いは [PERSISTENCE.md](PERSISTENCE.md) を参照してください。
+プロトコルは専用CDCへの1行コマンドと1行JSONです。`GET\n`は押下数・品質・timing、`BIGRAMS\n`は有向2連、`RECENT\n`はRAM上の直近順序、`SAVE\n`は`{"saved":true,"error":0}`を返します。JSONの`version`は3で、クライアントは旧version 1と2も読めます。不明なコマンドはエラーのみ返します。消去コマンドはありません。集計は1回コピーしてから送信し、通信中に更新された値を混ぜません。途中のJSONはクライアントが採用しません。保存形式と障害時の扱いは [PERSISTENCE.md](PERSISTENCE.md) を参照してください。

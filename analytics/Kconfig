@@ -11,12 +11,22 @@ menuconfig ZMK_ANALYTICS
 if ZMK_ANALYTICS
 
 config ZMK_ANALYTICS_PERSISTENCE
-    bool "Persist physical source counters using two settings records"
+    bool "Persist counters, timing histograms and directed bigrams"
     default n
     depends on SETTINGS_NVS
     help
-      Dedicated analytics_poc/a,b records; does not clear existing settings.
-      Only physical counts, not logical keymap data. Requires an explicit layout ID.
+      Two-generation analytics_poc/a,b records for counters and timing, plus
+      c,d records for directed bigrams. Does not clear existing settings.
+      Only physical position data, not logical keymap data. Requires an
+      explicit layout ID. The RAM-only recent press order is not saved.
+
+config ZMK_ANALYTICS_PAIR_LIST
+    string "Comma-separated unordered position pairs for timing histograms"
+    default "0:1"
+    help
+      Example "0:1,1:2". Positions are physical ids. Order inside a pair is
+      ignored. Invalid tokens and pairs beyond 16 are counted as configuration
+      errors and skipped.
 
 config ZMK_ANALYTICS_LAYOUT_ID
     string "Physical position mapping identity (manually versioned)"
@@ -34,8 +44,9 @@ config ZMK_ANALYTICS_USB_POC
     default n
     depends on USB_CDC_ACM && UART_LINE_CTRL && UART_INTERRUPT_DRIVEN && ZMK_USB
     help
-      A dedicated second CDC ACM port accepting GET and explicit SAVE requests.
-      No unlock required: any connected host application can read statistics.
+      A dedicated second CDC ACM port accepting GET, SAVE, BIGRAMS and RECENT.
+      No unlock required: any connected host application can read statistics
+      and the RAM-only recent press order.
       Requires usb-poc.overlay. Never shares the Studio UART.
 
 config ZMK_ANALYTICS_POC_REPORT

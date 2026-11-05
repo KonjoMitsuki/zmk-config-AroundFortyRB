@@ -19,6 +19,11 @@ def get_snapshot(connection):
     return read_poc.validate_snapshot(json.dumps(read_poc.read_response(connection)))
 
 
+def get_bigrams(connection):
+    connection.write(b"\nBIGRAMS\n")
+    return read_poc.validate_bigrams(json.dumps(read_poc.read_response(connection)))
+
+
 def save_baseline(port):
     with serial.Serial(port, 115200, timeout=0.5, write_timeout=2) as connection:
         connection.dtr = True
@@ -28,7 +33,7 @@ def save_baseline(port):
         reply = read_poc.read_response(connection)
         if not isinstance(reply, dict) or reply.get("saved") is not True or reply.get("error") != 0:
             raise ValueError(f"save failed: {reply}; -11 means retry after 10 seconds")
-        return get_snapshot(connection)
+        return get_snapshot(connection), get_bigrams(connection)
 
 
 def wait_and_read(port, timeout):
@@ -45,7 +50,7 @@ def wait_and_read(port, timeout):
                     connection.dtr = True
                     time.sleep(1.0)
                     connection.reset_input_buffer()
-                    return get_snapshot(connection)
+                    return get_snapshot(connection), get_bigrams(connection)
             except (serial.SerialException, OSError, ValueError):
                 pass
         time.sleep(0.2)
@@ -53,9 +58,8 @@ def wait_and_read(port, timeout):
 
 
 def same(a, b):
-    return (a["presses"] == b["presses"] and a["releases"] == b["releases"]
-            and a["invalid_positions"] == b["invalid_positions"]
-            and a["saturated"] == b["saturated"])
+    fields = ("presses", "releases", "invalid_positions", "saturated", "quality", "timing")
+    return all(a.get(field) == b.get(field) for field in fields)
 
 
 def main():
@@ -65,17 +69,19 @@ def main():
     parser.add_argument("--out", type=Path, help="write baseline and restored JSON here")
     args = parser.parse_args()
 
-    baseline = save_baseline(args.port)
+    baseline, baseline_bigrams = save_baseline(args.port)
     print("BASELINE " + json.dumps(baseline["storage"], sort_keys=True), flush=True)
     print(f"position 0: right/local={baseline['presses'][0][0]} "
           f"left/peripheral={baseline['presses'][0][1]}", flush=True)
-    restored = wait_and_read(args.port, args.timeout)
+    restored, restored_bigrams = wait_and_read(args.port, args.timeout)
     print("RESTORED " + json.dumps(restored["storage"], sort_keys=True), flush=True)
     print(f"position 0: right/local={restored['presses'][0][0]} "
           f"left/peripheral={restored['presses'][0][1]}", flush=True)
 
     if args.out:
-        args.out.write_text(json.dumps({"baseline": baseline, "restored": restored}, indent=2) + "\n",
+        args.out.write_text(json.dumps({"baseline": baseline, "restored": restored,
+                                        "baseline_bigrams": baseline_bigrams,
+                                        "restored_bigrams": restored_bigrams}, indent=2) + "\n",
                             encoding="utf-8")
     if not restored["persistent"] or restored["storage"]["state"] != "ok":
         print("FAIL: persistence is not active after reboot", file=sys.stderr)
@@ -88,9 +94,13 @@ def main():
               "(keyboard input during the test?)", file=sys.stderr)
         return 1
     if not same(baseline, restored):
-        print("FAIL: counters differ", file=sys.stderr)
+        print("FAIL: statistics differ", file=sys.stderr)
         return 1
-    print("PASS: counters restored exactly at the same generation", flush=True)
+    if (baseline_bigrams["counts"] != restored_bigrams["counts"]
+            or baseline_bigrams["saturated"] != restored_bigrams["saturated"]):
+        print("FAIL: directed bigrams differ", file=sys.stderr)
+        return 1
+    print("PASS: statistics and bigrams restored exactly at the same generation", flush=True)
     return 0
 
 

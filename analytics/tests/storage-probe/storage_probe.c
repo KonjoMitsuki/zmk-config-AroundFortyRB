@@ -12,7 +12,9 @@
 static bool fail_write;
 int __real_settings_save_one(const char *name, const void *data, size_t len);
 int __wrap_settings_save_one(const char *name, const void *data, size_t len) {
-    if (fail_write && strncmp(name, "analytics_poc/", 14) == 0) { return -EIO; }
+    if (fail_write && strncmp(name, "analytics_poc/", 14) == 0) {
+        return -EIO;
+    }
     return __real_settings_save_one(name, data, len);
 }
 
@@ -40,8 +42,9 @@ static void probe(struct k_work *work) {
     const char *step = getenv("ANALYTICS_TEST_STEP");
     __ASSERT(step, "missing test step");
     struct analytics_poc_snapshot stats;
+    struct analytics_bigram_counts bigrams;
     struct analytics_storage_status status;
-    zmk_analytics_capture(&stats, &status);
+    zmk_analytics_capture(&stats, &bigrams, &status);
     __ASSERT(strcmp(status.state, "loading") != 0, "settings not loaded");
     if (strcmp(step, "save") == 0) {
         __ASSERT(status.generation == 0 && stats.presses[0][0] == 1, "fresh boot");
@@ -54,21 +57,27 @@ static void probe(struct k_work *work) {
         k_sleep(K_MSEC(10010));
         fail_write = true;
         __ASSERT(zmk_analytics_save() == -EIO, "injected save failure");
-        zmk_analytics_capture(&stats, &status);
+        zmk_analytics_capture(&stats, &bigrams, &status);
         __ASSERT(status.generation == 1 && status.dirty && status.error_count_session == 1,
                  "failed save changed generation or lost dirty state");
         fail_write = false;
         k_sleep(K_MSEC(10010));
         __ASSERT(zmk_analytics_save() == 0, "save generation 2 after failure");
-        zmk_analytics_capture(&stats, &status);
+        zmk_analytics_capture(&stats, &bigrams, &status);
         __ASSERT(status.generation == 2 && !status.dirty, "generation 2 not committed");
     } else if (strcmp(step, "verify") == 0 || strcmp(step, "recover") == 0) {
         __ASSERT(status.generation == 2 && stats.presses[0][0] == 2 && stats.presses[1][0] == 2,
                  "saved counts + early startup event not restored");
-        if (strcmp(step, "recover") == 0) { __ASSERT(status.recovered, "corrupt slot not reported"); }
+        __ASSERT(bigrams.counts[0][1] == 1 && bigrams.counts[1][1] == 1,
+                 "directed bigrams not restored");
+        if (strcmp(step, "recover") == 0) {
+            __ASSERT(status.recovered, "corrupt slot not reported");
+        }
         __ASSERT(settings_load_subtree("analytics_poc") == 0, "reload");
-        zmk_analytics_capture(&stats, &status);
+        zmk_analytics_capture(&stats, &bigrams, &status);
         __ASSERT(stats.presses[0][0] == 2, "reload merged saved counts twice");
+        __ASSERT(bigrams.counts[0][1] == 1 && bigrams.counts[1][1] == 1,
+                 "reload merged saved bigrams twice");
     } else if (strcmp(step, "corrupt") == 0 || strcmp(step, "corrupt-both") == 0) {
         /* 'a' contains generation 1. Replace it with a truncated record,
          * keeping generation 2 in 'b' recoverable across a real NVS reload. */
