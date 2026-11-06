@@ -8,12 +8,13 @@ USB通信とHID／Studio共存は前版で確認済みです。フラッシュ�
 
 ## 1. 用意するファイル
 
-識別用USB名を付けた保存対応版は `build/analytics-windows-poc-v4/` に用意しています。
+GitHub Actionsの通常のビルドworkflowが成功したら、実行結果の **Artifacts → firmware** をダウンロードして展開します。Analytics対応版は `AroundForty-RB_R-analytics-usb-poc.uf2` です。通常版の右側UF2はAnalytics無効のため、集計には使えません。
+
+読出しスクリプトはUF2には同梱されません。ビルドしたコミットの `analytics/tools/` から、次の3ファイルをWindows側へコピーしてください。
 
 | ファイル | 用途 |
 |---|---|
-| `AroundForty-RB_R-analytics-usb-poc-v4.uf2` | 右側用・USB読出し＋保存・識別用USB名あり |
-| `AroundForty-RB_R-analytics-off.uf2` | 同じソースから作った右側用・計測なし |
+| `AroundForty-RB_R-analytics-usb-poc.uf2` | Actionsで生成する右側用・集計＋USB読出し＋保存・識別用USB名あり |
 | `read_poc.py` | Windowsで読み出す／保存するスクリプト |
 | `watch_reboot.py` | 保存後に再起動を待ち、復元値を自動比較するスクリプト |
 | `windows_usb_descriptor.py` | 実機のUSB構成を読む診断ツール |
@@ -23,12 +24,12 @@ USB通信とHID／Studio共存は前版で確認済みです。フラッシュ�
 
 ## 2. 右側を書き換える
 
-1. 可能なら、現在使っている右側UF2を戻すために手元へ残します。同梱OFF版は今回のソースからのビルドで、現在の実機のファームウェアそのものではありません。
+1. 可能なら、現在使っている右側UF2を戻すために手元へ残します。Actionsの通常版も戻すために使えますが、現在の実機のファームウェアそのものではありません。
 2. 右側をUSBでWindowsへ接続し、普段のファームウェア更新時と同じ方法でブートローダーを開きます。
-3. 表示されたドライブへ **R用** `AroundForty-RB_R-analytics-usb-poc-v4.uf2` をコピーします。L側へR用UF2を書かないでください。
+3. 表示されたドライブへ **R用** `AroundForty-RB_R-analytics-usb-poc.uf2` をコピーします。L側へR用UF2を書かないでください。
 4. 再起動後、文字入力とトラックボールが動くことを確認します。
 
-settings_resetやペアリングの消去は不要です。戻す場合も同じ方法で元の右側UF2または同梱OFF版を書き込みます。
+settings_resetやペアリングの消去は不要です。戻す場合も同じ方法で元の右側UF2またはActionsの通常版を書き込みます。
 
 ## 3. PowerShellから読む
 

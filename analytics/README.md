@@ -34,6 +34,16 @@ BLE取得、認可、停止／再開、リセット、レイヤー／ショー�
 
 ## ビルド
 
+### GitHub Actions
+
+`build.yaml`は通常版の右・左・settings_resetに加え、Analytics対応の右側版を別名で生成します。push、pull request、手動実行で起動する通常のビルドworkflowを使います。
+
+ビルドが成功したら、実行結果の **Artifacts → firmware** をダウンロードし、`AroundForty-RB_R-analytics-usb-poc.uf2` を選んでください。この版は集計・専用USB読出し・永続保存を有効にし、Studio USBと状態LEDも含みます。通常版のUF2ではAnalyticsは無効です。左側には通常の左側用UF2を使います。
+
+読出しスクリプトは同じコミットの `analytics/tools/` にあります。導入と読出しは[Windows実機確認手順](WINDOWS-USB-POC.md)を参照してください。`Analytics PoC` workflowは回帰試験用で、UF2の配布先ではありません。
+
+### ローカルビルド
+
 `config/west.yml` の依存モジュールを取得済みのwest workspaceと、ZMK v0.3.0対応SDKを使います。次の変数は各環境の絶対パスへ置き換えてください。
 
 ```sh
