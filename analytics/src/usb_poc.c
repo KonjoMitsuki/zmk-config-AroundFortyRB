@@ -249,6 +249,24 @@ static void send_recent(void) {
             return;
         }
     }
+    /* Keep the existing four-element tuples readable by older host tools. */
+    if (!send_text("],\"layers\":[")) {
+        return;
+    }
+    for (unsigned int i = 0; i < usb_recent.count; ++i) {
+        const struct analytics_recent_event *event = analytics_recent_get(&usb_recent, i);
+        if (!event) {
+            return;
+        }
+        if (event->layer_id == ANALYTICS_LAYER_UNKNOWN) {
+            snprintf(buffer, sizeof(buffer), "%snull", i ? "," : "");
+        } else {
+            snprintf(buffer, sizeof(buffer), "%s%u", i ? "," : "", (unsigned int)event->layer_id);
+        }
+        if (!send_text(buffer)) {
+            return;
+        }
+    }
     send_text("]}\n");
 }
 

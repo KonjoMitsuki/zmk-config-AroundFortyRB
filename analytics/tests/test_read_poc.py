@@ -122,6 +122,11 @@ class SnapshotTests(unittest.TestCase):
                    capacity=1024, next_sequence=3, count=2,
                    events=[[1, 100, 0, 0], [3, 120, 1, 1]])
         self.assertEqual(reader.validate_recent(json.dumps(doc)), doc)
+        layered = {**doc, "layers": [0, None]}
+        self.assertEqual(reader.validate_recent(json.dumps(layered)), layered)
+        for layers in ([0], [0, 255], [True, 1], None):
+            with self.subTest(layers=layers), self.assertRaisesRegex(ValueError, "layer"):
+                reader.validate_recent(json.dumps({**doc, "layers": layers}))
         mutations = [
             ("count", 3),
             ("events", [[2, 100, 0, 0], [1, 120, 1, 1]]),

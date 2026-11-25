@@ -4,12 +4,17 @@
 #include <zephyr/init.h>
 #include <zephyr/kernel.h>
 #include <zmk/events/position_state_changed.h>
+#include <zmk/keymap.h>
 #include <analytics/collector.h>
+#include <analytics/recent.h>
 
 extern const struct zmk_listener zmk_listener_keymap;
 
 static void probe(struct k_work *work) {
     ARG_UNUSED(work);
+    if (zmk_keymap_layer_activate(1) != 0) {
+        exit(1);
+    }
     /* Equal timestamps are intentional: clock values are not event identities.
      * Both sources use the real generated event function and linker wrapper. */
     for (unsigned int source = 0; source < 2; ++source) {
@@ -45,6 +50,13 @@ static void probe(struct k_work *work) {
     __ASSERT(stats.releases[ANALYTICS_LOCAL] == 2, "local release replay counted");
     __ASSERT(stats.releases[ANALYTICS_PERIPHERAL] == 2, "remote release replay counted");
     __ASSERT(stats.invalid_positions == 0 && !stats.saturated, "unexpected quality flags");
+    static struct analytics_recent_log recent;
+    zmk_analytics_recent_copy(&recent);
+    __ASSERT(recent.count == 4, "unexpected recent history length");
+    for (unsigned int i = 0; i < recent.count; ++i) {
+        const struct analytics_recent_event *event = analytics_recent_get(&recent, i);
+        __ASSERT(event && event->layer_id == i / 2, "layer did not follow transparent binding");
+    }
     puts("PASS: new local/peripheral events, equal timestamps, RAISE/RELEASE/AT/AFTER replay");
     exit(0);
 }

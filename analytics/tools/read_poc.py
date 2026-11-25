@@ -138,6 +138,11 @@ def validate_recent(raw):
     events = doc.get("events")
     if not isinstance(events, list) or len(events) != count:
         raise ValueError("invalid recent event count")
+    if "layers" in doc:
+        layers = doc["layers"]
+        if (not isinstance(layers, list) or len(layers) != count or
+                not all(layer is None or (type(layer) is int and 0 <= layer < 255) for layer in layers)):
+            raise ValueError("invalid recent layer IDs")
     previous = 0
     for event in events:
         if not isinstance(event, list) or len(event) != 4:
@@ -217,10 +222,12 @@ def print_bigrams(doc):
 
 def print_recent(doc, limit):
     events = doc["events"][-limit:]
-    print("sequence  time_ms  position  source")
-    for sequence, timestamp, position, source in events:
+    layers = doc.get("layers", [None] * doc["count"])[-limit:]
+    print("sequence  time_ms  position  source      layer")
+    for (sequence, timestamp, position, source), layer in zip(events, layers):
+        label = "?" if layer is None else f"L{layer}"
         print(f"{sequence:8} {timestamp:9} {position:8}  "
-              f"{'local' if source == 0 else 'peripheral'}")
+              f"{'local' if source == 0 else 'peripheral':<11} {label}")
     if not events:
         print("(no press events yet)")
     print(f"retained={doc['count']} capacity={doc['capacity']}")

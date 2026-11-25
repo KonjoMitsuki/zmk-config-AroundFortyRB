@@ -1,7 +1,10 @@
 /* SPDX-License-Identifier: MIT */
+#include <string.h>
 #include <zephyr/init.h>
 #include <zephyr/kernel.h>
+#include <zmk/behavior.h>
 #include <zmk/events/position_state_changed.h>
+#include <zmk/keymap.h>
 #include <analytics/bigram.h>
 #include <analytics/collector.h>
 #include <analytics/recent.h>
@@ -27,6 +30,29 @@ static void ensure_initialized_locked(void) {
     initialized = true;
 }
 
+static uint8_t layer_at_press(uint32_t position) {
+    for (int index = ZMK_KEYMAP_LAYERS_LEN - 1; index >= 0; --index) {
+        uint8_t id = zmk_keymap_layer_index_to_id(index);
+        if (id == ZMK_KEYMAP_LAYER_ID_INVAL || !zmk_keymap_layer_active(id)) {
+            continue;
+        }
+        const struct zmk_behavior_binding *binding = zmk_keymap_get_layer_binding_at_idx(id, position);
+        if (!binding || !binding->behavior_dev) {
+            return ANALYTICS_LAYER_UNKNOWN;
+        }
+#if DT_NODE_HAS_STATUS(DT_NODELABEL(trans), okay)
+        if (strcmp(binding->behavior_dev, DEVICE_DT_NAME(DT_NODELABEL(trans))) == 0) {
+            if (id == zmk_keymap_layer_default()) {
+                break;
+            }
+            continue;
+        }
+#endif
+        return id;
+    }
+    return ANALYTICS_LAYER_UNKNOWN;
+}
+
 /* Intercept construction of NEW events, not zmk_event_manager_raise(). Combo
  * RELEASE/RAISE and hold-tap RAISE_AT operate on existing event envelopes and
  * bypass this symbol. No listener ordering or timestamp-based deduplication.
@@ -42,7 +68,9 @@ int __wrap_raise_zmk_position_state_changed(struct zmk_position_state_changed ev
         if (result.previous_valid) {
             analytics_bigram_record(&bigrams, result.previous_position, event.position);
         }
-        analytics_recent_record(&recent, event.position, event.source, event.timestamp);
+        /* Read the binding before dispatch, without invoking or changing any behavior. */
+        analytics_recent_record(&recent, event.position, event.source, event.timestamp,
+                                layer_at_press(event.position));
     }
     k_spin_unlock(&counters_lock, key);
     return __real_raise_zmk_position_state_changed(event);

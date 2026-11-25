@@ -58,7 +58,7 @@ py -3.11 .\read_poc.py --port COM7 --save
 ```
 
 `--save` はPCのファイルではなく**キーボードのフラッシュへ保存**します。`--out trial.json` は取得したJSONをPCへ保存する別の操作です。
-保存版の通信プロトコルはversion 3。クライアントは旧version 1と2も読めます。`BIGRAMS`は有向2連、`RECENT`はRAM上の直近順序を返します。
+保存版の通信プロトコルはversion 3。クライアントは旧version 1と2も読めます。`BIGRAMS`は有向2連、`RECENT`はRAM上の直近順序を返します。レイヤー対応版では、従来の `events` に対応するレイヤーIDの配列 `layers` も返します。不明値は `null` です。
 
 `storage` の主なフィールド:
 

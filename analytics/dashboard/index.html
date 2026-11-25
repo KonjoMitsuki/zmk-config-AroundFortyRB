@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>AroundForty RB · 打鍵分析</title>
+  <link rel="stylesheet" href="dashboard.css">
+  <script src="keymap-data.js" defer></script>
+  <script src="serial.js" defer></script>
+  <script src="dashboard.js" defer></script>
+</head>
+<body>
+  <header class="top">
+    <a class="brand" href="#top"><span aria-hidden="true">⌘</span> AroundForty RB</a>
+    <nav aria-label="分析メニュー">
+      <a href="#heatmap">打鍵分布</a><a href="#layers">レイヤー</a><a href="#timing">タイミング</a><a href="#bigrams">遷移</a><a href="#recent">直近</a>
+    </nav>
+    <span class="local">● ローカル分析</span>
+  </header>
+  <main id="top">
+    <div class="hero">
+      <div>
+        <h1>打鍵分析</h1>
+        <p>物理キーごとの使用頻度、押下時間、キー間の遷移を確認できます。</p>
+      </div>
+      <div class="actions">
+        <button type="button" id="sample">サンプルを見る</button>
+        <button type="button" id="open">＋ JSONを開く</button>
+        <button type="button" class="primary" id="usb-read">USBから取得</button>
+        <input type="file" id="files" accept=".json,application/json" multiple hidden>
+      </div>
+    </div>
+    <div class="import-bar" id="drop">
+      <div id="sources">取得済みの JSON をここにドロップ</div>
+      <div class="actions">
+        <button type="button" id="usb-select" hidden>ポートを選び直す</button>
+        <button type="button" id="usb-download" hidden>取得結果を保存</button>
+        <button type="button" id="clear" hidden>クリア</button>
+      </div>
+    </div>
+    <p id="usb-status" class="hint" role="status"></p>
+    <p id="notice" role="status" aria-live="polite"></p>
+    <p id="history-note" class="hint" hidden>OneDrive に保存された長期履歴を表示中です。履歴の区切りや連番の欠落をまたぐキー遷移は集計から外しています。</p>
+    <div id="summary" class="summary"></div>
+
+    <section class="card" id="heatmap">
+      <div class="section-head">
+        <h2>打鍵ヒートマップ</h2>
+        <div class="filters">
+          <label>表示ラベル <select id="layout"><option value="win">Win Base</option><option value="mac">Mac Base</option></select></label>
+          <label>発生元 <select id="source"><option value="all">すべて</option><option value="0">右側（Central）</option><option value="1">左側（Peripheral）</option></select></label>
+        </div>
+      </div>
+      <p class="hint" id="layout-note">キーを選ぶと打鍵数とタイミングを確認できます。</p>
+      <div id="distribution" class="distribution">
+        <div>
+          <div class="board-scroll" tabindex="0" role="region" aria-label="物理キー配列"><div id="board" class="board"></div></div>
+          <div class="legend" id="heat-legend" hidden>
+            <div class="heat-scale"><span class="ramp" aria-hidden="true"></span><span>少ない</span><span>平均</span><span>多い</span></div>
+          </div>
+          <div id="key-detail" class="key-detail" aria-live="polite"></div>
+        </div>
+        <div class="ranking"><h3>打鍵数 上位10キー</h3><div id="ranking"></div></div>
+      </div>
+    </section>
+
+    <section class="card" id="layers">
+      <div class="section-head"><h2>レイヤー別ヒートマップ</h2><div class="filters"><label>レイヤー <select id="layer"></select></label></div></div>
+      <p class="hint" id="layer-note"></p>
+      <div class="board-scroll" tabindex="0" role="region" aria-label="レイヤー別の物理キー配列" hidden><div id="layer-board" class="board"></div></div>
+      <div class="legend" id="layer-legend" hidden>
+        <div class="heat-scale"><span class="ramp" aria-hidden="true"></span><span>少ない</span><span>平均</span><span>多い</span></div>
+      </div>
+      <p class="key-detail" id="layer-detail" aria-live="polite" hidden></p>
+    </section>
+
+    <section class="card" id="timing">
+      <div class="section-head">
+        <h2>タイミング分布</h2>
+        <div class="filters">
+          <label>キー <select id="timing-key"></select></label>
+          <label>指標 <select id="metric"><option value="hold">押下時間</option><option value="same_key">同じキーの押下間隔</option><option value="idle_before_press">直前の押下からの間隔</option></select></label>
+        </div>
+      </div>
+      <div id="histogram"></div>
+      <div id="pair-panel" class="pair-panel" hidden>
+        <div class="section-head">
+          <h3>指定ペアの押下間隔</h3>
+          <div class="filters">
+            <label>ペア <select id="pair"></select></label>
+            <label>条件 <select id="pair-metric"><option value="near">近接した押下</option><option value="overlap">押下が重なったもの</option></select></label>
+            <label>組み合わせ <select id="pair-class"><option value="0">右 × 右</option><option value="1">左 × 左</option><option value="2">左右混在</option></select></label>
+          </div>
+        </div>
+        <div id="pair-histogram"></div>
+        <p class="hint">集計対象は間隔250 ms未満です。左側を含む計測には左右間の通信遅延が影響します。</p>
+      </div>
+    </section>
+
+    <section class="card" id="bigrams">
+      <div class="section-head"><h2>キー遷移</h2><div class="filters"><label>遷移元 <select id="from"></select></label></div></div>
+      <p class="hint">連続して押したキーの組を回数順に表示します。割合は、同じ遷移元からの全遷移に占める比率です。</p>
+      <div id="flow-panel" hidden>
+        <p class="hint">遷移回数が多いほど線が太くなります。矢印は押下順、輪は同じキーへの遷移です。上位12組を表示します。</p>
+        <div class="board-scroll" tabindex="0" role="region" aria-label="キー遷移の流量図">
+          <div id="flow-board" class="board"></div>
+        </div>
+        <p class="hint" id="flow-scale"></p>
+      </div>
+      <div id="transitions"></div>
+    </section>
+
+    <section class="card" id="recent">
+      <div class="section-head"><h2>直近の打鍵</h2></div>
+      <div id="events"></div>
+    </section>
+
+    <section class="card" id="quality">
+      <div class="section-head"><h2>計測品質と保存状態</h2></div>
+      <div id="diagnostics"></div>
+    </section>
+  </main>
+</body>
+</html>

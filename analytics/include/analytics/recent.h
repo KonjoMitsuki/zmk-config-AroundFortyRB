@@ -8,6 +8,7 @@
 #ifndef ANALYTICS_RECENT_CAPACITY
 #define ANALYTICS_RECENT_CAPACITY 1024
 #endif
+#define ANALYTICS_LAYER_UNKNOWN UINT8_MAX
 
 /* RAM-only recent press order. Not persisted; cleared on boot. The sequence
  * number gives an unambiguous order even when timestamps tie. */
@@ -16,7 +17,7 @@ struct analytics_recent_event {
     uint32_t timestamp_ms;
     uint16_t position;
     uint8_t source;
-    uint8_t reserved;
+    uint8_t layer_id;
 };
 
 struct analytics_recent_log {
@@ -28,7 +29,7 @@ struct analytics_recent_log {
 
 void analytics_recent_init(struct analytics_recent_log *log);
 void analytics_recent_record(struct analytics_recent_log *log, uint32_t position,
-                             uint8_t source, int64_t timestamp);
+                             uint8_t source, int64_t timestamp, uint8_t layer_id);
 /* index 0 is the oldest retained event; returns NULL when out of range. */
 const struct analytics_recent_event *analytics_recent_get(
     const struct analytics_recent_log *log, unsigned int index);

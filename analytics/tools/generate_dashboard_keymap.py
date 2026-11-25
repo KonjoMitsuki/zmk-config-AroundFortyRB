@@ -298,6 +298,7 @@ def build_keymap_data(mapping_path: Path, keymap_path: Path) -> dict[str, object
         "position_count": len(keys),
         "canvas": {"width": 780, "height": 232, "key_width": 54, "key_height": 52},
         "fingers_order": ["小", "薬", "中", "人", "親"],
+        "layer_names": list(layers_raw),
         "combos": parse_combos(keymap_text, binding_order),
         "keys": keys,
     }

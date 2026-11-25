@@ -7,6 +7,9 @@
         default_layer {
             bindings = <&none &none &none &none>;
         };
+        upper_layer {
+            bindings = <&trans &none &trans &trans>;
+        };
     };
 };
 

@@ -7,7 +7,7 @@ void analytics_recent_init(struct analytics_recent_log *log) {
 }
 
 void analytics_recent_record(struct analytics_recent_log *log, uint32_t position,
-                             uint8_t source, int64_t timestamp) {
+                             uint8_t source, int64_t timestamp, uint8_t layer_id) {
     if (position >= ANALYTICS_POSITION_COUNT) {
         return;
     }
@@ -19,7 +19,7 @@ void analytics_recent_record(struct analytics_recent_log *log, uint32_t position
                                                             : (uint32_t)timestamp;
     event->position = (uint16_t)position;
     event->source = source == UINT8_MAX ? ANALYTICS_LOCAL : ANALYTICS_PERIPHERAL;
-    event->reserved = 0;
+    event->layer_id = layer_id;
     log->head = (uint16_t)((log->head + 1) % ANALYTICS_RECENT_CAPACITY);
     if (log->count < ANALYTICS_RECENT_CAPACITY) {
         ++log->count;

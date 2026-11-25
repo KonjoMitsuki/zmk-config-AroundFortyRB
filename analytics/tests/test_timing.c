@@ -125,7 +125,7 @@ int main(void) {
     analytics_recent_init(&recent);
     for (unsigned int i = 0; i < ANALYTICS_RECENT_CAPACITY + 3; ++i) {
         analytics_recent_record(&recent, i % ANALYTICS_POSITION_COUNT,
-                                i % 2 ? 0 : UINT8_MAX, i * 10);
+                                i % 2 ? 0 : UINT8_MAX, i * 10, i % 14);
     }
     assert(recent.count == ANALYTICS_RECENT_CAPACITY);
     assert(recent.next_sequence == ANALYTICS_RECENT_CAPACITY + 3);
@@ -134,14 +134,17 @@ int main(void) {
         analytics_recent_get(&recent, ANALYTICS_RECENT_CAPACITY - 1);
     assert(first && first->sequence == 4);
     assert(last && last->sequence == ANALYTICS_RECENT_CAPACITY + 3);
+    assert(first->layer_id == 3 && last->layer_id == (ANALYTICS_RECENT_CAPACITY + 2) % 14);
     assert(analytics_recent_get(&recent, ANALYTICS_RECENT_CAPACITY) == NULL);
     analytics_recent_init(&recent);
-    analytics_recent_record(&recent, 0, UINT8_MAX, -5);
-    analytics_recent_record(&recent, 1, 0, (int64_t)UINT32_MAX + 5);
+    analytics_recent_record(&recent, 0, UINT8_MAX, -5, 0);
+    analytics_recent_record(&recent, 1, 0, (int64_t)UINT32_MAX + 5, ANALYTICS_LAYER_UNKNOWN);
     assert(analytics_recent_get(&recent, 0)->timestamp_ms == 0);
     assert(analytics_recent_get(&recent, 1)->timestamp_ms == UINT32_MAX);
     assert(analytics_recent_get(&recent, 0)->source == ANALYTICS_LOCAL);
     assert(analytics_recent_get(&recent, 1)->source == ANALYTICS_PERIPHERAL);
+    assert(analytics_recent_get(&recent, 0)->layer_id == 0);
+    assert(analytics_recent_get(&recent, 1)->layer_id == ANALYTICS_LAYER_UNKNOWN);
 
     puts("PASS: timing bins, classes, duplicates, orphans, saturation, bigrams, recent");
     return 0;
