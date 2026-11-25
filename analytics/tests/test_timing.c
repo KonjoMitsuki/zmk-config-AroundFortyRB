@@ -13,7 +13,34 @@ static void reset(struct analytics_poc_snapshot *stats, struct analytics_timing_
     analytics_timing_init(timing);
 }
 
+static void test_pair_boundaries(void) {
+    const unsigned int gaps[] = {0, 19, 20, 39, 40, 59, 60, 79, 80, 99, 100, 101, 249, 250};
+    const unsigned int bins[] = {0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 5, 0};
+    const uint8_t sources[][2] = {{UINT8_MAX, UINT8_MAX}, {0, 0}, {UINT8_MAX, 0},
+                                  {0, UINT8_MAX}};
+    const unsigned int classes[] = {ANALYTICS_TIMING_CC, ANALYTICS_TIMING_PP,
+                                    ANALYTICS_TIMING_CP, ANALYTICS_TIMING_CP};
+
+    for (unsigned int s = 0; s < sizeof(sources) / sizeof(sources[0]); ++s) {
+        for (unsigned int g = 0; g < sizeof(gaps) / sizeof(gaps[0]); ++g) {
+            struct analytics_poc_snapshot stats;
+            struct analytics_timing_state timing;
+            reset(&stats, &timing, "0:1");
+            analytics_timing_record(&stats, &timing, 0, sources[s][0], true, 1000);
+            analytics_timing_record(&stats, &timing, 1, sources[s][1], true, 1000 + gaps[g]);
+            for (unsigned int c = 0; c < ANALYTICS_TIMING_CLASSES; ++c) {
+                for (unsigned int b = 0; b < ANALYTICS_PAIR_BINS; ++b) {
+                    unsigned int expected = gaps[g] < 250 && c == classes[s] && b == bins[g];
+                    assert(stats.pair_near[0][c][b] == expected);
+                    assert(stats.pair_overlap[0][c][b] == expected);
+                }
+            }
+        }
+    }
+}
+
 int main(void) {
+    test_pair_boundaries();
     struct analytics_poc_snapshot stats;
     struct analytics_timing_state timing;
     struct analytics_timing_result result;

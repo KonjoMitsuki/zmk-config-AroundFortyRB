@@ -8,6 +8,13 @@ static const uint16_t hold_bounds[] = {20, 40, 60, 80, 100, 200, 500};
 static const uint16_t interval_bounds[] = {50, 100, 150, 200, 300, 500, 1000};
 static const uint16_t pair_bounds[] = {20, 40, 60, 80, 100};
 
+_Static_assert(sizeof(hold_bounds) / sizeof(hold_bounds[0]) + 1 == ANALYTICS_TIME_BINS,
+               "Hold histogram needs one more bin than boundaries");
+_Static_assert(sizeof(interval_bounds) / sizeof(interval_bounds[0]) + 1 == ANALYTICS_TIME_BINS,
+               "Interval histogram needs one more bin than boundaries");
+_Static_assert(sizeof(pair_bounds) / sizeof(pair_bounds[0]) + 1 == ANALYTICS_PAIR_BINS,
+               "Pair histogram needs one more bin than boundaries");
+
 static void increment(struct analytics_poc_snapshot *stats, uint32_t *counter) {
     if (*counter == UINT32_MAX) {
         stats->saturated = true;
@@ -103,7 +110,7 @@ struct analytics_timing_result analytics_timing_record(
             uint32_t gap;
             if (elapsed_ms(timestamp, position_state->last_down_time, &gap)) {
                 add_hist(stats, &stats->same_key[position]
-                                            [bin_index(gap, interval_bounds, 7)]);
+                                            [bin_index(gap, interval_bounds, ANALYTICS_TIME_BINS - 1)]);
             } else {
                 increment(stats, &stats->timing_discards);
             }
@@ -112,7 +119,7 @@ struct analytics_timing_result analytics_timing_record(
             uint32_t gap;
             if (elapsed_ms(timestamp, state->last_any_down_time, &gap)) {
                 add_hist(stats, &stats->idle_before_press[position]
-                                                     [bin_index(gap, interval_bounds, 7)]);
+                                                     [bin_index(gap, interval_bounds, ANALYTICS_TIME_BINS - 1)]);
             } else {
                 increment(stats, &stats->timing_discards);
             }
@@ -126,7 +133,7 @@ struct analytics_timing_result analytics_timing_record(
                 if (pair >= 0) {
                     enum analytics_timing_class kind =
                         timing_class(state->previous_class, current_class);
-                    unsigned int bin = bin_index(gap, pair_bounds, ANALYTICS_PAIR_BINS);
+                    unsigned int bin = bin_index(gap, pair_bounds, ANALYTICS_PAIR_BINS - 1);
                     add_hist(stats, &stats->pair_near[pair][kind][bin]);
                     if (state->positions[state->previous_position].is_down) {
                         add_hist(stats, &stats->pair_overlap[pair][kind][bin]);
@@ -155,7 +162,7 @@ struct analytics_timing_result analytics_timing_record(
 
     uint32_t duration;
     if (elapsed_ms(timestamp, position_state->down_time, &duration)) {
-        add_hist(stats, &stats->hold[position][bin_index(duration, hold_bounds, 7)]);
+        add_hist(stats, &stats->hold[position][bin_index(duration, hold_bounds, ANALYTICS_TIME_BINS - 1)]);
     } else {
         increment(stats, &stats->timing_discards);
     }

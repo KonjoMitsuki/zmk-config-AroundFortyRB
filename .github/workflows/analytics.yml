@@ -38,7 +38,7 @@ jobs:
           west update --narrow -o=--depth=1
       - name: Collector boundary and saturation tests
         run: |
-          cmake -S config-repo/analytics/tests -B unit -G Ninja
+          cmake -S config-repo/analytics/tests -B unit -G Ninja -DANALYTICS_TEST_SANITIZERS=ON
           cmake --build unit
           ctest --test-dir unit --output-on-failure
           python -B -m unittest discover -s config-repo/analytics/tests -p test_read_poc.py -v

@@ -1,6 +1,12 @@
 cmake_minimum_required(VERSION 3.20)
 project(analytics_collector_tests C)
 enable_testing()
+option(ANALYTICS_TEST_SANITIZERS "Check host tests for memory errors and undefined behavior" OFF)
+if(ANALYTICS_TEST_SANITIZERS)
+  add_compile_options(-fsanitize=address,undefined -fno-sanitize-recover=all
+                      -fno-omit-frame-pointer -g)
+  add_link_options(-fsanitize=address,undefined)
+endif()
 add_executable(test_collector test_collector.c ../src/collector.c)
 target_include_directories(test_collector PRIVATE ../include)
 target_compile_definitions(test_collector PRIVATE ANALYTICS_POSITION_COUNT=42)
