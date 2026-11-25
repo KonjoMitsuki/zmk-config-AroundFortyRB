@@ -64,10 +64,16 @@ K_WORK_DELAYABLE_DEFINE(status_work, update_status);
 
 #if IS_ENABLED(CONFIG_ZMK_SPLIT_ROLE_CENTRAL)
 
-static void sync_clip_to_left(bool clip_on) {
+static struct k_work_q clip_sync_queue;
+K_THREAD_STACK_DEFINE(clip_sync_stack, 1536);
+
+static void sync_clip_to_left(struct k_work *work);
+static K_WORK_DELAYABLE_DEFINE(clip_sync_work, sync_clip_to_left);
+
+static void sync_clip_to_left(struct k_work *work) {
     struct zmk_behavior_binding binding = {
         .behavior_dev = DEVICE_DT_NAME(DT_DRV_INST(0)),
-        .param1 = clip_on,
+        .param1 = zmk_keymap_layer_active(DT_INST_PROP(0, clip_layer)),
     };
     const struct zmk_behavior_binding_event event = {.timestamp = k_uptime_get()};
 
@@ -81,6 +87,10 @@ static void sync_clip_to_left(bool clip_on) {
             zmk_split_central_invoke_behavior(sources[i], &binding, event, true);
         }
     }
+
+    /* Enqueue success does not guarantee delivery. Refresh the absolute state
+     * after reconnects and missed writes without putting BLE waits on syswork. */
+    k_work_schedule_for_queue(&clip_sync_queue, &clip_sync_work, K_SECONDS(2));
 }
 
 static void update_status(struct k_work *work) {
@@ -89,18 +99,16 @@ static void update_status(struct k_work *work) {
     const bool aml_active = zmk_keymap_layer_active(DT_INST_PROP(0, aml_layer));
     const bool aml_on = zmk_keymap_layer_active(DT_INST_PROP(0, aml_on_layer));
     set_status_color(aml_active ? STATUS_AML_ACTIVE : aml_on ? STATUS_AML_ON : STATUS_OFF);
-    sync_clip_to_left(zmk_keymap_layer_active(DT_INST_PROP(0, clip_layer)));
 
-    /* A successful BLE enqueue does not acknowledge delivery. Re-send the
-     * absolute state every two seconds to recover from reconnects, missed
-     * packets and a left-half reboot without toggling the layer again. */
+    /* Retry a full widget queue locally. */
     k_work_schedule(&status_work, K_SECONDS(2));
 }
 
 static int status_listener(const zmk_event_t *eh) {
     const struct zmk_layer_state_changed *event = as_zmk_layer_state_changed(eh);
-    if (event->layer == DT_INST_PROP(0, clip_layer) ||
-        event->layer == DT_INST_PROP(0, aml_layer) ||
+    if (event->layer == DT_INST_PROP(0, clip_layer)) {
+        k_work_reschedule_for_queue(&clip_sync_queue, &clip_sync_work, K_NO_WAIT);
+    } else if (event->layer == DT_INST_PROP(0, aml_layer) ||
         event->layer == DT_INST_PROP(0, aml_on_layer)) {
         k_work_reschedule(&status_work, K_NO_WAIT);
     }
@@ -163,6 +171,11 @@ BEHAVIOR_DT_INST_DEFINE(0, NULL, NULL, NULL, NULL, POST_KERNEL,
                         CONFIG_KERNEL_INIT_PRIORITY_DEFAULT, &status_api);
 
 static int status_init(void) {
+#if IS_ENABLED(CONFIG_ZMK_SPLIT_ROLE_CENTRAL)
+    k_work_queue_start(&clip_sync_queue, clip_sync_stack, K_THREAD_STACK_SIZEOF(clip_sync_stack),
+                       K_LOWEST_APPLICATION_THREAD_PRIO, NULL);
+    k_work_schedule_for_queue(&clip_sync_queue, &clip_sync_work, K_MSEC(200));
+#endif
     k_work_schedule(&status_work, K_MSEC(200));
     return 0;
 }
