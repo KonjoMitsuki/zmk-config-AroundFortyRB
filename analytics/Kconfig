@@ -44,7 +44,7 @@ config ZMK_ANALYTICS_USB_POC
     default n
     depends on USB_CDC_ACM && UART_LINE_CTRL && UART_INTERRUPT_DRIVEN && ZMK_USB
     help
-      A dedicated second CDC ACM port accepting GET, SAVE, BIGRAMS and RECENT.
+      A dedicated second CDC ACM port accepting GET, SAVE, BIGRAMS, RECENT and DIAG.
       No unlock required: any connected host application can read statistics
       and the RAM-only recent press order.
       Requires usb-poc.overlay. Never shares the Studio UART.

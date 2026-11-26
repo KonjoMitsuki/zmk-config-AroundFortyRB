@@ -101,3 +101,35 @@ bash tools/build_local_firmware.sh right
 
 左右のconfでは `CONFIG_ZMK_SLEEP=n`。自動保存は600秒間隔なので、
 約1分という目安だけからスリープや自動保存が原因とは判断しない。
+
+## 2026-11-27 トラックボール操作中の切断
+
+Windows上では右のAnalyticsがCOM10（USBのMI_03）、もう一つのUSBシリアルが
+COM5（MI_00）。COM7はBluetooth SPPだった。番号はPCやUSBポートで変わり得る。
+COM10で空行に対するAnalyticsのJSON応答を実測した。USBシリアルが開ける場合も
+キーボードのHID出力先はUSBまたはBLEになり得る。
+
+右のAnalytics版はHIDと2つのCDCポートを使う。使用中のZephyrの
+`drivers/usb/device/usb_dc_nrfx.c` は、USBイベントのメモリプールが枯渇すると
+保留イベントを破棄し、USBコントローラーを再初期化する。この経路が実機で
+発生したかは未確認。Analytics版でのみイベント数を32から64へ増やし、
+`DIAG` で起動後のピークと上限を読めるようにした。
+
+右のAnalytics UF2を書き込み、`analytics/tools/watch_connection.ps1` を
+Windows側のローカルフォルダーにコピーする。そのフォルダーでPowerShellを開き、
+次を実行して普段のスクロール・マウス操作を行う。WSL共有上のスクリプトは
+署名を要求される場合がある。実行ポリシーの指定は子プロセスにだけ適用される。
+
+```powershell
+powershell.exe -NoProfile -ExecutionPolicy RemoteSigned -File .\watch_connection.ps1 -Port COM10 | Tee-Object -FilePath "$env:TEMP\aroundforty-connection.jsonl"
+```
+
+切れたらリセット前に、右の文字キー・左の文字キー・ボールの反応と発生時刻を控える。
+監視はCtrl+Cで終了する。ポートを別のアプリが開いている間も `unavailable`
+になるので、アクセス拒否の行と、応答タイムアウト・ポート消失の行を区別する。
+
+- `output` は実際に選択されたHID出力先。`layer_mask` は有効レイヤーのビットマスク。
+- `usb_events_peak` は起動後の最大同時使用数。32を超えれば旧容量を超える負荷を観測したことになる。64に達しても、確保に失敗したことまでは示さない。
+- `split_disconnects` が増えた場合は右と左のBLEリンクが切れている。`last_split_reason` は直近のHCI理由コードを10進で示す。
+- `uptime_ms` が小さく戻れば右側の再起動。ポートが戻ったときに値が進み続けていれば、その間も右側が動作していたことが分かる。
+- 旧版は `without DIAG` と表示される。その場合もシリアル応答の有無は記録できる。

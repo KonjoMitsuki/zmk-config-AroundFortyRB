@@ -4,6 +4,11 @@
 #include <zephyr/device.h>
 #include <zephyr/drivers/uart.h>
 #include <zephyr/kernel.h>
+#include <zmk/endpoints.h>
+#include <zmk/keymap.h>
+#if IS_ENABLED(CONFIG_ZMK_SPLIT_BLE) && IS_ENABLED(CONFIG_ZMK_SPLIT_ROLE_CENTRAL)
+#include <zephyr/bluetooth/conn.h>
+#endif
 #include <analytics/bigram.h>
 #include <analytics/collector.h>
 #include <analytics/persistence.h>
@@ -50,6 +55,47 @@ static bool send_text(const char *text) {
         }
     }
     return true;
+}
+
+#if IS_ENABLED(CONFIG_ZMK_SPLIT_BLE) && IS_ENABLED(CONFIG_ZMK_SPLIT_ROLE_CENTRAL)
+static atomic_t split_disconnects;
+static atomic_t last_split_reason;
+
+static void record_disconnect(struct bt_conn *conn, uint8_t reason) {
+    struct bt_conn_info info;
+    if (!bt_conn_get_info(conn, &info) && info.type == BT_CONN_TYPE_LE &&
+        info.role == BT_CONN_ROLE_CENTRAL) {
+        atomic_set(&last_split_reason, reason);
+        atomic_inc(&split_disconnects);
+    }
+}
+
+BT_CONN_CB_DEFINE(analytics_connections) = {.disconnected = record_disconnect};
+#endif
+
+static void send_diagnostics(void) {
+    char buffer[192];
+    int peak = -1, capacity = -1, drops = -1, reason = -1;
+#if IS_ENABLED(CONFIG_USB_NRFX) && IS_ENABLED(CONFIG_MEM_SLAB_TRACE_MAX_UTILIZATION)
+    /* Event pool in the pinned Zephyr usb_dc_nrfx.c. Includes the event being handled. */
+    extern struct k_mem_slab fifo_elem_slab;
+    peak = k_mem_slab_max_used_get(&fifo_elem_slab);
+    capacity = CONFIG_USB_NRFX_EVT_QUEUE_SIZE;
+#endif
+#if IS_ENABLED(CONFIG_ZMK_SPLIT_BLE) && IS_ENABLED(CONFIG_ZMK_SPLIT_ROLE_CENTRAL)
+    drops = atomic_get(&split_disconnects);
+    if (drops) {
+        reason = atomic_get(&last_split_reason);
+    }
+#endif
+    snprintf(buffer, sizeof(buffer),
+             "{\"uptime_ms\":%lld,\"output\":\"%s\",\"layer_mask\":%lu,"
+             "\"usb_events_peak\":%d,\"usb_events_capacity\":%d,"
+             "\"split_disconnects\":%d,\"last_split_reason\":%d}\n",
+             (long long)k_uptime_get(),
+             zmk_endpoints_selected().transport == ZMK_TRANSPORT_USB ? "USB" : "BLE",
+             (unsigned long)zmk_keymap_layer_state(), peak, capacity, drops, reason);
+    send_text(buffer);
 }
 
 static bool send_values8(const uint16_t values[ANALYTICS_TIME_BINS]) {
@@ -297,7 +343,9 @@ static void diagnostic_thread(void *a, void *b, void *c) {
         }
         if (byte == '\n') {
             command[used] = '\0';
-            if (!overflow && strcmp(command, "GET") == 0) {
+            if (!overflow && strcmp(command, "DIAG") == 0) {
+                send_diagnostics();
+            } else if (!overflow && strcmp(command, "GET") == 0) {
                 send_snapshot();
             } else if (!overflow && strcmp(command, "SAVE") == 0) {
                 int error = zmk_analytics_save();
